@@ -3,11 +3,11 @@ package routes
 import (
 	"Printer3DCourses/internal/config"
 	"Printer3DCourses/internal/handlers"
+	"Printer3DCourses/internal/services"
 	"github.com/gofiber/fiber/v2"
-	"gorm.io/gorm"
 )
 
-func SetupRoutes(app *fiber.App, cfg *config.Config, db *gorm.DB) {
+func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserService) {
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
 		c.Set("Pragma", "no-cache")
@@ -20,7 +20,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, db *gorm.DB) {
 
 	//Роуты для апи
 	//app.Post("/api/auth/login", handlers.Login)
-	app.Post("/api/auth/register", handlers.Registration(db, cfg))
+	app.Post("/api/auth/register", handlers.Registration(userService, cfg))
 
 	//Роуты для фронта
 	app.Get("/", func(c *fiber.Ctx) error {

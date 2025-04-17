@@ -1,6 +1,6 @@
 package dto
 
-type RegistrationResponse struct {
+type RegistrationRequest struct {
 	LastName    string `json:"lastName"`
 	FirstName   string `json:"firstName"`
 	Patronymic  string `json:"patronymic"`

@@ -2,26 +2,29 @@ package config
 
 import (
 	"github.com/joho/godotenv"
-	"os"
+	"github.com/kelseyhightower/envconfig"
 )
 
+type DatabaseConfig struct {
+	Driver   string `envconfig:"DB_DRIVER" default:"sqlite"` // sqlite / postgres
+	Host     string `envconfig:"DB_HOST"`
+	Port     string `envconfig:"DB_PORT"`
+	User     string `envconfig:"DB_USER"`
+	Password string `envconfig:"DB_PASSWORD"`
+	Name     string `envconfig:"DB_NAME"`
+}
 type Config struct {
-	JwtSecret string
+	JWTSecret string `envconfig:"JWT_SECRET" required:"true"`
+	Port      string `envconfig:"PORT" default:"8080"`
+	Database  DatabaseConfig
 }
 
-var instance *Config = nil
-
-func (c *Config) GetJWTSecret() string {
-	return c.JwtSecret
-}
-
-func GetConfig() (*Config, error) {
-	if instance == nil {
-		err := godotenv.Load()
-		if err != nil {
-			return nil, err
-		}
-		instance = &Config{JwtSecret: os.Getenv("JWT_SECRET")}
+func LoadConfig() (*Config, error) {
+	_ = godotenv.Load()
+	var cfg Config
+	err := envconfig.Process("", &cfg)
+	if err != nil {
+		return nil, err
 	}
-	return instance, nil
+	return &cfg, nil
 }
