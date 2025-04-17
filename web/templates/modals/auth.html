@@ -1,0 +1,29 @@
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="this.closest('.modal').remove()">✖</span>
+        <div class="form-toggle">
+            <button onclick="showForm('login')" id="btn-login" class="active">Вход</button>
+            <button onclick="showForm('register')" id="btn-register">Регистрация</button>
+        </div>
+
+        <!-- Авторизация -->
+        <form id="loginForm">
+            <input type="text" placeholder="Логин" name="username" required />
+            <input type="password" placeholder="Пароль" name="password" required />
+            <label class="checkbox-label">
+                <input type="checkbox" name="remember" />
+                Запомнить меня
+            </label>
+            <button type="submit" class="submit-btn">Войти</button>
+        </form>
+
+        <!-- Регистрация -->
+        <form id="registerForm" style="display: none;">
+            <input type="text" placeholder="Имя" name="name" required />
+            <input type="tel" placeholder="Номер телефона" name="phone" required />
+            <input type="email" placeholder="Почта" name="email" required />
+            <input type="password" placeholder="Пароль" name="password" required />
+            <button type="submit" class="submit-btn">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
