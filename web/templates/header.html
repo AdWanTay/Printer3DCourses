@@ -6,8 +6,12 @@
         <a href="#">Стартовый набор</a>
 
     </nav>
-    <div class="auth-buttons">
-        <button id="loginBtn">Войти</button>
-        <button id="registerBtn">Регистрация</button>
-    </div>
+    {{if .isAuthenticated}}
+        <button id="profile">Профиль</button>
+    {{else}}
+        <div class="auth-buttons">
+            <button id="loginBtn">Войти</button>
+            <button id="registerBtn">Регистрация</button>
+        </div>
+    {{end}}
 </header>

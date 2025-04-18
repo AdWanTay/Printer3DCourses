@@ -3,6 +3,7 @@ package utils
 import (
 	"Printer3DCourses/internal/config"
 	"Printer3DCourses/internal/models"
+	"fmt"
 	"github.com/golang-jwt/jwt/v4"
 	"time"
 )
@@ -14,4 +15,27 @@ func GenerateJWT(user *models.User, cfg *config.Config) (string, error) {
 	claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
 	tokenString, _ := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(cfg.JWTSecret))
 	return tokenString, nil
+}
+
+func ParseAndValidateJWT(tokenString string, cfg *config.Config) (uint, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method")
+		}
+		return []byte(cfg.JWTSecret), nil
+	})
+
+	if err != nil || !token.Valid {
+		return 0, fmt.Errorf("invalid token")
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+
+	if !ok {
+		return 0, fmt.Errorf("invalid token claims")
+
+	}
+	userID, ok := claims["user_id"].(uint)
+
+	return userID, err
 }

@@ -6,6 +6,6 @@ type User struct {
 	FirstName   string `gorm:"not null"`
 	Patronymic  string `gorm:"not null"`
 	Email       string `gorm:"unique"`
-	PhoneNumber string `gorm:"unique"`
+	PhoneNumber string `gorm:"unique" validate:"required,numeric"`
 	Password    string `gorm:"not null"`
 }

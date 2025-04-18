@@ -46,5 +46,121 @@ function openAuthModal(type) {
                     modalContainer.remove();
                 }
             });
+            addAuthListener(type, modalContainer)
         });
 }
+
+function addAuthListener(type, modalContainer) {
+    if (type === "login") {
+
+        const loginForm = document.getElementById("loginForm");
+        const loginHandler = login(modalContainer);
+        loginForm.addEventListener('submit', loginHandler);
+    } else {
+        const registerForm = document.getElementById("registerForm");
+        const registerHandler = register(modalContainer);
+        registerForm.addEventListener('submit', registerHandler);
+    }
+}
+
+function login(modalContainer) {
+    return async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = {
+            email: form.email.value,
+            password: form.password.value,
+        };
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Успешно вошли');
+                modalContainer.remove()
+                location.reload();
+            } else {
+                alert('Ошибка входа: ' + (result.error || 'Неизвестная ошибка'));
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Ошибка при отправке запроса');
+        }
+    }
+}
+
+function register(modalContainer) {
+    return async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = {
+            lastName: form.lastName.value,
+            firstName: form.firstName.value,
+            patronymic: form.patronymic.value,
+            phoneNumber: form.phoneNumber.value,
+            email: form.email.value,
+            password: form.password.value,
+        };
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert('Регистрация прошла успешно!');
+                modalContainer.remove()
+                location.reload();
+            } else {
+                alert('Ошибка регистрации: ' + (result.error || 'Неизвестная ошибка'));
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Ошибка при отправке запроса');
+        }
+    }
+}
+
+// async function register(event) {
+//     event.preventDefault();
+//     const form = event.target;
+//     const formData = {
+//         lastName: form.lastName.value,
+//         firstName: form.firstName.value,
+//         patronymic: form.patronymic.value,
+//         phoneNumber: form.phoneNumber.value,
+//         email: form.email.value,
+//         password: form.password.value,
+//     };
+//
+//     try {
+//         const response = await fetch('/api/auth/register', {
+//             method: 'POST',
+//             headers: {'Content-Type': 'application/json'},
+//             body: JSON.stringify(formData)
+//         });
+//
+//         const result = await response.json();
+//
+//         if (response.ok) {
+//             alert('Регистрация прошла успешно!');
+//             // document.getElementById('registerModal').style.display = 'none';
+//             // form.reset();
+//         } else {
+//             alert('Ошибка регистрации: ' + (result.error || 'Неизвестная ошибка'));
+//         }
+//     } catch (error) {
+//         console.error('Ошибка:', error);
+//         alert('Ошибка при отправке запроса');
+//     }
+// }

@@ -5,7 +5,9 @@ import (
 	"Printer3DCourses/internal/models"
 	"Printer3DCourses/internal/repositories"
 	"context"
+	"errors"
 	"fmt"
+	"github.com/go-playground/validator"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -18,6 +20,7 @@ func NewUserService(repo repositories.UserRepository) *UserService {
 }
 
 func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequest) (*models.User, error) {
+
 	existingUser, err := s.repo.GetUserByEmail(c, input.Email)
 	if err == nil && existingUser != nil {
 		return nil, fmt.Errorf("user with this email already exists")
@@ -37,10 +40,37 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 		Password:    string(hashedPassword),
 	}
 
+	validate := validator.New()
+	err = validate.Struct(newUser)
+	if err != nil {
+		var validationErrors validator.ValidationErrors
+		errors.As(err, &validationErrors)
+		errorString := "failed to validate user fields: \n"
+		for _, validationError := range validationErrors {
+			errorString += validationError.Field() + "\n"
+		}
+		return nil, fmt.Errorf(errorString)
+	}
+
 	err = s.repo.CreateUser(c, newUser)
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to create user: %w", err)
 	}
 
 	return newUser, nil
+}
+
+func (s *UserService) LoginUser(c context.Context, input dto.LoginRequest) (*models.User, error) {
+	user, err := s.repo.GetUserByEmail(c, input.Email)
+	if err != nil {
+		return nil, fmt.Errorf("invalid email or password")
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password))
+	if err != nil {
+		return nil, fmt.Errorf("invalid email or password")
+	}
+
+	return user, nil
 }

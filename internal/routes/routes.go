@@ -5,6 +5,7 @@ import (
 	"Printer3DCourses/internal/handlers"
 	"Printer3DCourses/internal/services"
 	"github.com/gofiber/fiber/v2"
+	"time"
 )
 
 func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserService) {
@@ -19,17 +20,23 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Static("/web", "./web", fiber.Static{CacheDuration: 0})
 
 	//Роуты для апи
-	//app.Post("/api/auth/login", handlers.Login)
+	app.Post("/api/auth/login", handlers.Login(userService, cfg))
 	app.Post("/api/auth/register", handlers.Registration(userService, cfg))
+	app.Get("/api/auth/logout", func(c *fiber.Ctx) error {
+		c.Cookie(&fiber.Cookie{
+			Name:     "token",
+			Value:    "",
+			Expires:  time.Now().Add(-time.Hour), // Ставим просроченное время
+			HTTPOnly: true,
+			Secure:   true,
+			SameSite: "Strict",
+		})
+
+		return c.JSON(fiber.Map{"message": "Вы успешно вышли из аккаунта"})
+	})
 
 	//Роуты для фронта
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Render("index", fiber.Map{})
-	})
-	app.Get("/starter-kit", func(c *fiber.Ctx) error {
-		return c.Render("starter-kit", fiber.Map{})
-	})
-	app.Get("/course/:id", func(c *fiber.Ctx) error {
-		return c.Render("course-view", fiber.Map{})
-	})
+	app.Get("/", handlers.IndexPage(cfg))
+	app.Get("/starter-kit", handlers.StarterKitPage(cfg))
+	app.Get("/course/:id", handlers.CourseViewPage(cfg))
 }

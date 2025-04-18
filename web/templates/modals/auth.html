@@ -8,7 +8,7 @@
 
         <!-- Авторизация -->
         <form id="loginForm">
-            <input type="text" placeholder="Логин" name="username" required />
+            <input type="email" placeholder="Логин" name="email" required />
             <input type="password" placeholder="Пароль" name="password" required />
             <label class="checkbox-label">
                 <input type="checkbox" name="remember" />
@@ -19,11 +19,13 @@
 
         <!-- Регистрация -->
         <form id="registerForm" style="display: none;">
-            <input type="text" placeholder="Имя" name="name" required />
-            <input type="tel" placeholder="Номер телефона" name="phone" required />
+            <input type="text" placeholder="Фамилия" name="lastName" required />
+            <input type="text" placeholder="Имя" name="firstName" required />
+            <input type="text" placeholder="Отчество" name="patronymic" required />
+            <input type="tel" placeholder="Номер телефона" name="phoneNumber" required />
             <input type="email" placeholder="Почта" name="email" required />
             <input type="password" placeholder="Пароль" name="password" required />
-            <button type="submit" class="submit-btn">Зарегистрироваться</button>
+            <button type="submit" class="submit-btn" >Зарегистрироваться</button>
         </form>
     </div>
 </div>
