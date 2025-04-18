@@ -1,0 +1,105 @@
+/* Новые стили для модального окна курса */
+.course-modal {
+    max-width: 900px !important;
+}
+
+.course-modal-body {
+    display: flex;
+    gap: 20px;
+}
+
+.course-details {
+    flex: 2;
+}
+
+.course-title {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.course-category {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.course-description {
+    margin-bottom: 30px;
+}
+
+.course-description h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.course-description p {
+    color: #666;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    justify-content: flex-end;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-close,
+.btn-buy {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-close {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-buy {
+    background-color: #0055ff;
+    color: white;
+}
+
+.course-card h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+
+
+
+.accent-btn:hover {
+
+}
+
+.accent-btn {
+    background: #0055ff;
+    color: #fff;
+    border: 1px solid #0055ff;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.btn-small {
+    padding: .3rem;
+}
+
+.btn-standart {
+    padding: .5rem;
+}
+
+.btn-huge {
+    padding: .8rem 2rem;
+}

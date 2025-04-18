@@ -24,6 +24,10 @@ header {
     align-items: center;
 }
 
+header .logo {
+    margin-right: 2rem;
+}
+
 header nav a {
     margin-right: 20px;
     color: #bcbcbc;
@@ -43,6 +47,7 @@ header nav a:hover {
     color: #ffffff;
     background: #2e2e2f !important;
     gap: .5rem;
+    margin-left: auto;
     padding: .3rem;
     padding-right: .5rem;
     border: none;
@@ -77,11 +82,31 @@ header nav a:hover {
 }
 
 main.container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+    margin: 40px 8rem;
+    /*padding: 0 20px;*/
     flex: 1;
 }
+
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content .description {
+    width: 60%;
+}
+
+.image {
+    width: 35%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+}
+
 
 h1 {
     font-size: 28px;
@@ -163,6 +188,17 @@ h1 {
     color: #0055ff;
 }
 
+.banner {
+    margin: 4rem 0;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.banner img {
+    width: 100%;
+    height: 8rem;
+    object-fit: cover;
+}
 footer {
     background-color: #f2f2f2;
     padding: 4rem 8rem;
