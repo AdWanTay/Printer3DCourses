@@ -26,4 +26,10 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{})
 	})
+	app.Get("/starter-kit", func(c *fiber.Ctx) error {
+		return c.Render("starter-kit", fiber.Map{})
+	})
+	app.Get("/course/:id", func(c *fiber.Ctx) error {
+		return c.Render("course-view", fiber.Map{})
+	})
 }
