@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function openAuthModal(type) {
-    fetch("../modals/auth.html")
+    fetch("/web/templates/modals/auth.html")
         .then((res) => res.text())
         .then((html) => {
             const modalContainer = document.createElement("div");

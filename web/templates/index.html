@@ -4,24 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Курсы по 3D-печати</title>
-    <link rel="stylesheet" href="/web/css/main.css">
-    <link rel="stylesheet" href="/web/css/auth.css">
-    <script src="/web/js/app.js"></script>
+    <link rel="stylesheet" href="/web/static/css/main.css">
+    <link rel="stylesheet" href="/web/static/css/auth.css">
+    <script src="/js/app.js"></script>
 </head>
 <body>
-<header>
-    <div><a href="#" style="color: white; text-decoration: none; font-weight: bold;">3D-КУРСЫ</a></div>
-    <nav>
-        <a href="#">Каталог курсов</a>
-        <a href="#">Домашние задания</a>
-        <a href="#">Стартовый набор</a>
-
-    </nav>
-    <div class="auth-buttons">
-        <button id="loginBtn">Войти</button>
-        <button id="registerBtn">Регистрация</button>
-    </div>
-</header>
+    {{template "header" .}}
 
 <main class="container">
     <h1>Онлайн-курсы по 3D-печати</h1>
@@ -59,35 +47,7 @@
     </div>
 </main>
 
-<footer>
-    <div class="footer-col">
-        <h4>О проекте</h4>
-        <ul>
-            <li><a href="#">О нас</a></li>
-            <li><a href="#">Команда</a></li>
-            <li><a href="#">Вакансии</a></li>
-        </ul>
-    </div>
-    <div class="footer-col">
-        <h4>Платформа</h4>
-        <ul>
-            <li><a href="#">Каталог курсов</a></li>
-            <li><a href="#">Преподавание</a></li>
-            <li><a href="#">Авторам курсов</a></li>
-        </ul>
-    </div>
-    <div class="footer-col">
-        <h4>Помощь</h4>
-        <ul>
-            <li><a href="#">Центр поддержки</a></li>
-            <li><a href="#">Контакты</a></li>
-            <li><a href="#">Пользовательское соглашение</a></li>
-            <li><a href="#">Политика конфиденциальности</a></li>
-        </ul>
-    </div>
-    <div class="copyright">
-        © 2013 — 2025. Все права защищены.
-    </div>
-</footer>
+    {{template "footer" .}}
+
 </body>
 </html>
