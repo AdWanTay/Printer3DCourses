@@ -78,10 +78,46 @@ h1 {
     font-size: 18px;
 }
 
-.course-card .author {
+.course-card .description {
     font-size: 14px;
     color: #555;
     margin-bottom: 10px;
+}
+
+.courses-buttons {
+    display: flex;
+    gap: .5rem;
+    margin-top: 1.5rem;
+}
+
+.course-card .about-btn {
+    flex: 2;
+    color: #555;
+    border: none;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.course-card .about-btn:hover {
+    color: #999999;
+}
+
+.course-card .buy-btn:hover {
+    background: #0055ff;
+    color: #fff;
+}
+
+.course-card .buy-btn {
+    flex: 1;
+    color: #555;
+    background: none;
+    border: 1px solid #0055ff;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
 }
 
 .course-card .details {
