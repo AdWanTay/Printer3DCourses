@@ -93,7 +93,8 @@
     font-size: 20px;
     cursor: pointer;
     color: #999;
+    transition: .3s ease-in-out;
 }
 .modal-close:hover {
-    color: #000;
+    color: #eee;
 }
