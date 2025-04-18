@@ -1,0 +1,66 @@
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: .5rem;
+}
+
+.profile-name #name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.profile-email #email {
+    color: #0055ff;
+}
+
+.profile-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 1000px;
+    font-size: 4rem;
+    background: #eeeeee !important;
+}
+
+.manage-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+}
+
+.account-manage, .bought-courses {
+    margin: 4rem 0;
+}
+
+.account-manage h3, .bought-courses h3 {
+    margin-bottom: 1.2rem;
+}
+
+.manage-buttons button {
+    width: 16rem;
+}
+
+.course-progress {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    font-size: 14px;
+    padding: 0 .5rem;
+    background: #f2f2f2;
+    border-radius: 8px;
+}
