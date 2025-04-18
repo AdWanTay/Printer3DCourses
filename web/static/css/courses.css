@@ -1,0 +1,58 @@
+.course-latex-container {
+    position: relative;
+    width: 100%;
+}
+
+#course-content {
+    width: 100%;
+    height: auto;
+    margin: 2rem 0 4rem 0;
+}
+
+.tests-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+    gap: 1rem;
+}
+
+.test-card {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 3rem;
+    background: #f2f2f2;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.test-card .test-name {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 1rem;
+}
+
+.test-card .test-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    padding: 0 .5rem;
+    background: #cccccc;
+}
+
+.test-status.passed {
+    background: #0055ff;
+    color: #ffffff;
+}
+
+.course-progress {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f2f2f2;
+    border-radius: 8px;
+}
