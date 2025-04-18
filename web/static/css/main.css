@@ -34,10 +34,42 @@ header nav a:hover {
     color: #ffffff;
 }
 
-.auth-buttons button {
+#profileBtn {
+    /*width: 8rem;*/
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    background: #2e2e2f !important;
+    gap: .5rem;
+    padding: .3rem;
+    padding-right: .5rem;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    transition: .3s ease-in-out;
+}
+
+#profileBtn:hover {
+    cursor: pointer;
+    background: rgba(46, 46, 47, 0.8) !important;
+}
+
+#profileAvatar {
+    height: 100%;
+    width: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: #999;
+}
+
+.auth-buttons button, #loginBtn1 {
     background-color: #2e2e2f;
     border: none;
-    padding: 16px 30px;
+    padding: .5rem 30px;
     margin-left: 10px;
     color: #fff;
     cursor: pointer;
