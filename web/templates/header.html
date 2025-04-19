@@ -1,14 +1,22 @@
 <header>
     <div class="logo"><a href="#" style="color: white; text-decoration: none; font-weight: bold;">3D-КУРСЫ</a></div>
     <nav class="nav-block">
-        <a href="#">Каталог курсов</a>
+        <a href="/#courses">Каталог курсов</a>
         {{if .isAuthenticated}}
-            <a href="#">Домашние задания</a>
+            <a href="/homework">Домашние задания</a>
         {{end}}
-        <a href="#">Стартовый набор</a>
+        <a href="/starter-kit">Стартовый набор</a>
     </nav>
     {{if .isAuthenticated}}
-        <button id="profileBtn"><span id="profileAvatar">A</span>Профиль</button>
+        {{if eq .page "Profile"}}
+            <div style="margin-left: auto">
+                <span id="name">Имя Ф.</span>
+                <button id="logoutBtn">Выйти</button>
+            </div>
+        {{else}}
+            <a id="profileBtn" href="/profile"><span id="profileAvatar">A</span>Профиль</a>
+        {{end}}
+
     {{else}}
         <div class="auth-buttons">
             <button id="loginBtn">Войти</button>
