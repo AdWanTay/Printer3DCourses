@@ -130,3 +130,45 @@
     padding: .8rem 2rem;
     border-radius: 15px;
 }
+
+
+.switch {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+input[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+label {
+    cursor: pointer;
+    padding: .35rem .8rem;
+    border: 2px solid #2f2f2f;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    position: relative;
+    transition: .2s ease-in-out;
+}
+
+input:checked + label {
+    background: #2f2f2f;
+}
+
+/*input:checked + label:after {*/
+/*    left: calc(100% - 5px);*/
+/*    transform: translateX(-100%);*/
+/*}*/
+
+label:active:after {
+    width: 13px;
+}
+

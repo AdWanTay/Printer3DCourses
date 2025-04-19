@@ -18,11 +18,13 @@ function showForm(type) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const loginBtn = document.getElementById("loginBtn");
-    const registerBtn = document.getElementById("registerBtn");
+    try {
+        const loginBtn = document.getElementById("loginBtn");
+        const registerBtn = document.getElementById("registerBtn");
 
-    loginBtn.addEventListener("click", () => openAuthModal("login"));
-    registerBtn.addEventListener("click", () => openAuthModal("register"));
+        loginBtn.addEventListener("click", () => openAuthModal("login"));
+        registerBtn.addEventListener("click", () => openAuthModal("register"));
+    } catch { }
 });
 
 function openAuthModal(type) {

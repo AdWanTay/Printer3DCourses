@@ -4,12 +4,27 @@
     padding: 0;
 }
 
+:root {
+    --font-color: #000;
+    --accent-color: #0055ff;
+    --primary-color: #eeeeee;
+    --border-color: #0055ff;
+    --bg-color: #fafafa;
+}
+[data-theme="dark"] {
+    --font-color: #c1bfbd;
+    --accent-color: #0055ff;
+    --primary-color: #eeeeee;
+    --border-color: #0055ff;
+    --bg-color: #000;
+}
+
 html, body {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
     scroll-behavior: smooth;
-    background-color: #fafafa;
+    background-color: var(--bg-color);
     color: #1c1c1e;
 }
 
@@ -58,7 +73,7 @@ header #name {
     align-items: center;
     color: #ffffff;
     background: #2e2e2f !important;
-    margin-left: auto;
+    /*margin-left: auto;*/
     gap: .5rem;
     padding: .3rem;
     padding-right: .5rem;
@@ -90,7 +105,7 @@ header #name {
     transition: .3s ease-in-out;
 }
 
-.auth-buttons {
+.auth-buttons, .switch {
     margin-left: auto;
 }
 
@@ -296,4 +311,11 @@ footer {
 
 #courses {
     scroll-margin-top: 100px;
+}
+
+@media (prefers-color-scheme: dark) {
+
+}
+@media (prefers-color-scheme: light) {
+
 }
