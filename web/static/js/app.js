@@ -82,15 +82,15 @@ function login(modalContainer) {
             const result = await response.json();
 
             if (response.ok) {
-                alert('Успешно вошли');
+                showNotify("Платформа 3D-курсов", "Успешный вход в аккаунт!");
                 modalContainer.remove()
                 location.reload();
             } else {
-                alert('Ошибка входа: ' + (result.error || 'Неизвестная ошибка'));
+                showErr('Ошибка входа: ' + (result.error || 'Неизвестная ошибка'))
             }
         } catch (error) {
             console.error('Ошибка:', error);
-            alert('Ошибка при отправке запроса');
+            showErr('Ошибка при отправке запроса')
         }
     }
 }
@@ -118,15 +118,15 @@ function register(modalContainer) {
             const result = await response.json();
 
             if (response.ok) {
-                alert('Регистрация прошла успешно!');
+                showNotify("Платформа 3D-курсов", "Регистрация прошла успешно!");
                 modalContainer.remove()
                 location.reload();
             } else {
-                alert('Ошибка регистрации: ' + (result.error || 'Неизвестная ошибка'));
+                showErr('Ошибка входа: ' + (result.error || 'Неизвестная ошибка'))
             }
         } catch (error) {
             console.error('Ошибка:', error);
-            alert('Ошибка при отправке запроса');
+            showErr('Ошибка при отправке запроса')
         }
     }
 }
