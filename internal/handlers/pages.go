@@ -28,6 +28,16 @@ func StarterKitPage(cfg *config.Config) fiber.Handler {
 		return Render(c, "starter-kit", nil, cfg)
 	}
 }
+func ProfilePage(cfg *config.Config) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		return Render(c, "profile", nil, cfg)
+	}
+}
+func TestingPage(cfg *config.Config) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		return Render(c, "test/test", nil, cfg)
+	}
+}
 func CourseViewPage(cfg *config.Config) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		return Render(c, "course-view", nil, cfg)

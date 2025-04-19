@@ -38,5 +38,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	//Роуты для фронта
 	app.Get("/", handlers.IndexPage(cfg))
 	app.Get("/starter-kit", handlers.StarterKitPage(cfg))
+	app.Get("/profile", handlers.ProfilePage(cfg))
+	app.Get("/test", handlers.TestingPage(cfg))
 	app.Get("/course/:id", handlers.CourseViewPage(cfg))
 }
