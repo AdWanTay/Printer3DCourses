@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/profile.css">
     <link rel="stylesheet" href="/web/static/css/elements.css">
+    <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
     <script src="/web/static/js/app.js"></script>
 </head>
 <body>
@@ -18,7 +19,7 @@
             <div class="profile-info">
                 <div class="profile-name">
                     <h3 id="name">Фамилия Имя Отчество</h3>
-                    <button class="accent-btn btn-small" id="profileEdit">Редактировать</button>
+                    <button class="outline-btn btn-small" id="profileEdit">Редактировать</button>
                 </div>
                 <div class="profile-email">
                     <span id="email">почта@яндекс.ру</span>
@@ -26,7 +27,7 @@
             </div>
         </div>
 
-        <div class="bought-courses">
+        <div id="bought-courses">
             <h3>Приобретенные курсы</h3>
             <div class="courses-grid">
                 <div class="course-card">
@@ -34,7 +35,7 @@
                     <div class="description">Описание 1</div>
                     <div class="courses-buttons">
                         <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn">Продолжить</button>
+                        <button class="buy-btn accent-btn">Продолжить</button>
                     </div>
                 </div>
                 <div class="course-card">
@@ -42,7 +43,7 @@
                     <div class="description">Описание 2</div>
                     <div class="courses-buttons">
                         <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn">Продолжить</button>
+                        <button class="buy-btn accent-btn">Продолжить</button>
                     </div>
                 </div>
                 <div class="course-card">
@@ -50,7 +51,7 @@
                     <div class="description">Описание 3</div>
                     <div class="courses-buttons">
                         <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn">Продолжить</button>
+                        <button class="buy-btn accent-btn">Продолжить</button>
                     </div>
                 </div>
                 <div class="course-card">
@@ -58,7 +59,7 @@
                     <div class="description">Описание 4</div>
                     <div class="courses-buttons">
                         <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn">Продолжить</button>
+                        <button class="buy-btn accent-btn">Продолжить</button>
                     </div>
                 </div>
                 <div class="course-card">
@@ -66,7 +67,7 @@
                     <div class="description">Описание 5</div>
                     <div class="courses-buttons">
                         <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn">Продолжить</button>
+                        <button class="buy-btn accent-btn">Продолжить</button>
                     </div>
                 </div>
             </div>
@@ -75,9 +76,9 @@
         <div class="account-manage">
             <h3>Управление аккаунтом</h3>
             <div class="manage-buttons">
-                <button class="accent-btn btn-huge" id="emailEdit">Изменить почту</button>
-                <button class="accent-btn btn-huge" id="passwordEdit">Изменить пароль</button>
-                <button class="accent-btn btn-huge" id="deleteAccount">Удалить аккаунт</button>
+                <button class="primary-btn btn-huge" id="emailEdit">Изменить почту</button>
+                <button class="primary-btn btn-huge" id="passwordEdit">Изменить пароль</button>
+                <button class="primary-btn btn-huge" id="deleteAccount">Удалить аккаунт</button>
             </div>
         </div>
     </main>

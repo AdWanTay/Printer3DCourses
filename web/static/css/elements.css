@@ -78,9 +78,6 @@
 
 
 
-.accent-btn:hover {
-
-}
 
 .accent-btn {
     background: #0055ff;
@@ -90,6 +87,35 @@
     padding: .5rem;
     cursor: pointer;
     transition: .3s ease-in-out;
+}
+.accent-btn:hover {
+    opacity: .8;
+}
+
+.primary-btn {
+    color: #555;
+    border: none;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.primary-btn:hover {
+    color: #999999;
+}
+
+.outline-btn {
+    color: #555;
+    background: none;
+    border: 1px solid #0055ff;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.outline-btn:hover {
+    background: #0055ff;
+    color: #fff;
 }
 
 .btn-small {
@@ -102,4 +128,5 @@
 
 .btn-huge {
     padding: .8rem 2rem;
+    border-radius: 15px;
 }
