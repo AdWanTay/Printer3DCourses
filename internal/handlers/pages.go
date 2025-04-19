@@ -30,7 +30,7 @@ func StarterKitPage(cfg *config.Config) fiber.Handler {
 }
 func ProfilePage(cfg *config.Config) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "profile", nil, cfg)
+		return Render(c, "profile", fiber.Map{"page": "Profile"}, cfg)
 	}
 }
 func TestingPage(cfg *config.Config) fiber.Handler {
@@ -41,5 +41,10 @@ func TestingPage(cfg *config.Config) fiber.Handler {
 func CourseViewPage(cfg *config.Config) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		return Render(c, "course-view", nil, cfg)
+	}
+}
+func HomeworkPage(cfg *config.Config) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		return Render(c, "homeworkd", nil, cfg)
 	}
 }
