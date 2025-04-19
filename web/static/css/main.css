@@ -105,7 +105,7 @@ header #name {
     transition: .3s ease-in-out;
 }
 
-.auth-buttons, .switch {
+.switch {
     margin-left: auto;
 }
 

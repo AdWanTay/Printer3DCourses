@@ -140,15 +140,16 @@
     margin-right: 3rem;
 }
 
-input[type=checkbox]{
+#checkbox-theme {
     height: 0;
     width: 0;
     visibility: hidden;
 }
 
-label {
+#theme-switch {
     cursor: pointer;
-    padding: .35rem .8rem;
+    padding: .35rem;
+    width: 7.5rem;
     border: 2px solid #2f2f2f;
     font-size: 14px;
     display: flex;
@@ -159,16 +160,11 @@ label {
     transition: .2s ease-in-out;
 }
 
-input:checked + label {
+#checkbox-theme:checked + #theme-switch {
     background: #2f2f2f;
 }
 
-/*input:checked + label:after {*/
-/*    left: calc(100% - 5px);*/
-/*    transform: translateX(-100%);*/
-/*}*/
-
-label:active:after {
+#theme-switch :active:after {
     width: 13px;
 }
 
