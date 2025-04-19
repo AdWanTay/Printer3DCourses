@@ -45,6 +45,6 @@ func CourseViewPage(cfg *config.Config) fiber.Handler {
 }
 func HomeworkPage(cfg *config.Config) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "homeworkd", nil, cfg)
+		return Render(c, "homework", nil, cfg)
 	}
 }
