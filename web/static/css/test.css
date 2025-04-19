@@ -1,0 +1,125 @@
+.test-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.test-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    padding: 0.75rem;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+}
+
+.question-navigation-wrapper {
+    overflow-x: hidden;
+}
+
+.question-navigation {
+    display: flex;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    cursor: grab;
+    user-select: none;
+}
+
+.question-navigation.dragging {
+    cursor: grabbing;
+}
+
+.question-number {
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.question-number.active {
+    background-color: #d1fae5;
+    border-color: #a7f3d0;
+}
+
+.question-box {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.answers-box {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.answers-title {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.answers-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.answers-list li {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.test-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.next-button,
+.finish-button {
+    border: none;
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.next-button {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.next-button:hover {
+    background-color: #a7f3d0;
+}
+
+.finish-button {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.finish-button:hover {
+    background-color: #e5e7eb;
+}
+
+@media (max-width: 600px) {
+    .test-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
