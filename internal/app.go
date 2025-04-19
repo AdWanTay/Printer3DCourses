@@ -26,6 +26,8 @@ func App() error {
 	userService := services.NewUserService(userRepo)
 
 	engine := html.New("./web/templates", ".html")
+	engine.Reload(true)
+
 	app := fiber.New(fiber.Config{Views: engine})
 
 	routes.SetupRoutes(app, cfg, userService)
