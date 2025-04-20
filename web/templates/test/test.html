@@ -7,72 +7,85 @@
     <link rel="stylesheet" href="/web/static/css/main.css" />
     <link rel="stylesheet" href="/web/static/css/elements.css" />
     <link rel="stylesheet" href="/web/static/css/test.css" />
-    <meta http-equiv="refresh" content="3" />
+<!--    <meta http-equiv="refresh" content="3" />-->
 </head>
 <body>
 {{template "header" .}}
 
 <main class="test-container">
-    <div class="test-title">Название теста</div>
+    <div class="test-header">
+        <h3 class="test-title">Тест на определение умственных способностей</h3>
+        <div class="test-time">Оставшееся время: <span id="time">30:00</span></div>
+    </div>
 
     <div class="question-navigation-wrapper">
         <div class="question-navigation">
-            <button class="question-number active">1</button>
-            <button class="question-number active">2</button>
-            <button class="question-number active">3</button>
-            <button class="question-number active">4</button>
-            <button class="question-number active">5</button>
-            <button class="question-number active">6</button>
-            <button class="question-number">7</button>
-            <button class="question-number">8</button>
-            <button class="question-number">9</button>
-            <button class="question-number">10</button>
-            <button class="question-number">11</button>
-            <button class="question-number">12</button>
-            <button class="question-number">13</button>
-            <button class="question-number">14</button>
-            <button class="question-number">15</button>
-            <button class="question-number">16</button>
-            <button class="question-number">7</button>
-            <button class="question-number">8</button>
-            <button class="question-number">9</button>
-            <button class="question-number">10</button>
-            <button class="question-number">11</button>
-            <button class="question-number">12</button>
-            <button class="question-number">13</button>
-            <button class="question-number">14</button>
-            <button class="question-number">15</button>
-            <button class="question-number">16</button>
-            <button class="question-number">7</button>
-            <button class="question-number">8</button>
-            <button class="question-number">9</button>
-            <button class="question-number">10</button>
-            <button class="question-number">11</button>
-            <button class="question-number">12</button>
-            <button class="question-number">13</button>
-            <button class="question-number">14</button>
-            <button class="question-number">15</button>
-            <button class="question-number">16</button>
+            <label class="question-label">
+                <input class="question-number" type="radio" name="question" value="1" checked />
+                <span>1</span>
+            </label>
+            <label class="question-label active">
+                <input class="question-number" type="radio" name="question" value="2" />
+                <span>2</span>
+            </label>
+            <label class="question-label active">
+                <input class="question-number" type="radio" name="question" value="3" />
+                <span>3</span>
+            </label>
+            <label class="question-label">
+                <input class="question-number" type="radio" name="question" value="4" />
+                <span>4</span>
+            </label>
+            <label class="question-label">
+                <input class="question-number" type="radio" name="question" value="5" />
+                <span>5</span>
+            </label>
+            <label class="question-label">
+                <input class="question-number" type="radio" name="question" value="6" />
+                <span>6</span>
+            </label>
+            <label class="question-label">
+                <input class="question-number" type="radio" name="question" value="7" />
+                <span>7</span>
+            </label>
+            <label class="question-label">
+                <input class="question-number" type="radio" name="question" value="8" />
+                <span>8</span>
+            </label>
+            <label class="question-label">
+                <input class="question-number" type="radio" name="question" value="9" />
+                <span>9</span>
+            </label>
         </div>
     </div>
 
     <div class="question-box">
-        <div class="question-text">Вопрос<br />может длинный</div>
+        <div class="question-text">1. Вопрос не длинный,а может длинный, но строк тоже может быть очень очень много и текст очень и очень большой, поэтому и нужен этот тест длинный вопроса который может тут корректно отобразится</div>
     </div>
 
     <div class="answers-box">
         <div class="answers-title">Варианты ответов (один ответ):</div>
         <ul class="answers-list">
-            <li><label><input type="radio" name="answer" /> вариант 1</label></li>
-            <li><label><input type="radio" name="answer" /> вариант 2</label></li>
-            <li><label><input type="radio" name="answer" /> вариант 3</label></li>
-            <li><label><input type="radio" name="answer" /> вариант 4</label></li>
+            <li><label><input type="radio" name="answer" />Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1  Длинный Вариант ответа 1 Длинный Вариант ответа 1 </label></li>
+            <li><label><input type="radio" name="answer" />Вариант 2</label></li>
+            <li><label><input type="radio" name="answer" />Вариант 3</label></li>
+            <li><label><input type="radio" name="answer" />Вариант 4</label></li>
+        </ul>
+    </div>
+
+    <div class="answers-box">
+        <div class="answers-title">Варианты ответов (возможно несколько ответов):</div>
+        <ul class="answers-list">
+            <li><label><input type="checkbox" name="answer" />Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1 Длинный Вариант ответа 1  Длинный Вариант ответа 1 Длинный Вариант ответа 1 </label></li>
+            <li><label><input type="checkbox" name="answer" />Вариант 2</label></li>
+            <li><label><input type="checkbox" name="answer" />Вариант 3</label></li>
+            <li><label><input type="checkbox" name="answer" />Вариант 4</label></li>
         </ul>
     </div>
 
     <div class="test-buttons">
-        <button class="next-button">Далее</button>
-        <button class="finish-button">Завершить тест</button>
+        <button id="next-button" class="accent-btn btn-huge">Далее</button>
+        <button id="finish-button" class="primary-btn btn-huge">Завершить тест</button>
     </div>
 </main>
 

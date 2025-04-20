@@ -6,6 +6,10 @@ let startX;
 let scrollStart;
 
 questionButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        button.classList.add('selected');
+    });
+
     button.addEventListener('mousedown', (e) => {
         isDragging = true;
         startX = e.pageX;
