@@ -7,13 +7,11 @@ function showForm(type) {
     if (type === 'login') {
         loginForm.style.display = 'block';
         registerForm.style.display = 'none';
-        btnLogin.classList.add('active');
-        btnRegister.classList.remove('active');
+        btnLogin.checked = true;
     } else {
         loginForm.style.display = 'none';
         registerForm.style.display = 'block';
-        btnLogin.classList.remove('active');
-        btnRegister.classList.add('active');
+        btnRegister.checked = true;
     }
 }
 
@@ -47,7 +45,7 @@ function openAuthModal(type) {
                 showForm("register");
             }
 
-            // Закрытие по клику вне модалки (доп)
+            //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
                 if (e.target.classList.contains("modal")) {
                     modalContainer.remove();
