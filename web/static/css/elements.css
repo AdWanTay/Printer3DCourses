@@ -131,13 +131,10 @@
     border-radius: 15px;
 }
 
-
 .switch {
     position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-right: 3rem;
 }
 
 #checkbox-theme {
@@ -148,21 +145,18 @@
 
 #theme-switch {
     cursor: pointer;
-    padding: .35rem;
-    width: 7.5rem;
-    border: 2px solid #2f2f2f;
     font-size: 14px;
+    width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    border-radius: 8px;
     position: relative;
-    transition: .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-#checkbox-theme:checked + #theme-switch {
-    background: #2f2f2f;
-}
+/*#checkbox-theme:checked + #theme-switch {*/
+/*    background: #2f2f2f;*/
+/*}*/
 
 #theme-switch :active:after {
     width: 13px;

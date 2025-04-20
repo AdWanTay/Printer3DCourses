@@ -1,3 +1,7 @@
+// ################################################################################################################
+// ##                    Notifications
+// ################################################################################################################
+
 function showErr(text) {
     new Notify ({
         status: 'error',
@@ -35,6 +39,10 @@ function showNotify(title, text) {
 };
 
 
+// ################################################################################################################
+// ##                    Themes
+// ################################################################################################################
+
 document.addEventListener("DOMContentLoaded", () => {
     function detectColorScheme(){
         var theme="light";    //default to light
@@ -54,9 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector('#theme-switch').innerHTML = "Тема: Темная";
         }
     }
-    detectColorScheme();
-
-
+    try {
+        detectColorScheme();
+    } catch {}
 
     const toggleSwitch = document.querySelector('#checkbox-theme');
     const toggleSwitchText = document.querySelector('#theme-switch');
@@ -74,12 +82,53 @@ document.addEventListener("DOMContentLoaded", () => {
             toggleSwitch.checked = false;
         }
     }
+    try {
+        toggleSwitch.addEventListener('change', switchTheme, false);
+        if (document.documentElement.getAttribute("data-theme") == "dark"){
+            toggleSwitch.checked = true;
+        }
+    } catch { }
 
-    toggleSwitch.addEventListener('change', switchTheme, false);
 
-    if (document.documentElement.getAttribute("data-theme") == "dark"){
-        toggleSwitch.checked = true;
-    }
+    // ################################################################################################################
+    // ##                    Profile
+    // ################################################################################################################
 
+    const profileBtn = document.getElementById('profileBtn');
+    const dropdown = document.querySelector('.profile-dropdown');
+
+    let hideTimeout;
+
+    const showDropdown = () => {
+        clearTimeout(hideTimeout);
+        dropdown.classList.add('visible');
+        profileBtn.classList.add('active');
+    };
+
+    const hideDropdown = () => {
+        dropdown.classList.remove('visible');
+        profileBtn.classList.remove('active');
+
+        hideTimeout = setTimeout(() => {
+            dropdown.style.visibility = 'hidden';
+            dropdown.style.pointerEvents = 'none';
+        }, 300); // такое же, как transition
+    };
+
+    const forceVisible = () => {
+        dropdown.style.visibility = 'visible';
+        dropdown.style.pointerEvents = 'auto';
+        profileBtn.classList.add('active');
+    };
+
+    try {
+        profileBtn.addEventListener('mouseenter', () => {
+            forceVisible();
+            showDropdown();
+        });
+        profileBtn.addEventListener('mouseleave', hideDropdown);
+        dropdown.addEventListener('mouseenter', showDropdown);
+        dropdown.addEventListener('mouseleave', hideDropdown);
+    } catch { }
 });
 

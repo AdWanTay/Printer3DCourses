@@ -7,18 +7,32 @@
         {{end}}
         <a href="/starter-kit">Стартовый набор</a>
     </nav>
-    <div class="switch">
-        <input type="checkbox" id="checkbox-theme" />
-        <label id="theme-switch" for="checkbox-theme">Тема: Светлая</label>
-    </div>
     {{if .isAuthenticated}}
         {{if eq .page "Profile"}}
-            <div>
+            <div style="margin-left: auto">
                 <span id="name">Имя Ф.</span>
-                <button id="logoutBtn">Выйти</button>
+                <button class="profile logoutBtn">Выйти</button>
             </div>
         {{else}}
             <a id="profileBtn" href="/profile"><span id="profileAvatar">A</span>Профиль</a>
+            <div class="profile-dropdown">
+                <div class="dropdown-container">
+                    <span class="profile-name">Имя Ф.</span>
+                    <ul class="dropdown-list">
+                        <li class="dropdown-item"><a class="link" href="/profile">Мой профиль</a></li>
+                        <li class="dropdown-item"><a class="link" href="/profile#bought-courses">Мои курсы</a></li>
+                        <li class="dropdown-item"><a class="link" href="/homework">Домашние задания</a></li>
+                        <li class="dropdown-item">
+                            <div class="switch">
+                                <input type="checkbox" id="checkbox-theme" />
+                                <label id="theme-switch" for="checkbox-theme">Тема: Светлая</label>
+                            </div>
+                        </li>
+                        <li class="delimeter"></li>
+                        <li class="dropdown-item"><p style="color: #ff0000" class="logoutBtn">Выйти</p></li>
+                    </ul>
+                </div>
+            </div>
         {{end}}
 
     {{else}}
