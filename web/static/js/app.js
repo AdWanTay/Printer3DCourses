@@ -20,10 +20,15 @@ function showForm(type) {
 document.addEventListener("DOMContentLoaded", () => {
     try {
         const loginBtn = document.getElementById("loginBtn");
-        const registerBtn = document.getElementById("registerBtn");
-
         loginBtn.addEventListener("click", () => openAuthModal("login"));
+
+        const registerBtn = document.getElementById("registerBtn");
         registerBtn.addEventListener("click", () => openAuthModal("register"));
+    } catch { }
+
+    try {
+        const logoutBtn = document.querySelector(".logoutBtn");
+        logoutBtn.addEventListener("click", () => logout());
     } catch { }
 });
 
@@ -132,6 +137,25 @@ function register(modalContainer) {
         }
     }
 }
+
+async function logout() {
+    showNotify("Уведомление", "Началось!!");
+
+    try {
+        const response = await fetch("/api/auth/logout", {
+            method: "GET",
+            credentials: "include", // Обязательно, чтобы cookie ушла
+        });
+
+        if (response.ok) {
+            window.location.href = "/";
+        } else {
+            showErr("Ошибка в запросе выхода. Попробуйте позже")
+        }
+    } catch (err) {
+        showErr("Ошибка при запросе выхода:", err);
+    }
+};
 
 // async function register(event) {
 //     event.preventDefault();
