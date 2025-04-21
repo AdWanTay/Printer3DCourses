@@ -141,32 +141,14 @@ body {
     flex-wrap: wrap;
 }
 
-.next-button,
-.finish-button {
-    border: none;
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
+.force-finish-modal .modal-title {
+    color: #d74c4c; /* красный акцент */
 }
 
-.next-button {
-    background-color: #d1fae5;
-    color: #065f46;
-}
-
-.next-button:hover {
-    background-color: #a7f3d0;
-}
-
-.finish-button {
-    background-color: #f3f4f6;
-    color: #1f2937;
-}
-
-.finish-button:hover {
-    background-color: #e5e7eb;
+.force-finish-modal .modal-body p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+    color: #444;
 }
 
 @media (max-width: 600px) {
