@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserService) {
+func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserService, courseService *services.CourseService) {
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
 		c.Set("Pragma", "no-cache")
@@ -36,7 +36,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	})
 
 	//Роуты для фронта
-	app.Get("/", handlers.IndexPage(cfg))
+	app.Get("/", handlers.IndexPage(cfg, courseService))
 	app.Get("/starter-kit", handlers.StarterKitPage(cfg))
 	app.Get("/profile", handlers.ProfilePage(cfg))
 	app.Get("/test", handlers.TestingPage(cfg))

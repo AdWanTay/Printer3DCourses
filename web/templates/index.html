@@ -37,56 +37,18 @@
 
     <h1>Онлайн-курсы по 3D-печати</h1>
     <div id="courses" class="courses-grid">
+        {{ range .items }}
         <div class="course-card">
-            <h3>Основы 3D-печати: старт для новичков</h3>
-            <div class="description">Описание 1</div>
-            <div class="details">4.8 ★ · 1200 учеников · 40 ч</div>
-            <div class="price">2 900 ₽</div>
+            <h3>{{ .CourseTitle }}</h3>
+            <div class="description">{{ .CourseDescription }}</div>
+            <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч</div>
+            <div class="price">{{ printf "%.0f" .Price }} ₽</div>
             <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal(1)">Подробнее</button>
+                <button class="about-btn primary-btn" onclick="openAboutModal({{ .ID }})">Подробнее</button>
                 <button class="buy-btn outline-btn">Купить</button>
             </div>
         </div>
-        <div class="course-card">
-            <h3>3D-моделирование для печати в Blender</h3>
-            <div class="description">Описание 2</div>
-            <div class="details">4.7 ★ · 800 учеников · 35 ч</div>
-            <div class="price">3 200 ₽</div>
-            <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal(2)">Подробнее</button>
-                <button class="buy-btn outline-btn">Купить</button>
-            </div>
-        </div>
-        <div class="course-card">
-            <h3>Печать прототипов: от модели до изделия</h3>
-            <div class="description">Описание 3</div>
-            <div class="details">4.9 ★ · 1 100 учеников · 50 ч</div>
-            <div class="price">3 500 ₽</div>
-            <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal(3)">Подробнее</button>
-                <button class="buy-btn outline-btn">Купить</button>
-            </div>
-        </div>
-        <div class="course-card">
-            <h3>Настройка и калибровка 3D-принтера</h3>
-            <div class="description">Описание 4</div>
-            <div class="details">4.6 ★ · 600 учеников · 30 ч</div>
-            <div class="price">2 700 ₽</div>
-            <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal(4)">Подробнее</button>
-                <button class="buy-btn outline-btn">Купить</button>
-            </div>
-        </div>
-        <div class="course-card">
-            <h3>Продвинутый курс по SLA и FDM технологиям</h3>
-            <div class="description">Описание 5</div>
-            <div class="details">4.8 ★ · 950 учеников · 45 ч</div>
-            <div class="price">4 100 ₽</div>
-            <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal(5)">Подробнее</button>
-                <button class="buy-btn outline-btn">Купить</button>
-            </div>
-        </div>
+        {{ end }}
     </div>
     
     <div class="banner">

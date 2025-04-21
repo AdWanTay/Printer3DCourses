@@ -40,7 +40,8 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 		}
 
 		// Автоматическая миграция таблиц
-		err = db.AutoMigrate(&models.User{})
+		err = db.AutoMigrate(&models.User{}, &models.Course{})
+		err = populateDB(db)
 	})
 
 	if db == nil {
@@ -48,4 +49,54 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 	}
 
 	return db, nil
+}
+
+func populateDB(*gorm.DB) error {
+	courses := []models.Course{
+		{
+			CourseTitle:          "Основы 3D-печати: старт для новичков",
+			CourseDescription:    "Описание 1",
+			NumberOfParticipants: "1200",
+			Duration:             40,
+			LatexPath:            "course1",
+			Price:                2900,
+		},
+		{
+			CourseTitle:          "3D-моделирование для печати в Blender",
+			CourseDescription:    "Описание 2",
+			NumberOfParticipants: "800",
+			Duration:             35,
+			LatexPath:            "course2",
+			Price:                3200,
+		},
+		{
+			CourseTitle:          "Печать прототипов: от модели до изделия",
+			CourseDescription:    "Описание 3",
+			NumberOfParticipants: "1100",
+			Duration:             50,
+			LatexPath:            "course3",
+			Price:                3500,
+		},
+		{
+			CourseTitle:          "Настройка и калибровка 3D-принтера",
+			CourseDescription:    "Описание 4",
+			NumberOfParticipants: "600",
+			Duration:             30,
+			LatexPath:            "course4",
+			Price:                2700,
+		},
+		{
+			CourseTitle:          "Продвинутый курс по SLA и FDM технологиям",
+			CourseDescription:    "Описание 5",
+			NumberOfParticipants: "950",
+			Duration:             45,
+			LatexPath:            "course5",
+			Price:                4100,
+		},
+	}
+	result := db.Create(&courses)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
 }

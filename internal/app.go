@@ -25,12 +25,15 @@ func App() error {
 	userRepo := repositories.NewUserRepository(db)
 	userService := services.NewUserService(userRepo)
 
+	courseRepo := repositories.NewCourseRepository(db)
+	courseService := services.NewCourseService(courseRepo)
+
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)
 
 	app := fiber.New(fiber.Config{Views: engine})
 
-	routes.SetupRoutes(app, cfg, userService)
+	routes.SetupRoutes(app, cfg, userService, courseService)
 	err = app.Listen(":" + cfg.Port)
 	if err != nil {
 		return fmt.Errorf("app listen: %w", err)

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"Printer3DCourses/internal/config"
+	"Printer3DCourses/internal/services"
 	"Printer3DCourses/internal/utils"
 	"github.com/gofiber/fiber/v2"
 )
@@ -18,9 +19,16 @@ func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config) e
 	return c.Render(template, data)
 }
 
-func IndexPage(cfg *config.Config) fiber.Handler {
+func IndexPage(cfg *config.Config, courseService *services.CourseService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "index", nil, cfg)
+		response, err := courseService.GetCoursesForResponse(c.Context())
+		if err != nil {
+			return err
+		}
+
+		return Render(c, "index", fiber.Map{
+			"items": response.Items,
+		}, cfg)
 	}
 }
 func StarterKitPage(cfg *config.Config) fiber.Handler {
