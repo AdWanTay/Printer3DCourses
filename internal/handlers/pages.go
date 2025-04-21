@@ -16,6 +16,7 @@ func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config) e
 	_, err := utils.ParseAndValidateJWT(tokenString, cfg)
 
 	data["isAuthenticated"] = err == nil
+
 	return c.Render(template, data)
 }
 

@@ -22,12 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const registerBtn = document.getElementById("registerBtn");
         registerBtn.addEventListener("click", () => openAuthModal("register"));
-    } catch { }
-
-    try {
+    } catch { } finally {
         const logoutBtn = document.querySelector(".logoutBtn");
         logoutBtn.addEventListener("click", () => logout());
-    } catch { }
+    }
 });
 
 
@@ -174,7 +172,7 @@ async function logout() {
     } catch (err) {
         showErr("Ошибка при запросе выхода:", err);
     }
-};
+}
 
 // async function register(event) {
 //     event.preventDefault();
