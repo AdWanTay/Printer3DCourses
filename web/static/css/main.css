@@ -31,7 +31,6 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
-    scroll-margin-top: -1000px;
 }
 
 a {
@@ -205,6 +204,10 @@ h1 {
     margin-bottom: 30px;
 }
 
+.main-header {
+    font-size: 2.5rem;
+}
+
 .courses-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -319,7 +322,7 @@ footer {
 }
 
 #courses {
-    scroll-margin-top: 100px;
+    scroll-margin-top: 200px;
 }
 
 .profile-dropdown {
