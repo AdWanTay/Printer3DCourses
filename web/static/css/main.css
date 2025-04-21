@@ -80,7 +80,7 @@ header #name {
     padding-right: .5rem;
     margin-left: auto;
     text-decoration: none;
-    font-size: 14px;
+    font-size: .875rem;
     border: none;
     background: none;
     border-radius: 8px;
@@ -188,6 +188,7 @@ main.container {
 .image {
     width: 35%;
     border-radius: 15px;
+    margin-bottom: 1rem;
     overflow: hidden;
 }
 
@@ -210,8 +211,8 @@ h1 {
 
 .courses-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-gap: 1rem;
 }
 
 .course-card {
@@ -262,6 +263,7 @@ h1 {
 }
 
 .banner {
+    height: 8rem;
     margin: 4rem 0;
     overflow: hidden;
     border-radius: 15px;
@@ -269,7 +271,7 @@ h1 {
 
 .banner img {
     width: 100%;
-    height: 8rem;
+    height: 100%;
     object-fit: cover;
 }
 footer {
@@ -425,4 +427,168 @@ footer {
 }
 @media (prefers-color-scheme: light) {
 
+}
+
+/* Small (sm) – устройства от 576px */
+@media (min-width: 120px) {
+
+}
+
+
+/* Small (sm) – устройства от 576px */
+@media (min-width: 320px) {
+    body {
+    }
+    header {
+        padding: 1.5rem 1rem;
+    }
+    main.container {
+        padding: 10px 1rem;
+    }
+    footer {
+        padding: 1rem;
+    }
+    .courses-grid {
+        display: flex;
+        flex-direction: column;
+    }
+    header .nav-block {
+        display: none;
+    }
+    .content {
+        flex-direction: column;
+    }
+    .content .image {
+        order: 0;
+        width: 100%;
+    }
+    .content .description {
+        order: 1;
+        width: 100%;
+    }
+}
+
+
+/* Small (sm) – устройства от 576px */
+@media (min-width: 576px) {
+    body {
+    }
+    header {
+        padding: 1rem 2rem;
+    }
+    main.container {
+        padding: 40px 2rem;
+    }
+    footer {
+        padding: 2rem;
+    }
+}
+
+/* Medium (md) – устройства от 768px */
+@media (min-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    header {
+        padding: 1rem 3rem;
+    }
+    header .logo {
+        margin-right: 1rem;
+    }
+    main.container {
+        padding: 40px 3rem;
+    }
+    footer {
+        padding: 3rem;
+    }
+    header .nav-block {
+        display: block;
+    }
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+/* Large (lg) – устройства от 992px */
+@media (min-width: 992px) {
+    body {
+        font-size: 15px;
+    }
+    header {
+        padding: 1rem 5rem;
+    }
+    header .logo {
+        margin-right: 2rem;
+    }
+    main.container {
+        padding: 40px 5rem;
+    }
+    .content {
+        flex-direction: row;
+    }
+    .content .image {
+        order: 1;
+        width: 25%;
+    }
+    .content .description {
+        order: 0;
+        width: 75%;
+    }
+    footer {
+        padding: 5rem;
+    }
+    .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+}
+
+/* Extra large (xl) – устройства от 1200px */
+@media (min-width: 1200px) {
+    body {
+        font-size: 16px;
+    }
+    header {
+        padding: 1rem 6rem;
+    }
+    header .logo {
+        margin-right: 3rem;
+    }
+    main.container {
+        padding: 40px 6rem;
+    }
+    footer {
+        padding: 4rem 5rem;
+    }
+    .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    }
+}
+
+/* Extra extra large (xxl) – устройства от 1400px */
+@media (min-width: 1400px) {
+    header {
+        padding: 1rem 8rem;
+    }
+    main.container {
+        padding: 40px 8rem;
+    }
+    footer {
+        padding: 4rem 8rem;
+    }
+    .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+    }
+}
+
+@media (min-width: 1600px) {
+    .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    }
+}
+
+@media (min-width: 1920px) {
+    .image {
+        width: 25%;
+    }
 }
