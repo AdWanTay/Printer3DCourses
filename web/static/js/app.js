@@ -102,18 +102,15 @@ function login(modalContainer) {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(formData)
             });
-
             const result = await response.json();
 
             if (response.ok) {
-                showNotify("Платформа 3D-курсов", "Успешный вход в аккаунт!");
-                modalContainer.remove()
+                modalContainer.remove();
                 location.reload();
             } else {
                 showErr('Ошибка входа: ' + (result.error || 'Неизвестная ошибка'))
             }
         } catch (error) {
-            console.error('Ошибка:', error);
             showErr('Ошибка при отправке запроса')
         }
     }
@@ -142,7 +139,6 @@ function register(modalContainer) {
             const result = await response.json();
 
             if (response.ok) {
-                showNotify("Платформа 3D-курсов", "Регистрация прошла успешно!");
                 modalContainer.remove()
                 location.reload();
             } else {
