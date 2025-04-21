@@ -30,6 +30,27 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch { }
 });
 
+
+
+function openAboutModal(num) {
+    // todo переменная num участвует в выборе инфы по конкретному курсу
+
+    fetch("/web/templates/modals/about-course.html")
+        .then((res) => res.text())
+        .then((html) => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+
+            //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
+            modalContainer.addEventListener("click", (e) => {
+                if (e.target.classList.contains("modal")) {
+                    modalContainer.remove();
+                }
+            });
+        });
+}
+
 function openAuthModal(type) {
     fetch("/web/templates/modals/auth.html")
         .then((res) => res.text())
