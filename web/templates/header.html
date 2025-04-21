@@ -10,14 +10,14 @@
     {{if .isAuthenticated}}
         {{if eq .page "Profile"}}
             <div style="margin-left: auto">
-                <span id="name">Имя Ф.</span>
+                <span id="name">{{ .firstName}} {{ printf "%.1s." .lastName }}</span>
                 <button class="profile logoutBtn">Выйти</button>
             </div>
         {{else}}
             <a id="profileBtn" href="/profile"><span id="profileAvatar">A</span>Профиль</a>
             <div class="profile-dropdown">
                 <div class="dropdown-container">
-                    <span class="profile-name">Имя Ф.</span>
+                    <span class="profile-name">{{ .firstName}} {{ printf "%.1s." .lastName }}</span>
                     <ul class="dropdown-list">
                         <li class="dropdown-item"><a class="link" href="/profile">Мой профиль</a></li>
                         <li class="dropdown-item"><a class="link" href="/profile#bought-courses">Мои курсы</a></li>
@@ -34,7 +34,6 @@
                 </div>
             </div>
         {{end}}
-
     {{else}}
         <div class="auth-buttons">
             <button id="loginBtn">Войти</button>

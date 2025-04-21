@@ -16,7 +16,8 @@ func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config) e
 	_, err := utils.ParseAndValidateJWT(tokenString, cfg)
 
 	data["isAuthenticated"] = err == nil
-
+	data["firstName"] = "Вася"
+	data["lastName"] = "Пупкин"
 	return c.Render(template, data)
 }
 
@@ -37,9 +38,14 @@ func StarterKitPage(cfg *config.Config) fiber.Handler {
 		return Render(c, "starter-kit", nil, cfg)
 	}
 }
-func ProfilePage(cfg *config.Config) fiber.Handler {
+func ProfilePage(cfg *config.Config, courseService *services.CourseService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "profile", fiber.Map{"page": "Profile"}, cfg)
+		userId := c.Locals("userId").(uint)
+		usersCoursesResponse, err := courseService.GetAllPaidCoursesForResponse(c.Context(), userId)
+		if err != nil {
+			return err
+		}
+		return Render(c, "profile", fiber.Map{"response": usersCoursesResponse, "page": "Profile"}, cfg)
 	}
 }
 func TestingPage(cfg *config.Config) fiber.Handler {

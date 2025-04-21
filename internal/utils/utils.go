@@ -36,7 +36,7 @@ func ParseAndValidateJWT(tokenString string, cfg *config.Config) (uint, error) {
 		return 0, fmt.Errorf("invalid token claims")
 
 	}
-	userID, ok := claims["user_id"].(uint)
+	userID, ok := claims["user_id"].(float64)
 
-	return userID, err
+	return uint(userID), err
 }

@@ -20,7 +20,7 @@ func RequireAuth(cfg *config.Config) fiber.Handler {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"errors": "Invalid token"})
 		}
 
-		c.Locals("user_id", userId)
+		c.Locals("userId", userId)
 		return c.Next()
 	}
 }

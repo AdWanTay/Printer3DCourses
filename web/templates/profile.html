@@ -6,84 +6,59 @@
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/profile.css">
     <link rel="stylesheet" href="/web/static/css/elements.css">
-    <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
+    <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
     <script src="/web/static/js/app.js"></script>
 </head>
 <body>
 
-    {{template "header" .}}
+{{template "header" .}}
 
-    <main class="container">
-        <h1>Профиль</h1>
-        <div class="profile-container">
-            <div class="profile-avatar">A</div>
-            <div class="profile-info">
-                <div class="profile-name">
-                    <h3 id="name">Фамилия Имя Отчество</h3>
-                    <button class="outline-btn btn-small" id="profileEdit">Редактировать</button>
-                </div>
-                <div class="profile-email">
-                    <span id="email">почта@яндекс.ру</span>
-                </div>
+<main class="container">
+    <h1>Профиль</h1>
+    <div class="profile-container">
+        <div class="profile-avatar">A</div>
+        <div class="profile-info">
+            <div class="profile-name">
+                <h3 id="name">{{.response.LastName}} {{.response.FirstName}} {{.response.Patronymic}}</h3>
+                <button class="outline-btn btn-small" id="profileEdit">Редактировать</button>
+            </div>
+            <div class="profile-email">
+                <span id="email">{{.response.Email}}</span>
             </div>
         </div>
+    </div>
 
-        <div id="bought-courses">
-            <h3>Приобретенные курсы</h3>
-            <div class="courses-grid">
+    <div id="bought-courses">
+        <h3>Приобретенные курсы</h3>
+        <div class="courses-grid">
+            {{ if .response.Items }}
+                {{ range .response.Items }}
                 <div class="course-card">
-                    <h3>Основы 3D-печати: старт для новичков</h3>
-                    <div class="description">Описание 1</div>
+                    <h3>{{ .CourseTitle }}</h3>
+                    <div class="description">{{ .CourseDescription }}</div>
                     <div class="courses-buttons">
-                        <span class="course-progress">Прогресс: 87%</span>
+                        <span class="course-progress">Прогресс: {{ printf "%.0f" .Progress }}%</span>
                         <button class="buy-btn accent-btn">Продолжить</button>
                     </div>
                 </div>
-                <div class="course-card">
-                    <h3>3D-моделирование для печати в Blender</h3>
-                    <div class="description">Описание 2</div>
-                    <div class="courses-buttons">
-                        <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn accent-btn">Продолжить</button>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <h3>Печать прототипов: от модели до изделия</h3>
-                    <div class="description">Описание 3</div>
-                    <div class="courses-buttons">
-                        <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn accent-btn">Продолжить</button>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <h3>Настройка и калибровка 3D-принтера</h3>
-                    <div class="description">Описание 4</div>
-                    <div class="courses-buttons">
-                        <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn accent-btn">Продолжить</button>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <h3>Продвинутый курс по SLA и FDM технологиям</h3>
-                    <div class="description">Описание 5</div>
-                    <div class="courses-buttons">
-                        <span class="course-progress">Прогресс: 87%</span>
-                        <button class="buy-btn accent-btn">Продолжить</button>
-                    </div>
-                </div>
-            </div>
+                {{ end }}
+            {{else}}
+                <div>Поешь говна нищеброд</div>
+            {{ end }}
         </div>
 
-        <div class="account-manage">
-            <h3>Управление аккаунтом</h3>
-            <div class="manage-buttons">
-                <button class="primary-btn btn-huge" id="emailEdit">Изменить почту</button>
-                <button class="primary-btn btn-huge" id="passwordEdit">Изменить пароль</button>
-                <button class="primary-btn btn-huge" id="deleteAccount">Удалить аккаунт</button>
-            </div>
-        </div>
-    </main>
+    </div>
 
-    {{template "footer" .}}
+    <div class="account-manage">
+        <h3>Управление аккаунтом</h3>
+        <div class="manage-buttons">
+            <button class="primary-btn btn-huge" id="emailEdit">Изменить почту</button>
+            <button class="primary-btn btn-huge" id="passwordEdit">Изменить пароль</button>
+            <button class="primary-btn btn-huge" id="deleteAccount">Удалить аккаунт</button>
+        </div>
+    </div>
+</main>
+
+{{template "footer" .}}
 </body>
 </html>

@@ -26,7 +26,7 @@ func App() error {
 	userService := services.NewUserService(userRepo)
 
 	courseRepo := repositories.NewCourseRepository(db)
-	courseService := services.NewCourseService(courseRepo)
+	courseService := services.NewCourseService(courseRepo, userRepo)
 
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)

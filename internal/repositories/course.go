@@ -8,9 +8,24 @@ import (
 
 type CourseRepository interface {
 	GetAllCourses(c context.Context) (*[]models.Course, error)
+	GetAllPaidCoursesByUserId(c context.Context, userId uint) (*[]models.Course, error)
 }
 type courseRepository struct {
 	db *gorm.DB
+}
+
+func (cr *courseRepository) GetAllPaidCoursesByUserId(c context.Context, userId uint) (*[]models.Course, error) {
+	var usersCourses *[]models.UsersCourse
+	err := cr.db.WithContext(c).Preload("Course").Where("user_id = ?", userId).Find(&usersCourses).Error
+	if err != nil {
+		return nil, err
+	}
+	var courses []models.Course
+	for _, course := range *usersCourses {
+		courses = append(courses, course.Course)
+	}
+
+	return &courses, nil
 }
 
 func NewCourseRepository(db *gorm.DB) CourseRepository {

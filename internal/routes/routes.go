@@ -3,9 +3,9 @@ package routes
 import (
 	"Printer3DCourses/internal/config"
 	"Printer3DCourses/internal/handlers"
+	"Printer3DCourses/internal/middlewares"
 	"Printer3DCourses/internal/services"
 	"github.com/gofiber/fiber/v2"
-	"time"
 )
 
 func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserService, courseService *services.CourseService) {
@@ -22,23 +22,16 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	//Роуты для апи
 	app.Post("/api/auth/login", handlers.Login(userService, cfg))
 	app.Post("/api/auth/register", handlers.Registration(userService, cfg))
-	app.Get("/api/auth/logout", func(c *fiber.Ctx) error {
-		c.Cookie(&fiber.Cookie{
-			Name:     "token",
-			Value:    "",
-			Expires:  time.Now().Add(-time.Hour), // Ставим просроченное время
-			HTTPOnly: true,
-			Secure:   true,
-			SameSite: "Strict",
-		})
-
-		return c.JSON(fiber.Map{"message": "Вы успешно вышли из аккаунта"})
-	})
+	app.Get("/api/auth/logout", handlers.Logout())
+	app.Patch("/api/auth/change-email", middlewares.RequireAuth(cfg), handlers.ChangeEmail(userService))
+	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg), handlers.ChangePassword(userService))
+	app.Patch("/api/auth/change-name", middlewares.RequireAuth(cfg), handlers.ChangeName(userService))
+	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg), handlers.DeleteAccount(userService))
 
 	//Роуты для фронта
 	app.Get("/", handlers.IndexPage(cfg, courseService))
 	app.Get("/starter-kit", handlers.StarterKitPage(cfg))
-	app.Get("/profile", handlers.ProfilePage(cfg))
+	app.Get("/profile", middlewares.RequireAuth(cfg), handlers.ProfilePage(cfg, courseService))
 	app.Get("/test", handlers.TestingPage(cfg))
 	app.Get("/course/:id", handlers.CourseViewPage(cfg))
 	app.Get("/homework", handlers.HomeworkPage(cfg))

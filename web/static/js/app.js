@@ -22,12 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const registerBtn = document.getElementById("registerBtn");
         registerBtn.addEventListener("click", () => openAuthModal("register"));
-    } catch { } finally {
+    } catch {
+    }
+
+    try {
         const logoutBtn = document.querySelector(".logoutBtn");
         logoutBtn.addEventListener("click", () => logout());
+    } catch {
     }
 });
-
 
 
 function openAboutModal(num) {
@@ -39,7 +42,7 @@ function openAboutModal(num) {
             const modalContainer = document.createElement("div");
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
-
+            document.querySelector(".course-description").innerHTML = "<p>"+num+"</p>"
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
                 if (e.target.classList.contains("modal")) {

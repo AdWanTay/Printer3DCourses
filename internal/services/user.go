@@ -74,3 +74,38 @@ func (s *UserService) LoginUser(c context.Context, input dto.LoginRequest) (*mod
 
 	return user, nil
 }
+
+func (s *UserService) ChangeEmail(c context.Context, userID uint, newEmail string) error {
+	user, err := s.repo.GetUserById(c, userID)
+	if err != nil {
+		return err
+	}
+	user.Email = newEmail
+	return s.repo.Update(c, user)
+}
+func (s *UserService) ChangePassword(c context.Context, userID uint, newPassword string) error {
+	user, err := s.repo.GetUserById(c, userID)
+	if err != nil {
+		return err
+	}
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	user.Password = string(hashedPassword)
+	if err != nil {
+		return fmt.Errorf("failed to hash password: %w", err)
+	}
+	return s.repo.Update(c, user)
+}
+func (s *UserService) ChangeName(c context.Context, userID uint, newLastName, newFirstName, newPatronymic string) error {
+	user, err := s.repo.GetUserById(c, userID)
+	if err != nil {
+		return err
+	}
+	user.LastName = newLastName
+	user.FirstName = newFirstName
+	user.Patronymic = newPatronymic
+	return s.repo.Update(c, user)
+}
+func (s *UserService) DeleteUser(c context.Context, userID uint) error {
+	return s.repo.Delete(c, userID)
+}

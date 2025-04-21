@@ -3,7 +3,7 @@ package dto
 import "Printer3DCourses/internal/models"
 
 type CoursesPageResponse struct {
-	Items []courseResponse
+	Items []courseResponse `json:"items"`
 }
 
 type courseResponse struct {
@@ -30,4 +30,36 @@ func NewCoursesPageResponse(items *[]models.Course) *CoursesPageResponse {
 	}
 	coursesPageResponse.Items = courseResponses
 	return &coursesPageResponse
+}
+
+type ProfilePageResponse struct {
+	Items []userCourseResponse `json:"items"`
+
+	LastName   string `json:"last_name"`
+	FirstName  string `json:"first_name"`
+	Patronymic string `json:"patronymic"`
+	Email      string `json:"email"`
+}
+
+type userCourseResponse struct {
+	ID                uint    `json:"id"`
+	CourseTitle       string  `json:"course_title"`
+	CourseDescription string  `json:"course_description"`
+	Progress          float32 `json:"progress"`
+}
+
+func NewProfilePageResponse(userCourses *[]models.Course, user *models.User) *ProfilePageResponse {
+	var userCoursesResponse []userCourseResponse
+	for _, course := range *userCourses {
+		courseResp := userCourseResponse{
+			ID:                course.ID,
+			CourseTitle:       course.CourseTitle,
+			CourseDescription: course.CourseDescription,
+			Progress:          80.0,
+		}
+		userCoursesResponse = append(userCoursesResponse, courseResp)
+	}
+	return &ProfilePageResponse{Items: userCoursesResponse,
+		LastName: user.LastName, FirstName: user.FirstName,
+		Patronymic: user.Patronymic, Email: user.Email}
 }

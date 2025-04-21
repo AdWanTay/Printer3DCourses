@@ -40,9 +40,10 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 		}
 
 		// Автоматическая миграция таблиц
-		err = db.AutoMigrate(&models.User{}, &models.Course{})
+		err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{})
 		err = populateDB(db)
 	})
+	//err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{})
 
 	if db == nil {
 		return nil, err
@@ -51,7 +52,7 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 	return db, nil
 }
 
-func populateDB(*gorm.DB) error {
+func populateDB(db *gorm.DB) error {
 	courses := []models.Course{
 		{
 			CourseTitle:          "Основы 3D-печати: старт для новичков",
