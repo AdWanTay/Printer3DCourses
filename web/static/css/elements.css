@@ -50,6 +50,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin: 0;
+    margin-bottom: 1rem;
 }
 
 .modal-body {
@@ -233,9 +234,10 @@
 }
 
 .switch {
-    position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
+    height: 2rem;
 }
 
 #checkbox-theme {
@@ -245,12 +247,15 @@
 }
 
 #theme-switch {
+    position: absolute;
+    top: 0;
+    left: .5rem;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
     font-size: 14px;
-    width: 100%;
     display: flex;
     align-items: center;
-    position: relative;
     user-select: none;
     -webkit-user-select: none;
 }
