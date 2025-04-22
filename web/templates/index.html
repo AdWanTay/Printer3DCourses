@@ -50,7 +50,7 @@
             <div class="price">{{ printf "%.0f" .Price }} ₽</div>
             <div class="courses-buttons">
                 {{if .IsBought}}
-                    <a class="redirect-btn accent-btn" href="">Перейти</a>
+                    <a class="redirect-btn accent-btn" href="/course/{{ .ID }}">Перейти</a>
                 {{else}}
                     <button class="about-btn primary-btn" onclick="openAboutModal({{.FullDescription}})">
                         Подробнее
