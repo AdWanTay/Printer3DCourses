@@ -58,7 +58,8 @@ func populateDB(db *gorm.DB) error {
 	courses := []models.Course{
 		{
 			CourseTitle:          "Основы 3D-печати: старт для новичков",
-			CourseDescription:    "Описание 1",
+			ShortDescription:     "Описание 1",
+			FullDescription:      "Полное описание",
 			NumberOfParticipants: "150",
 			Duration:             40,
 			LatexPath:            "course1",
@@ -68,7 +69,8 @@ func populateDB(db *gorm.DB) error {
 		},
 		{
 			CourseTitle:          "3D-моделирование для печати в Blender",
-			CourseDescription:    "Описание 2",
+			ShortDescription:     "Описание 2",
+			FullDescription:      "Полное описание",
 			NumberOfParticipants: "423",
 			Duration:             35,
 			LatexPath:            "course2",
@@ -78,7 +80,8 @@ func populateDB(db *gorm.DB) error {
 		},
 		{
 			CourseTitle:          "Печать прототипов: от модели до изделия",
-			CourseDescription:    "Описание 3",
+			ShortDescription:     "Описание 3",
+			FullDescription:      "Полное описание",
 			NumberOfParticipants: "93",
 			Duration:             50,
 			LatexPath:            "course3",
@@ -88,7 +91,8 @@ func populateDB(db *gorm.DB) error {
 		},
 		{
 			CourseTitle:          "Настройка и калибровка 3D-принтера",
-			CourseDescription:    "Описание 4",
+			ShortDescription:     "Описание 4",
+			FullDescription:      "Полное описание",
 			NumberOfParticipants: "45",
 			Duration:             30,
 			LatexPath:            "course4",
@@ -98,7 +102,8 @@ func populateDB(db *gorm.DB) error {
 		},
 		{
 			CourseTitle:          "Продвинутый курс по SLA и FDM технологиям",
-			CourseDescription:    "Описание 5",
+			ShortDescription:     "Описание 5",
+			FullDescription:      "Полное описание",
 			NumberOfParticipants: "892",
 			Duration:             45,
 			LatexPath:            "course5",

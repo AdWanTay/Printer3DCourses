@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/auth.css">
     <link rel="stylesheet" href="/web/static/css/elements.css">
-    <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
-<!--    <meta http-equiv="refresh" content="3" />-->
+    <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
+    <!--    <meta http-equiv="refresh" content="3" />-->
 </head>
 <body>
 {{template "header" .}}
@@ -18,19 +18,25 @@
     <div class="content">
         <div class="description">
             <p>
-                Это пример описания для вашей веб-страницы. Здесь вы можете разместить текст, который будет информировать
+                Это пример описания для вашей веб-страницы. Здесь вы можете разместить текст, который будет
+                информировать
                 посетителей о содержании и целях вашего сайта.
             </p>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequuntur cumque dicta nobis perferendis. Deleniti deserunt magni quidem voluptas voluptates. Consectetur culpa facilis, ipsum iusto rem repellendus sit. Minus, voluptas?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequuntur cumque dicta nobis
+                perferendis. Deleniti deserunt magni quidem voluptas voluptates. Consectetur culpa facilis, ipsum iusto
+                rem repellendus sit. Minus, voluptas?
             </p>
             <p>
                 Какой-то завлекающий на покупку стартового набора абзац!
             </p>
 
-            <a id="mainBtn" class="accent-btn btn-huge" href="/starter-kit"><span class="flare"></span>Приобрести стартовый набор</a>
+            <a id="mainBtn" class="accent-btn btn-huge" href="/starter-kit"><span class="flare"></span>Приобрести
+                стартовый набор</a>
         </div>
-        <div class="image"><img src="https://s.yimg.com/ny/api/res/1.2/yzX93lbD80VQlgM9LJmgjw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MA--/https://media.zenfs.com/en/Benzinga/ce1ec5a318ffbcdf41f17e0675e7c5c0" alt="Пример изображения"></div>
+        <div class="image"><img
+                src="https://s.yimg.com/ny/api/res/1.2/yzX93lbD80VQlgM9LJmgjw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MA--/https://media.zenfs.com/en/Benzinga/ce1ec5a318ffbcdf41f17e0675e7c5c0"
+                alt="Пример изображения"></div>
     </div>
 
     <h1>Онлайн-курсы по 3D-печати</h1>
@@ -39,21 +45,24 @@
         {{ range .items }}
         <div class="course-card">
             <h3>{{ .CourseTitle }}</h3>
-            <div class="description">{{ .CourseDescription }}</div>
+            <div class="description">{{ .ShortDescription }}</div>
             <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч</div>
             <div class="price">{{ printf "%.0f" .Price }} ₽</div>
             <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal({{ .ID }})">Подробнее {{ .IsBought}}</button>
+                <button class="about-btn primary-btn" onclick="openAboutModal({{.FullDescription}})">
+                    Подробнее
+                </button>
+                <p> куплен? {{ .IsBought}}</p>
                 {{if $.isAuthenticated}}
-                    <button class="buy-btn outline-btn">Купить</button>
+                <button class="buy-btn outline-btn">Купить</button>
                 {{else}}
-                    <button class="buy-btn outline-btn" onclick="openAuthModal('login')">Купить</button>
+                <button class="buy-btn outline-btn" onclick="openAuthModal('login')">Купить</button>
                 {{end}}
             </div>
         </div>
         {{ end }}
     </div>
-    
+
     <div class="banner">
         <img src="https://s3.objstor.cloud4u.com/unti-prod-people/file/presentation/project/ftx97l9vip.jpg" alt="">
     </div>

@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function openAboutModal(num) {
+function openAboutModal(fullDescription) {
     // todo переменная num участвует в выборе инфы по конкретному курсу
 
     fetch("/web/templates/modals/about-course.html")
@@ -42,7 +42,7 @@ function openAboutModal(num) {
             const modalContainer = document.createElement("div");
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
-            document.querySelector(".course-description").innerHTML = "<p>"+num+"</p>"
+            document.querySelector(".course-description").innerHTML = "<p>"+fullDescription+"</p>"
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
                 if (e.target.classList.contains("modal")) {

@@ -9,14 +9,14 @@ type CoursesPageResponse struct {
 type courseResponse struct {
 	ID                   uint    `json:"id"`
 	CourseTitle          string  `json:"course_title"`
-	CourseDescription    string  `json:"course_description"`
+	ShortDescription     string  `gorm:"not null" json:"short_description"`
+	FullDescription      string  `gorm:"not null" json:"full_description"`
 	NumberOfParticipants string  `json:"number_of_participants"`
 	Duration             int     `json:"duration"`
 	Price                float32 `json:"price"`
 	IsBought             bool    `json:"is_bought" default:"false"`
 }
 
-// NewCoursesPageResponse TODO IsBought: for index page
 func NewCoursesPageResponse(items *[]models.Course, paidIndexes map[uint]struct{}) *CoursesPageResponse {
 	coursesPageResponse := CoursesPageResponse{}
 	courseResponses := make([]courseResponse, 0)
@@ -26,7 +26,8 @@ func NewCoursesPageResponse(items *[]models.Course, paidIndexes map[uint]struct{
 		courseResponses = append(courseResponses, courseResponse{
 			ID:                   course.ID,
 			CourseTitle:          course.CourseTitle,
-			CourseDescription:    course.CourseDescription,
+			ShortDescription:     course.ShortDescription,
+			FullDescription:      course.FullDescription,
 			NumberOfParticipants: course.NumberOfParticipants,
 			Duration:             course.Duration,
 			Price:                course.Price,
@@ -61,7 +62,7 @@ func NewProfilePageResponse(userCourses *[]models.Course, user *models.User) *Pr
 		items = append(items, userCourseResponse{
 			ID:                course.ID,
 			CourseTitle:       course.CourseTitle,
-			CourseDescription: course.CourseDescription,
+			CourseDescription: course.ShortDescription,
 			Progress:          80.0, // можно потом динамически передавать
 		})
 	}
