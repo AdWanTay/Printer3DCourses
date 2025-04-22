@@ -109,3 +109,12 @@ func (s *UserService) ChangeName(c context.Context, userID uint, newLastName, ne
 func (s *UserService) DeleteUser(c context.Context, userID uint) error {
 	return s.repo.Delete(c, userID)
 }
+
+func (s *UserService) GetFirstNameAndLastName(c context.Context, userID uint) (string, string, error) {
+	user, err := s.repo.GetUserById(c, userID)
+	if err != nil {
+		return "", "", err
+	}
+
+	return user.FirstName, user.LastName, nil
+}

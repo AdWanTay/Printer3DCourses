@@ -31,10 +31,10 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Get("/api/tests/:id", middlewares.RequireAuth(cfg), handlers.GetTests(testService))
 
 	//Роуты для фронта
-	app.Get("/", handlers.IndexPage(cfg, courseService))
-	app.Get("/starter-kit", handlers.StarterKitPage(cfg))
-	app.Get("/profile", middlewares.RequireAuth(cfg), handlers.ProfilePage(cfg, courseService))
-	app.Get("/test", handlers.TestingPage(cfg))
-	app.Get("/course/:id", handlers.CourseViewPage(cfg))
-	app.Get("/homework", handlers.HomeworkPage(cfg))
+	app.Get("/", handlers.IndexPage(cfg, courseService, userService))
+	app.Get("/starter-kit", handlers.StarterKitPage(cfg, userService))
+	app.Get("/profile", middlewares.RequireAuth(cfg), handlers.ProfilePage(cfg, courseService, userService))
+	app.Get("/test", handlers.TestingPage(cfg, userService))
+	app.Get("/course/:id", handlers.CourseViewPage(cfg, userService))
+	app.Get("/homework", handlers.HomeworkPage(cfg, userService))
 }

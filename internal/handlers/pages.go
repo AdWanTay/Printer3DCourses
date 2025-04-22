@@ -7,21 +7,24 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config) error {
+func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config, userService *services.UserService) error {
 	if data == nil {
 		data = fiber.Map{}
 	}
 
 	tokenString := c.Cookies("token")
-	_, err := utils.ParseAndValidateJWT(tokenString, cfg)
+	userId, err := utils.ParseAndValidateJWT(tokenString, cfg)
+
+	if err == nil {
+		data["firstName"], data["lastName"], _ = userService.GetFirstNameAndLastName(c.Context(), userId)
+	}
 
 	data["isAuthenticated"] = err == nil
-	data["firstName"] = "Вася"
-	data["lastName"] = "Пупкин"
+
 	return c.Render(template, data)
 }
 
-func IndexPage(cfg *config.Config, courseService *services.CourseService) fiber.Handler {
+func IndexPage(cfg *config.Config, courseService *services.CourseService, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		response, err := courseService.GetCoursesForResponse(c.Context())
 		if err != nil {
@@ -30,36 +33,36 @@ func IndexPage(cfg *config.Config, courseService *services.CourseService) fiber.
 
 		return Render(c, "index", fiber.Map{
 			"items": response.Items,
-		}, cfg)
+		}, cfg, userService)
 	}
 }
-func StarterKitPage(cfg *config.Config) fiber.Handler {
+func StarterKitPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "starter-kit", nil, cfg)
+		return Render(c, "starter-kit", nil, cfg, userService)
 	}
 }
-func ProfilePage(cfg *config.Config, courseService *services.CourseService) fiber.Handler {
+func ProfilePage(cfg *config.Config, courseService *services.CourseService, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		userId := c.Locals("userId").(uint)
 		usersCoursesResponse, err := courseService.GetAllPaidCoursesForResponse(c.Context(), userId)
 		if err != nil {
 			return err
 		}
-		return Render(c, "profile", fiber.Map{"response": usersCoursesResponse, "page": "Profile"}, cfg)
+		return Render(c, "profile", fiber.Map{"response": usersCoursesResponse, "page": "Profile"}, cfg, userService)
 	}
 }
-func TestingPage(cfg *config.Config) fiber.Handler {
+func TestingPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "test/test", nil, cfg)
+		return Render(c, "test/test", nil, cfg, userService)
 	}
 }
-func CourseViewPage(cfg *config.Config) fiber.Handler {
+func CourseViewPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "course-view", nil, cfg)
+		return Render(c, "course-view", nil, cfg, userService)
 	}
 }
-func HomeworkPage(cfg *config.Config) fiber.Handler {
+func HomeworkPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "homework", nil, cfg)
+		return Render(c, "homework", nil, cfg, userService)
 	}
 }
