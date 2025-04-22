@@ -15,6 +15,7 @@ type courseResponse struct {
 	Price                float32 `json:"price"`
 }
 
+// NewCoursesPageResponse TODO IsBought: for index page
 func NewCoursesPageResponse(items *[]models.Course) *CoursesPageResponse {
 	coursesPageResponse := CoursesPageResponse{}
 	courseResponses := make([]courseResponse, 0)
@@ -35,10 +36,11 @@ func NewCoursesPageResponse(items *[]models.Course) *CoursesPageResponse {
 type ProfilePageResponse struct {
 	Items []userCourseResponse `json:"items"`
 
-	LastName   string `json:"last_name"`
-	FirstName  string `json:"first_name"`
-	Patronymic string `json:"patronymic"`
-	Email      string `json:"email"`
+	LastName    string `json:"last_name"`
+	FirstName   string `json:"first_name"`
+	Patronymic  string `json:"patronymic"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phone_number"`
 }
 
 type userCourseResponse struct {
@@ -61,11 +63,12 @@ func NewProfilePageResponse(userCourses *[]models.Course, user *models.User) *Pr
 	}
 
 	return &ProfilePageResponse{
-		Items:      items,
-		LastName:   user.LastName,
-		FirstName:  user.FirstName,
-		Patronymic: user.Patronymic,
-		Email:      user.Email,
+		Items:       items,
+		LastName:    user.LastName,
+		FirstName:   user.FirstName,
+		Patronymic:  user.Patronymic,
+		Email:       user.Email,
+		PhoneNumber: user.PhoneNumber,
 	}
 }
 
@@ -104,6 +107,7 @@ func NewTestResponse(test *models.Test, count int) *TestResponse {
 			Answers:      answerItems,
 		})
 	}
+
 	return &TestResponse{
 		Count:     uint(count),
 		Title:     test.TestTitle,
