@@ -3,7 +3,7 @@ package tests
 import "Printer3DCourses/internal/models"
 
 type TestScore struct {
-	ID uint64 `gorm:"primary_key"`
+	ID uint64 `gorm:"primaryKey"`
 
 	TestID uint `gorm:"not null;OnDelete:CASCADE;"`
 	Test   Test `gorm:"foreignKey:TestID;references:ID"`

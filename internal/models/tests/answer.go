@@ -1,7 +1,7 @@
 package tests
 
 type Answer struct {
-	ID         uint   `gorm:"primarykey"`
+	ID         uint   `gorm:"primaryKey"`
 	AnswerText string `gorm:"type:text"`
 	IsCorrect  bool   `gorm:"type:boolean"`
 

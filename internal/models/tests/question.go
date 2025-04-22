@@ -1,7 +1,7 @@
 package tests
 
 type Question struct {
-	ID           uint   `gorm:"primary_key"`
+	ID           uint   `gorm:"primaryKey"`
 	QuestionText string `gorm:"type:text"`
 
 	TestID uint `gorm:"not null;OnDelete:CASCADE;"`
