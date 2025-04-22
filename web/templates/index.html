@@ -49,14 +49,17 @@
             <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч</div>
             <div class="price">{{ printf "%.0f" .Price }} ₽</div>
             <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal({{.FullDescription}})">
-                    Подробнее
-                </button>
-                <p> куплен? {{ .IsBought}}</p>
-                {{if $.isAuthenticated}}
-                <button class="buy-btn outline-btn">Купить</button>
+                {{if .IsBought}}
+                    <a class="redirect-btn outline-btn" href="">Перейти</a>
                 {{else}}
-                <button class="buy-btn outline-btn" onclick="openAuthModal('login')">Купить</button>
+                    <button class="about-btn primary-btn" onclick="openAboutModal({{.FullDescription}})">
+                        Подробнее
+                    </button>
+                    {{if $.isAuthenticated}}
+                    <button class="buy-btn outline-btn">Купить</button>
+                    {{else}}
+                    <button class="buy-btn outline-btn" onclick="openAuthModal('login')">Купить</button>
+                    {{end}}
                 {{end}}
             </div>
         </div>

@@ -239,7 +239,14 @@ h1 {
 .courses-buttons {
     display: flex;
     gap: .5rem;
-    margin-top: 1.5rem;
+    margin-top: .8rem;
+}
+
+.redirect-btn {
+    text-align: center;
+    margin-left: auto;
+    width: 35%;
+    font-size: .875rem;
 }
 
 .course-card .about-btn {
