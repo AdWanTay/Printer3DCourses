@@ -14,7 +14,7 @@
                 <button class="profile logoutBtn">Выйти</button>
             </div>
         {{else}}
-            <a id="profileBtn" href="/profile"><span id="profileAvatar">A</span>Профиль</a>
+            <a id="profileBtn" href="/profile"><span id="profileAvatar">{{ printf "%.1s" .firstName }}</span>Профиль</a>
             <div class="profile-dropdown">
                 <div class="dropdown-container">
                     <span class="profile-name">{{ .firstName}} {{ printf "%.1s." .lastName }}</span>
