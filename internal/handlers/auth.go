@@ -149,7 +149,7 @@ func ChangeName(userService *services.UserService) fiber.Handler {
 		userID := c.Locals("userId").(uint)
 
 		if err := userService.ChangeName(c.Context(), userID, body.NewLastName, body.NewFirstName, body.NewPatronymic); err != nil {
-			return fiber.NewError(fiber.StatusInternalServerError, "Не удалось ФИО")
+			return fiber.NewError(fiber.StatusInternalServerError, "Не удалось изменить ФИО")
 		}
 
 		return c.JSON(fiber.Map{"message": "ФИО успешно изменены"})
@@ -173,5 +173,30 @@ func DeleteAccount(userService *services.UserService) fiber.Handler {
 			SameSite: "Strict",
 		})
 		return c.JSON(fiber.Map{"message": "Аккаунт успешно удален"})
+	}
+}
+
+func ChangePhoneNumber(userService *services.UserService) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		type request struct {
+			NewPhoneNumber string `json:"new_phone_number"`
+		}
+
+		var body request
+		if err := c.BodyParser(&body); err != nil {
+			return fiber.NewError(fiber.StatusBadRequest, "Некорректный формат запроса")
+		}
+
+		if body.NewPhoneNumber == "" {
+			return fiber.NewError(fiber.StatusBadRequest, "Номер телефона не может быть пустым")
+		}
+
+		userID := c.Locals("userId").(uint)
+
+		if err := userService.ChangePhoneNumber(c.Context(), userID, body.NewPhoneNumber); err != nil {
+			return fiber.NewError(fiber.StatusInternalServerError, "Не удалось обновить номер телефона")
+		}
+
+		return c.JSON(fiber.Map{"message": "номер телефона успешно изменен"})
 	}
 }

@@ -106,6 +106,15 @@ func (s *UserService) ChangeName(c context.Context, userID uint, newLastName, ne
 	user.Patronymic = newPatronymic
 	return s.repo.Update(c, user)
 }
+func (s *UserService) ChangePhoneNumber(c context.Context, userID uint, newPhoneNumber string) error {
+	user, err := s.repo.GetUserById(c, userID)
+	if err != nil {
+		return err
+	}
+	user.PhoneNumber = newPhoneNumber
+	return s.repo.Update(c, user)
+}
+
 func (s *UserService) DeleteUser(c context.Context, userID uint) error {
 	return s.repo.Delete(c, userID)
 }

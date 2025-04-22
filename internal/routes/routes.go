@@ -26,6 +26,8 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Patch("/api/auth/change-email", middlewares.RequireAuth(cfg), handlers.ChangeEmail(userService))
 	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg), handlers.ChangePassword(userService))
 	app.Patch("/api/auth/change-name", middlewares.RequireAuth(cfg), handlers.ChangeName(userService))
+	//TODO change-phone
+	app.Patch("/api/auth/change-phone", middlewares.RequireAuth(cfg), handlers.ChangePhoneNumber(userService))
 	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg), handlers.DeleteAccount(userService))
 
 	app.Get("/api/tests/:id", middlewares.RequireAuth(cfg), handlers.GetTests(testService))
