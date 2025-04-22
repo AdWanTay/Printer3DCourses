@@ -6,7 +6,7 @@ function showErr(text) {
     new Notify ({
         status: 'error',
         title: 'Ошибка',
-        text: `${text}.`,
+        text: `${text}`,
         effect: 'fade',
         speed: 300,
         showIcon: true,
@@ -21,8 +21,8 @@ function showErr(text) {
 function showNotify(title, text) {
     new Notify ({
         status: 'success',
-        title: `${title}.`,
-        text: `${text}.`,
+        title: `${title}`,
+        text: `${text}`,
         effect: 'fade',
         speed: 300,
         customClass: '',
@@ -132,3 +132,34 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch { }
 });
 
+
+function setCursorPosition(pos, elem) {
+    elem.focus();
+    if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);
+    else if (elem.createTextRange) {
+        var range = elem.createTextRange();
+        range.collapse(true);
+        range.moveEnd("character", pos);
+        range.moveStart("character", pos);
+        range.select()
+    }
+}
+
+function mask(event) {
+    var matrix = "+7 (___) ___ ____",
+        i = 0,
+        def = matrix.replace(/\D/g, ""),
+        val = this.value.replace(/\D/g, "");
+    if (def.length >= val.length) val = def;
+    this.value = matrix.replace(/./g, function(a) {
+        return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a
+    });
+    if (event.type == "blur") {
+        if (this.value.length == 2) this.value = ""
+    } else setCursorPosition(this.value.length, this)
+};
+
+function validateEmail(email) {
+    var re = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}

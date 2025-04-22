@@ -59,6 +59,11 @@ function openAuthModal(type) {
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
 
+            var input = document.querySelector("input[type='tel']");
+            input.addEventListener("input", mask, false);
+            input.addEventListener("focus", mask, false);
+            input.addEventListener("blur", mask, false);
+
             // Запускаем нужную форму
             if (type === "login") {
                 showForm("login");
@@ -89,6 +94,8 @@ function addAuthListener(type, modalContainer) {
     }
 }
 
+
+
 function login(modalContainer) {
     return async (event) => {
         event.preventDefault();
@@ -110,7 +117,7 @@ function login(modalContainer) {
                 modalContainer.remove();
                 location.reload();
             } else {
-                showErr('Ошибка входа: ' + (result.error || 'Неизвестная ошибка'))
+                showErr(result.error)
             }
         } catch (error) {
             showErr('Ошибка при отправке запроса')
@@ -154,8 +161,6 @@ function register(modalContainer) {
 }
 
 async function logout() {
-    showNotify("Уведомление", "Началось!!");
-
     try {
         const response = await fetch("/api/auth/logout", {
             method: "GET",
@@ -172,46 +177,9 @@ async function logout() {
     }
 }
 
-// async function register(event) {
-//     event.preventDefault();
-//     const form = event.target;
-//     const formData = {
-//         lastName: form.lastName.value,
-//         firstName: form.firstName.value,
-//         patronymic: form.patronymic.value,
-//         phoneNumber: form.phoneNumber.value,
-//         email: form.email.value,
-//         password: form.password.value,
-//     };
-//
-//     try {
-//         const response = await fetch('/api/auth/register', {
-//             method: 'POST',
-//             headers: {'Content-Type': 'application/json'},
-//             body: JSON.stringify(formData)
-//         });
-//
-//         const result = await response.json();
-//
-//         if (response.ok) {
-//             alert('Регистрация прошла успешно!');
-//             // document.getElementById('registerModal').style.display = 'none';
-//             // form.reset();
-//         } else {
-//             alert('Ошибка регистрации: ' + (result.error || 'Неизвестная ошибка'));
-//         }
-//     } catch (error) {
-//         console.error('Ошибка:', error);
-//         alert('Ошибка при отправке запроса');
-//     }
-// }
-
-
-
 
 // Функция для открытия модального окна с нужным содержимым
 function openModal(config) {
-    // Создаем модальное окно из шаблона
     const modalHtml = `
         <div class="modal">
             <div class="modal-content main-modal">
@@ -232,6 +200,12 @@ function openModal(config) {
 
     // Назначаем обработчик для основной кнопки
     document.getElementById('mainBtn').addEventListener('click', config.mainBtnAction);
+    try {
+        var input = document.querySelector("input[type='tel']");
+        input.addEventListener("input", mask, false);
+        input.addEventListener("focus", mask, false);
+        input.addEventListener("blur", mask, false);
+    } catch { }
 }
 
 // Конфигурации для разных модальных окон
@@ -241,17 +215,20 @@ const modalConfigs = {
         body: `
             <form id="emailForm" autocomplete="off">
                 <input type="email" id="newEmail" autocomplete="off" placeholder="Новая почта" required>
-                <input type="password" id="currentPasswordForEmail" autocomplete="off" placeholder="Текущий пароль" required>
             </form>
         `,
-        description: "После изменения почты вам нужно будет подтвердить новый адрес",
+        description: "ⓘ Необходимо ввести новый адрес без ошибок",
         mainBtnText: "Сохранить",
         mainBtnAction: async function() {
             const newEmail = document.getElementById('newEmail').value;
-            const currentPassword = document.getElementById('currentPasswordForEmail').value;
 
-            if (!newEmail || !currentPassword) {
-                showNotify("Ошибка", "Все поля должны быть заполнены", "error");
+            if (!newEmail) {
+                showErr("Все поля должны быть заполнены");
+                return;
+            }
+
+            if (!validateEmail(newEmail)) {
+                showErr("Введен некорректный адрес электронной почты");
                 return;
             }
 
@@ -263,8 +240,7 @@ const modalConfigs = {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                     body: JSON.stringify({
-                        new_email: newEmail,
-                        current_password: currentPassword
+                        new_email: newEmail
                     })
                 });
 
@@ -273,10 +249,13 @@ const modalConfigs = {
                     throw new Error(error.message || "Не удалось изменить email");
                 }
 
-                showNotify("Успех", "Email успешно изменён. Проверьте новую почту для подтверждения.", "success");
+                showNotify("Успех", "Email успешно изменён. Страница будет перезагружена");
                 this.closest('.modal').remove();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3100);
             } catch (error) {
-                showNotify("Ошибка", error.message, "error");
+                showErr(error.message);
             }
         }
     },
@@ -284,30 +263,28 @@ const modalConfigs = {
         title: "Изменение пароля",
         body: `
             <form id="passwordForm">
-                <input type="password" id="currentPassword" autocomplete="off" placeholder="Текущий пароль" required>
                 <input type="password" id="newPassword" autocomplete="off" placeholder="Новый пароль" required>
                 <input type="password" id="repeatNewPassword" autocomplete="off" placeholder="Повторите новый пароль" required>
             </form>
         `,
-        description: "Пароль должен содержать не менее 8 символов",
+        description: "ⓘ Пароль должен содержать не менее 8 символов",
         mainBtnText: "Сохранить",
         mainBtnAction: async function() {
-            const currentPassword = document.getElementById('currentPassword').value;
             const newPassword = document.getElementById('newPassword').value;
             const repeatNewPassword = document.getElementById('repeatNewPassword').value;
 
-            if (!currentPassword || !newPassword || !repeatNewPassword) {
-                showNotify("Ошибка", "Все поля должны быть заполнены", "error");
+            if (!newPassword || !repeatNewPassword) {
+                showErr("Все поля должны быть заполнены");
                 return;
             }
 
             if (newPassword !== repeatNewPassword) {
-                showNotify("Ошибка", "Новые пароли не совпадают", "error");
+                showErr("Пароли не совпадают");
                 return;
             }
 
             if (newPassword.length < 8) {
-                showNotify("Ошибка", "Пароль должен содержать не менее 8 символов", "error");
+                showErr("Пароль должен содержать не менее 8 символов");
                 return;
             }
 
@@ -319,8 +296,7 @@ const modalConfigs = {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                     body: JSON.stringify({
-                        new_password: newPassword,
-                        current_password: currentPassword
+                        new_password: newPassword
                     })
                 });
 
@@ -328,11 +304,10 @@ const modalConfigs = {
                     const error = await response.json();
                     throw new Error(error.message || "Не удалось изменить пароль");
                 }
-
-                showNotify("Успех", "Пароль успешно изменён", "success");
+                showNotify("Успех", "Пароль успешно изменён");
                 this.closest('.modal').remove();
             } catch (error) {
-                showNotify("Ошибка", error.message, "error");
+                showErr(error.message);
             }
         }
     },
@@ -345,7 +320,7 @@ const modalConfigs = {
                 <input type="text" id="newPatronymic" autocomplete="off" placeholder="Отчество (необязательно)">
             </form>
         `,
-        description: "Укажите ваши реальные фамилию и имя",
+        description: "ⓘ Укажите ваши реальные фамилию, имя и отчество",
         mainBtnText: "Сохранить",
         mainBtnAction: async function() {
             const lastName = document.getElementById('newLastName').value;
@@ -353,7 +328,7 @@ const modalConfigs = {
             const patronymic = document.getElementById('newPatronymic').value;
 
             if (!lastName || !firstName) {
-                showNotify("Ошибка", "Фамилия и имя обязательны для заполнения", "error");
+                showErr("Фамилия и имя обязательны для заполнения");
                 return;
             }
 
@@ -376,15 +351,56 @@ const modalConfigs = {
                     throw new Error(error.message || "Не удалось изменить ФИО");
                 }
 
-                showNotify("Успех", "ФИО успешно изменены", "success");
+                showNotify("Успех", "Персональные данные успешно изменены. Страница будет перезагружена");
                 this.closest('.modal').remove();
-
-                // Обновляем отображение имени в интерфейсе
-                if (typeof updateUserDisplay === 'function') {
-                    updateUserDisplay();
-                }
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3100);
             } catch (error) {
-                showNotify("Ошибка", error.message, "error");
+                showErr(error.message);
+            }
+        }
+    },
+    phoneEdit: {
+        title: "Изменение номера телефона",
+        body: `
+            <form id="phoneForm" autocomplete="off">
+                <input type="tel" id="newPhoneNumber" autocomplete="off" placeholder="Новый номер телефона" required>
+            </form>
+        `,
+        description: "ⓘ Необходимо ввести корректный номер телефона",
+        mainBtnText: "Сохранить",
+        mainBtnAction: async function() {
+            const newPhoneNumber = document.getElementById('newPhoneNumber').value;
+
+            if (!newPhoneNumber) {
+                showErr("Все поля должны быть заполнены");
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/change-phone', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        new_phone_number: newPhoneNumber
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || "Не удалось изменить номер телефона");
+                }
+                showNotify("Успех", "Номер телефона успешно изменён. Страница будет перезагружена");
+                this.closest('.modal').remove();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3100);
+            } catch (error) {
+                showErr(error.message);
             }
         }
     },
@@ -392,18 +408,16 @@ const modalConfigs = {
         title: "Удаление аккаунта",
         body: `
             <form id="deleteForm">
-                <input type="password" id="deletePassword" autocomplete="off" placeholder="Ваш пароль" required>
                 <input type="text" id="deleteConfirmation" autocomplete="off" placeholder="Напишите 'УДАЛИТЬ'" required>
             </form>
         `,
-        description: "Это действие необратимо. Все ваши данные будут удалены.",
+        description: "ⓘ Это действие необратимо. Все ваши данные будут удалены.",
         mainBtnText: "Удалить аккаунт",
         mainBtnAction: async function() {
-            const password = document.getElementById('deletePassword').value;
             const confirmation = document.getElementById('deleteConfirmation').value;
 
-            if (!password || confirmation !== 'УДАЛИТЬ') {
-                showNotify("Ошибка", "Пожалуйста, введите пароль и напишите 'УДАЛИТЬ' для подтверждения", "error");
+            if (confirmation !== 'УДАЛИТЬ') {
+                showErr("Пожалуйста, введите пароль и напишите 'УДАЛИТЬ' для подтверждения");
                 return;
             }
 
@@ -413,10 +427,7 @@ const modalConfigs = {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    },
-                    body: JSON.stringify({
-                        password: password
-                    })
+                    }
                 });
 
                 if (!response.ok) {
@@ -424,45 +435,16 @@ const modalConfigs = {
                     throw new Error(error.message || "Не удалось удалить аккаунт");
                 }
 
-                showNotify("Успех", "Аккаунт успешно удалён", "success");
+                showNotify("Успех", "Аккаунт успешно удалён");
+                showNotify("Внимание!", "Аккаунт будет удален в течение");
                 this.closest('.modal').remove();
 
-                // Перенаправляем на страницу входа
                 setTimeout(() => {
-                    window.location.href = '/login';
-                }, 1500);
+                    window.location.href = '/';
+                }, 3100);
             } catch (error) {
-                showNotify("Ошибка", error.message, "error");
+                showErr(error.message);
             }
         }
     }
 };
-
-// Функция для открытия модального окна с нужным содержимым
-function openModal(config) {
-    // Создаем модальное окно из шаблона
-    const modalHtml = `
-        <div class="modal">
-            <div class="modal-content main-modal">
-                <span class="modal-close" onclick="this.closest('.modal').remove()">✖</span>
-                <h2 class="modal-title">${config.title}</h2>
-                <div class="modal-body">${config.body}</div>
-                <div class="modal-description">${config.description}</div>
-                <div class="modal-actions">
-                    <button id="mainBtn" class="modal-button primary">${config.mainBtnText}</button>
-                    <button class="modal-button cancel" onclick="this.closest('.modal').remove()">Отмена</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Вставляем модальное окно в body
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-    // Назначаем обработчик для основной кнопки
-    document.getElementById('mainBtn').addEventListener('click', config.mainBtnAction.bind(document.querySelector('.modal')));
-}
-// // Назначаем обработчики на кнопки
-// document.getElementById('emailEdit').addEventListener('click', () => openModal(modalConfigs.emailEdit));
-// document.getElementById('passwordEdit').addEventListener('click', () => openModal(modalConfigs.passwordEdit));
-// document.getElementById('deleteAccount').addEventListener('click', () => openModal(modalConfigs.deleteAccount));
