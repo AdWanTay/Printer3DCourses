@@ -40,7 +40,7 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 		}
 
 		// Автоматическая миграция таблиц
-		err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{})
+		err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{}, &models.Test{}, &models.Question{}, &models.Answer{}, &models.TestScore{})
 		err = populateDB(db)
 	})
 	//err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{})
