@@ -49,17 +49,64 @@ type userCourseResponse struct {
 }
 
 func NewProfilePageResponse(userCourses *[]models.Course, user *models.User) *ProfilePageResponse {
-	var userCoursesResponse []userCourseResponse
+	items := make([]userCourseResponse, 0, len(*userCourses))
+
 	for _, course := range *userCourses {
-		courseResp := userCourseResponse{
+		items = append(items, userCourseResponse{
 			ID:                course.ID,
 			CourseTitle:       course.CourseTitle,
 			CourseDescription: course.CourseDescription,
-			Progress:          80.0,
-		}
-		userCoursesResponse = append(userCoursesResponse, courseResp)
+			Progress:          80.0, // можно потом динамически передавать
+		})
 	}
-	return &ProfilePageResponse{Items: userCoursesResponse,
-		LastName: user.LastName, FirstName: user.FirstName,
-		Patronymic: user.Patronymic, Email: user.Email}
+
+	return &ProfilePageResponse{
+		Items:      items,
+		LastName:   user.LastName,
+		FirstName:  user.FirstName,
+		Patronymic: user.Patronymic,
+		Email:      user.Email,
+	}
+}
+
+type TestResponse struct {
+	Count     uint       `json:"count"`
+	Title     string     `json:"title"`
+	Questions []question `json:"questions"`
+}
+
+type question struct {
+	ID           uint     `json:"id"`
+	QuestionText string   `json:"question_text"`
+	Answers      []answer `json:"answers"`
+}
+
+type answer struct {
+	ID         uint   `json:"id"`
+	AnswerText string `json:"answer_text"`
+}
+
+func NewTestResponse(test *models.Test, count int) *TestResponse {
+	questionItems := make([]question, 0, len(test.Questions))
+	for _, questionItem := range test.Questions {
+		answerItems := make([]answer, 0, len(questionItem.Answers))
+
+		for _, answerItem := range questionItem.Answers {
+			answerItems = append(answerItems, answer{
+				ID:         answerItem.ID,
+				AnswerText: answerItem.AnswerText,
+			})
+		}
+
+		questionItems = append(questionItems, question{
+			ID:           questionItem.ID,
+			QuestionText: questionItem.QuestionText,
+			Answers:      answerItems,
+		})
+	}
+	return &TestResponse{
+		Count:     uint(count),
+		Title:     test.TestTitle,
+		Questions: questionItems,
+	}
 }

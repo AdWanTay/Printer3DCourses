@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserService, courseService *services.CourseService) {
+func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserService, courseService *services.CourseService, testService *services.TestService) {
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
 		c.Set("Pragma", "no-cache")
@@ -28,11 +28,13 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Patch("/api/auth/change-name", middlewares.RequireAuth(cfg), handlers.ChangeName(userService))
 	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg), handlers.DeleteAccount(userService))
 
+	app.Get("/api/tests/:id", middlewares.RequireAuth(cfg), handlers.GetTests(testService))
+
 	//Роуты для фронта
 	app.Get("/", handlers.IndexPage(cfg, courseService))
 	app.Get("/starter-kit", handlers.StarterKitPage(cfg))
 	app.Get("/profile", middlewares.RequireAuth(cfg), handlers.ProfilePage(cfg, courseService))
-	app.Get("/test/:id", handlers.TestingPage(cfg))
+	app.Get("/test", handlers.TestingPage(cfg))
 	app.Get("/course/:id", handlers.CourseViewPage(cfg))
 	app.Get("/homework", handlers.HomeworkPage(cfg))
 }
