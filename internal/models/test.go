@@ -7,15 +7,15 @@ type Test struct {
 	CourseID uint   `gorm:"not null;OnDelete:CASCADE;"`
 	Course   Course `gorm:"foreignKey:CourseID;references:ID"`
 
-	Question []Question `gorm:"foreignKey:TestID;references:ID"`
+	Questions []Question `gorm:"foreignKey:TestID;references:ID"`
 }
 
 type Question struct {
 	ID           uint   `gorm:"primaryKey"`
 	QuestionText string `gorm:"type:text"`
 
-	TestID uint `gorm:"not null;OnDelete:CASCADE;"`
-	Test   Test `gorm:"foreignKey:TestID;references:ID"`
+	TestID  uint     `gorm:"not null;OnDelete:CASCADE;"`
+	Answers []Answer `gorm:"foreignKey:QuestionID;references:ID"`
 }
 
 type Answer struct {
@@ -23,8 +23,7 @@ type Answer struct {
 	AnswerText string `gorm:"type:text"`
 	IsCorrect  bool   `gorm:"type:boolean"`
 
-	QuestionID uint     `gorm:"not null;OnDelete:CASCADE;"`
-	Question   Question `gorm:"foreignKey:QuestionID;references:ID"`
+	QuestionID uint `gorm:"not null;OnDelete:CASCADE;"`
 }
 
 type TestScore struct {
