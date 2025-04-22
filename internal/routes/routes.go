@@ -23,19 +23,18 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Post("/api/auth/login", handlers.Login(userService, cfg))
 	app.Post("/api/auth/register", handlers.Registration(userService, cfg))
 	app.Get("/api/auth/logout", handlers.Logout())
-	app.Patch("/api/auth/change-email", middlewares.RequireAuth(cfg), handlers.ChangeEmail(userService))
-	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg), handlers.ChangePassword(userService))
-	app.Patch("/api/auth/change-name", middlewares.RequireAuth(cfg), handlers.ChangeName(userService))
-	//TODO change-phone
-	app.Patch("/api/auth/change-phone", middlewares.RequireAuth(cfg), handlers.ChangePhoneNumber(userService))
-	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg), handlers.DeleteAccount(userService))
+	app.Patch("/api/auth/change-email", middlewares.RequireAuth(cfg, false), handlers.ChangeEmail(userService))
+	app.Patch("/api/auth/change-password", middlewares.RequireAuth(cfg, false), handlers.ChangePassword(userService))
+	app.Patch("/api/auth/change-name", middlewares.RequireAuth(cfg, false), handlers.ChangeName(userService))
+	app.Patch("/api/auth/change-phone", middlewares.RequireAuth(cfg, false), handlers.ChangePhoneNumber(userService))
+	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(userService))
 
-	app.Get("/api/tests/:id", middlewares.RequireAuth(cfg), handlers.GetTests(testService))
+	app.Get("/api/tests/:id", middlewares.RequireAuth(cfg, false), handlers.GetTests(testService))
 
 	//Роуты для фронта
-	app.Get("/", handlers.IndexPage(cfg, courseService, userService))
+	app.Get("/", middlewares.RequireAuth(cfg, true), handlers.IndexPage(cfg, courseService, userService))
 	app.Get("/starter-kit", handlers.StarterKitPage(cfg, userService))
-	app.Get("/profile", middlewares.RequireAuth(cfg), handlers.ProfilePage(cfg, courseService, userService))
+	app.Get("/profile", middlewares.RequireAuth(cfg, false), handlers.ProfilePage(cfg, courseService, userService))
 	app.Get("/test", handlers.TestingPage(cfg, userService))
 	app.Get("/course/:id", handlers.CourseViewPage(cfg, userService))
 	app.Get("/homework", handlers.HomeworkPage(cfg, userService))

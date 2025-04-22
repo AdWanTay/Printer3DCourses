@@ -15,10 +15,21 @@ func NewCourseService(repo repositories.CourseRepository, userRepo repositories.
 	return &CourseService{repo: repo, userRepo: userRepo}
 }
 
-func (cr *CourseService) GetCoursesForResponse(c context.Context) (*dto.CoursesPageResponse, error) {
+func (cr *CourseService) GetCoursesForResponse(c context.Context, userId *uint) (*dto.CoursesPageResponse, error) {
 	courses, err := cr.repo.GetAllCourses(c)
+	paidIndexes := make(map[uint]struct{})
 
-	coursesResponse := dto.NewCoursesPageResponse(courses)
+	if userId != nil {
+		paidCourses, err := cr.repo.GetAllPaidCoursesByUserId(c, *userId)
+		if err != nil {
+			return nil, err
+		}
+		for _, course := range *paidCourses {
+			paidIndexes[course.ID] = struct{}{}
+		}
+	}
+
+	coursesResponse := dto.NewCoursesPageResponse(courses, paidIndexes)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +39,6 @@ func (cr *CourseService) GetCoursesForResponse(c context.Context) (*dto.CoursesP
 
 func (cr *CourseService) GetAllPaidCoursesForResponse(c context.Context, userId uint) (*dto.ProfilePageResponse, error) {
 	courses, err := cr.repo.GetAllPaidCoursesByUserId(c, userId)
-
 	user, err := cr.userRepo.GetUserById(c, userId)
 
 	userCoursesResponse := dto.NewProfilePageResponse(courses, user)

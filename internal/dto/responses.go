@@ -13,13 +13,16 @@ type courseResponse struct {
 	NumberOfParticipants string  `json:"number_of_participants"`
 	Duration             int     `json:"duration"`
 	Price                float32 `json:"price"`
+	IsBought             bool    `json:"is_bought" default:"false"`
 }
 
 // NewCoursesPageResponse TODO IsBought: for index page
-func NewCoursesPageResponse(items *[]models.Course) *CoursesPageResponse {
+func NewCoursesPageResponse(items *[]models.Course, paidIndexes map[uint]struct{}) *CoursesPageResponse {
 	coursesPageResponse := CoursesPageResponse{}
 	courseResponses := make([]courseResponse, 0)
 	for _, course := range *items {
+		_, exists := paidIndexes[course.ID]
+
 		courseResponses = append(courseResponses, courseResponse{
 			ID:                   course.ID,
 			CourseTitle:          course.CourseTitle,
@@ -27,6 +30,7 @@ func NewCoursesPageResponse(items *[]models.Course) *CoursesPageResponse {
 			NumberOfParticipants: course.NumberOfParticipants,
 			Duration:             course.Duration,
 			Price:                course.Price,
+			IsBought:             exists,
 		})
 	}
 	coursesPageResponse.Items = courseResponses

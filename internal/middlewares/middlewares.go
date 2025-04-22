@@ -7,20 +7,21 @@ import (
 	"strings"
 )
 
-func RequireAuth(cfg *config.Config) fiber.Handler {
+func RequireAuth(cfg *config.Config, onlyUserId bool) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		tokenString := c.Cookies("token")
-		if tokenString == "" {
+		if tokenString == "" && !onlyUserId {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"errors": "Missing token"})
 		}
 		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 
 		userId, err := utils.ParseAndValidateJWT(tokenString, cfg)
-		if err != nil {
+		if err != nil && !onlyUserId {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"errors": "Invalid token"})
 		}
-
-		c.Locals("userId", userId)
+		if err == nil {
+			c.Locals("userId", userId)
+		}
 		return c.Next()
 	}
 }

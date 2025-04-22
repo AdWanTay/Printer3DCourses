@@ -43,7 +43,7 @@
             <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч</div>
             <div class="price">{{ printf "%.0f" .Price }} ₽</div>
             <div class="courses-buttons">
-                <button class="about-btn primary-btn" onclick="openAboutModal({{ .ID }})">Подробнее</button>
+                <button class="about-btn primary-btn" onclick="openAboutModal({{ .ID }})">Подробнее {{ .IsBought}}</button>
                 {{if $.isAuthenticated}}
                     <button class="buy-btn outline-btn">Купить</button>
                 {{else}}

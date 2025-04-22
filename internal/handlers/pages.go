@@ -26,7 +26,14 @@ func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config, u
 
 func IndexPage(cfg *config.Config, courseService *services.CourseService, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		response, err := courseService.GetCoursesForResponse(c.Context())
+
+		//userId, ok := c.Locals("userId").(uint)
+
+		var userIdPointer *uint
+		if userId, ok := c.Locals("userId").(uint); ok {
+			userIdPointer = &userId
+		}
+		response, err := courseService.GetCoursesForResponse(c.Context(), userIdPointer)
 		if err != nil {
 			return err
 		}
