@@ -46,13 +46,13 @@
         <div class="course-card">
             <h3>{{ .CourseTitle }}</h3>
             <div class="description">{{ .ShortDescription }}</div>
-            <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч</div>
+            <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч · Автор: {{ "Тут Ильнур добавит в запрос автора" }}</div>
             <div class="price">{{ printf "%.0f" .Price }} ₽</div>
             <div class="courses-buttons">
                 {{if .IsBought}}
                     <a class="redirect-btn accent-btn" href="/course/{{ .ID }}">Перейти</a>
                 {{else}}
-                    <button class="about-btn primary-btn" onclick="openAboutModal({{.FullDescription}})">
+                    <button class="about-btn primary-btn" onclick="openAboutModal({{"Тут автор"}}, {{.FullDescription}})">
                         Подробнее
                     </button>
                     {{if $.isAuthenticated}}
