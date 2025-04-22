@@ -8,4 +8,6 @@ type Course struct {
 	Duration             int     `gorm:"not null"`
 	LatexPath            string  `gorm:"unique" json:"latex_path"`
 	Price                float32 `gorm:"unique"`
+	AuthorName           string  `gorm:"not null" json:"author_name"`
+	AuthorTgUsername     string  `gorm:"not null" json:"author_tg_username"`
 }

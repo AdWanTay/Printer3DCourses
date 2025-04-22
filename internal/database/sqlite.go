@@ -53,46 +53,58 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 }
 
 func populateDB(db *gorm.DB) error {
+	authorName := "Полное Имя Автора"
+	authorTgUsername := "@kizzzzzaaaaa"
 	courses := []models.Course{
 		{
 			CourseTitle:          "Основы 3D-печати: старт для новичков",
 			CourseDescription:    "Описание 1",
-			NumberOfParticipants: "1200",
+			NumberOfParticipants: "150",
 			Duration:             40,
 			LatexPath:            "course1",
 			Price:                2900,
+			AuthorName:           authorName,
+			AuthorTgUsername:     authorTgUsername,
 		},
 		{
 			CourseTitle:          "3D-моделирование для печати в Blender",
 			CourseDescription:    "Описание 2",
-			NumberOfParticipants: "800",
+			NumberOfParticipants: "423",
 			Duration:             35,
 			LatexPath:            "course2",
 			Price:                3200,
+			AuthorName:           authorName,
+			AuthorTgUsername:     authorTgUsername,
 		},
 		{
 			CourseTitle:          "Печать прототипов: от модели до изделия",
 			CourseDescription:    "Описание 3",
-			NumberOfParticipants: "1100",
+			NumberOfParticipants: "93",
 			Duration:             50,
 			LatexPath:            "course3",
 			Price:                3500,
+			AuthorName:           authorName,
+			AuthorTgUsername:     authorTgUsername,
 		},
 		{
 			CourseTitle:          "Настройка и калибровка 3D-принтера",
 			CourseDescription:    "Описание 4",
-			NumberOfParticipants: "600",
+			NumberOfParticipants: "45",
 			Duration:             30,
 			LatexPath:            "course4",
 			Price:                2700,
+			AuthorName:           authorName,
+			AuthorTgUsername:     authorTgUsername,
 		},
 		{
 			CourseTitle:          "Продвинутый курс по SLA и FDM технологиям",
 			CourseDescription:    "Описание 5",
-			NumberOfParticipants: "950",
+			NumberOfParticipants: "892",
 			Duration:             45,
 			LatexPath:            "course5",
 			Price:                4100,
+			AuthorName:           authorName,
+			AuthorTgUsername:     authorTgUsername,
 		},
 	}
 	result := db.Create(&courses)
