@@ -47,7 +47,10 @@
             <h3>{{ .CourseTitle }}</h3>
             <div class="description">{{ .ShortDescription }}</div>
             <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч · Автор: {{ "Тут Ильнур добавит в запрос автора" }}</div>
-            <div class="price">{{ printf "%.0f" .Price }} ₽</div>
+
+            {{if not .IsBought}}
+                <div class="price">{{ printf "%.0f" .Price }} ₽</div>
+            {{end}}
             <div class="courses-buttons">
                 {{if .IsBought}}
                     <a class="redirect-btn accent-btn" href="/course/{{ .ID }}">Перейти</a>

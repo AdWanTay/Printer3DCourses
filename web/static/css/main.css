@@ -244,7 +244,7 @@ h1 {
 
 .redirect-btn {
     text-align: center;
-    margin-left: auto;
+    /*margin-left: auto;*/
     width: 35%;
     font-size: .875rem;
 }
@@ -254,6 +254,8 @@ h1 {
 }
 
 .course-card .buy-btn {
+    text-align: center;
+    font-size: .875rem;
     flex: 1;
 }
 
