@@ -32,7 +32,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Get("/", handlers.IndexPage(cfg, courseService))
 	app.Get("/starter-kit", handlers.StarterKitPage(cfg))
 	app.Get("/profile", middlewares.RequireAuth(cfg), handlers.ProfilePage(cfg, courseService))
-	app.Get("/test", handlers.TestingPage(cfg))
+	app.Get("/test/:id", handlers.TestingPage(cfg))
 	app.Get("/course/:id", handlers.CourseViewPage(cfg))
 	app.Get("/homework", handlers.HomeworkPage(cfg))
 }
