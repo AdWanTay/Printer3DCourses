@@ -30,31 +30,6 @@
     border-bottom: 2px dashed #0055ff;
 }
 
-.modal-content input[type="text"],
-.modal-content input[type="email"],
-.modal-content input[type="tel"],
-.modal-content input[type="password"] {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.checkbox-label input {
-    border: 1px solid #999999;
-    margin: 0 .8rem 0 .5rem;
-    scale: 2;
-}
 
 .submit-btn {
     width: 100%;
