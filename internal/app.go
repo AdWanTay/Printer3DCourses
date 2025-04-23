@@ -12,11 +12,7 @@ import (
 	"strings"
 )
 
-func App() error {
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		return fmt.Errorf("get config: %w", err)
-	}
+func App(cfg *config.Config) error {
 
 	db, err := database.GetConnection(cfg.Database)
 	if err != nil {

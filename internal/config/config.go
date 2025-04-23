@@ -13,10 +13,18 @@ type DatabaseConfig struct {
 	Password string `envconfig:"DB_PASSWORD"`
 	Name     string `envconfig:"DB_NAME"`
 }
+
+type BotConfig struct {
+	Token   string `envconfig:"BOT_TOKEN"`
+	AdminId int64  `envconfig:"BOT_ADMIN_ID"`
+}
 type Config struct {
 	JWTSecret string `envconfig:"JWT_SECRET" required:"true"`
 	Port      string `envconfig:"PORT" default:"8080"`
-	Database  DatabaseConfig
+
+	Database DatabaseConfig
+
+	Bot BotConfig
 }
 
 func LoadConfig() (*Config, error) {

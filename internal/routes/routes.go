@@ -31,6 +31,8 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 
 	app.Get("/api/tests/:id", middlewares.RequireAuth(cfg, false), handlers.GetTests(testService))
 
+	app.Post("/api/starter-kit/request", middlewares.RequireAuth(cfg, true), handlers.StarterKitRequest(cfg))
+
 	//Роуты для фронта
 	app.Get("/", middlewares.RequireAuth(cfg, true), handlers.IndexPage(cfg, courseService, userService))
 	app.Get("/starter-kit", handlers.StarterKitPage(cfg, userService))

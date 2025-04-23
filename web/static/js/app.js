@@ -270,14 +270,14 @@ const modalConfigs = {
             }
 
             try {
-                const response = await fetch('/api/', {
-                    method: 'PATCH',
+                const response = await fetch('/api/starter-kit/request', {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                     body: JSON.stringify({
-
+                        email:"adsas"
                     })
                 });
 

@@ -35,7 +35,7 @@ func (t *testRepository) GetCourseProgressForUser(courseId, userId uint) (int, e
 	}
 
 	if totalTests == 0 {
-		return 1, nil // если у курса нет тестов, прогресс — 0
+		return 0, nil // если у курса нет тестов, прогресс — 0
 	}
 
 	var passedScores []models.TestScore
