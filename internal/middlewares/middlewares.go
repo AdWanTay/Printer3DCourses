@@ -11,13 +11,13 @@ func RequireAuth(cfg *config.Config, onlyUserId bool) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		tokenString := c.Cookies("token")
 		if tokenString == "" && !onlyUserId {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"errors": "Missing token"})
+			return fiber.NewError(fiber.StatusUnauthorized, "Missing token")
 		}
 		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 
 		userId, err := utils.ParseAndValidateJWT(tokenString, cfg)
 		if err != nil && !onlyUserId {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"errors": "Invalid token"})
+			return fiber.NewError(fiber.StatusUnauthorized, "Invalid token")
 		}
 		if err == nil {
 			c.Locals("userId", userId)

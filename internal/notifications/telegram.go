@@ -7,8 +7,11 @@ import (
 	tele "gopkg.in/telebot.v4"
 )
 
-func HandleUserSubmission(cfg *config.Config) {
-	text := fmt.Sprintf("🔔 Новый пользователь:\n👤 %s %s\n📧 %s", "", "", "")
+func HandleUserSubmission(cfg *config.Config, name, email, phoneNumber string) {
+	text := fmt.Sprintf("🔔 Новая заявка на покупку стартового набора:\n👤 %s %s\n📧 %s", name, email, phoneNumber)
 	adminId := cfg.Bot.AdminId
-	bot.Bot.Send(tele.ChatID(adminId), text)
+	_, err := bot.Bot.Send(tele.ChatID(adminId), text)
+	if err != nil {
+		return
+	}
 }

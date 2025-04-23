@@ -13,3 +13,9 @@ type LoginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+type StarterKitRequest struct {
+	Email       string `json:"email"`
+	FullName    string `json:"full_name"`
+	PhoneNumber string `json:"phone_number"`
+}

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"Printer3DCourses/internal/config"
+	"Printer3DCourses/internal/dto"
 	"Printer3DCourses/internal/services"
 	"Printer3DCourses/internal/utils"
 	"github.com/gofiber/fiber/v2"
@@ -43,7 +44,12 @@ func IndexPage(cfg *config.Config, courseService *services.CourseService, userSe
 }
 func StarterKitPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "starter-kit", nil, cfg, userService)
+		userId, ok := c.Locals("userId").(uint)
+		if ok {
+			response, _ := userService.GetUserInfoForStarterKitModal(c.Context(), userId)
+			return Render(c, "starter-kit", fiber.Map{"response": response}, cfg, userService)
+		}
+		return Render(c, "starter-kit", fiber.Map{"response": dto.StarterKitModalResponse{}}, cfg, userService)
 	}
 }
 func ProfilePage(cfg *config.Config, courseService *services.CourseService, userService *services.UserService) fiber.Handler {

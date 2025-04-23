@@ -58,7 +58,7 @@
 
 
     {{ range .response.Tests }}
-        <div class="test-card">
+        <div class="test-card" onclick="location.href = '/test/{{ .ID }}'">
             <p class="test-name">Тест №{{ .Index }} {{ .TestTitle }}</p>
             <p class="test-status passed">Пройден</p>
             <p class="test-status passed">Прогресс: {{ .TestProgress}} %</p>

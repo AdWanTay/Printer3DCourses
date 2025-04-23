@@ -37,7 +37,7 @@
                     <h3>{{ .CourseTitle }}</h3>
                     <div class="description">{{ .CourseDescription }}</div>
                     <div class="courses-buttons">
-                        <span class="course-progress">Прогресс: {{ printf "%.0f" .Progress }}%</span>
+                        <span class="course-progress">Прогресс: {{ .Progress }}%</span>
                         <a href="/course/{{ .ID }}" class="buy-btn accent-btn">Продолжить</a>
                     </div>
                 </div>

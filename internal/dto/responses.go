@@ -53,13 +53,13 @@ type ProfilePageResponse struct {
 }
 
 type userCourseResponse struct {
-	ID                uint    `json:"id"`
-	CourseTitle       string  `json:"course_title"`
-	CourseDescription string  `json:"course_description"`
-	Progress          float32 `json:"progress"`
+	ID                uint   `json:"id"`
+	CourseTitle       string `json:"course_title"`
+	CourseDescription string `json:"course_description"`
+	Progress          int    `json:"progress"`
 }
 
-func NewProfilePageResponse(userCourses *[]models.Course, user *models.User) *ProfilePageResponse {
+func NewProfilePageResponse(userCourses *[]models.Course, user *models.User, progressMap map[uint]int) *ProfilePageResponse {
 	items := make([]userCourseResponse, 0, len(*userCourses))
 
 	for _, course := range *userCourses {
@@ -67,7 +67,7 @@ func NewProfilePageResponse(userCourses *[]models.Course, user *models.User) *Pr
 			ID:                course.ID,
 			CourseTitle:       course.CourseTitle,
 			CourseDescription: course.ShortDescription,
-			Progress:          80.0, // можно потом динамически передавать
+			Progress:          progressMap[course.ID],
 		})
 	}
 
@@ -155,4 +155,10 @@ func NewCourseViewPageResponse(course *models.Course, courseProgress int, tests 
 		CourseProgress: courseProgress,
 		Tests:          items,
 	}
+}
+
+type StarterKitModalResponse struct {
+	FullName    string `json:"full_name"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phone_number"`
 }

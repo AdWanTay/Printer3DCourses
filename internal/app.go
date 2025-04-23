@@ -35,7 +35,27 @@ func App(cfg *config.Config) error {
 		return strings.Split(s, sep)
 	})
 
-	app := fiber.New(fiber.Config{Views: engine})
+	app := fiber.New(fiber.Config{
+		Views: engine,
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			code := fiber.StatusInternalServerError
+
+			if e, ok := err.(*fiber.Error); ok {
+				code = e.Code
+			}
+
+			switch code {
+			case fiber.StatusUnauthorized:
+				return c.Status(code).Render("errors/401", fiber.Map{})
+			case fiber.StatusNotFound:
+				return c.Status(code).Render("errors/404", fiber.Map{})
+			default:
+				return c.Status(code).Render("errors/500", fiber.Map{
+					"error": err.Error(),
+				})
+			}
+		},
+	})
 
 	routes.SetupRoutes(app, cfg, userService, courseService, testService)
 	err = app.Listen(":" + cfg.Port)

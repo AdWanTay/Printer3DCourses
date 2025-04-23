@@ -48,8 +48,11 @@ func (cr *CourseService) GetAllPaidCoursesForResponse(c context.Context, userId 
 	if err != nil {
 		return nil, err
 	}
-
-	userCoursesResponse := dto.NewProfilePageResponse(courses, user)
+	progresses, err := cr.repo.GetCoursesProgress(c, userId)
+	if err != nil {
+		return nil, err
+	}
+	userCoursesResponse := dto.NewProfilePageResponse(courses, user, progresses)
 
 	return userCoursesResponse, nil
 }

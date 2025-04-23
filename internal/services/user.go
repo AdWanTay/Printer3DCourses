@@ -127,3 +127,16 @@ func (s *UserService) GetFirstNameAndLastName(c context.Context, userID uint) (s
 
 	return user.FirstName, user.LastName, nil
 }
+
+func (s *UserService) GetUserInfoForStarterKitModal(c context.Context, userID uint) (*dto.StarterKitModalResponse, error) {
+	user, err := s.repo.GetUserById(c, userID)
+	if err != nil {
+		return nil, err
+	}
+	response := dto.StarterKitModalResponse{
+		FullName:    user.LastName + " " + user.FirstName + " " + user.Patronymic,
+		PhoneNumber: user.PhoneNumber,
+		Email:       user.Email,
+	}
+	return &response, nil
+}

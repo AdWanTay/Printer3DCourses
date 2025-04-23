@@ -42,7 +42,7 @@ function openPurchaseModal(title) {
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
             if (title != undefined)
-                document.querySelector('.purchase-modal .course-title').innerHTML = "«"+title+"»";
+                document.querySelector('.purchase-modal .course-title').innerHTML = "«" + title + "»";
 
             setTimeout(() => {
                 showNotify("Успех", "Оплата прошла успешно! Страница будет перезагружена");
@@ -73,7 +73,7 @@ function openAboutModal(title, author, fullDescription) {
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
             document.querySelector(".course-title").innerHTML = title;
-            document.querySelector(".course-description").innerHTML = "<p>"+fullDescription+"</p>"
+            document.querySelector(".course-description").innerHTML = "<p>" + fullDescription + "</p>"
             document.querySelector(".course-category").innerHTML = "Автор курса: " + author;
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
@@ -126,7 +126,6 @@ function addAuthListener(type, modalContainer) {
         registerForm.addEventListener('submit', registerHandler);
     }
 }
-
 
 
 function login(modalContainer) {
@@ -238,7 +237,8 @@ function openModal(config) {
         input.addEventListener("input", mask, false);
         input.addEventListener("focus", mask, false);
         input.addEventListener("blur", mask, false);
-    } catch { }
+    } catch {
+    }
 }
 
 // Конфигурации для разных модальных окон
@@ -254,12 +254,12 @@ const modalConfigs = {
         `,
         description: "ⓘ Необходимо ввести свои данные без ошибок",
         mainBtnText: "Готово",
-        mainBtnAction: async function() {
+        mainBtnAction: async function () {
             const email = document.getElementById('email1').value;
-            const fio = document.getElementById('fio').value;
-            const tel = document.getElementById('tel1').value;
+            const fullName = document.getElementById('fio').value;
+            const phoneNumber = document.getElementById('tel1').value;
 
-            if (!email || !fio || ! tel) {
+            if (!email || !fullName || !phoneNumber) {
                 showErr("Все поля должны быть заполнены");
                 return;
             }
@@ -277,7 +277,9 @@ const modalConfigs = {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                     body: JSON.stringify({
-                        email:"adsas"
+                        email: email,
+                        full_name: fullName,
+                        phone_number: phoneNumber
                     })
                 });
 
@@ -305,7 +307,7 @@ const modalConfigs = {
         `,
         description: "ⓘ Необходимо ввести новый адрес без ошибок",
         mainBtnText: "Сохранить",
-        mainBtnAction: async function() {
+        mainBtnAction: async function () {
             const newEmail = document.getElementById('newEmail').value;
 
             if (!newEmail) {
@@ -355,7 +357,7 @@ const modalConfigs = {
         `,
         description: "ⓘ Пароль должен содержать не менее 8 символов",
         mainBtnText: "Сохранить",
-        mainBtnAction: async function() {
+        mainBtnAction: async function () {
             const newPassword = document.getElementById('newPassword').value;
             const repeatNewPassword = document.getElementById('repeatNewPassword').value;
 
@@ -408,7 +410,7 @@ const modalConfigs = {
         `,
         description: "ⓘ Укажите ваши реальные фамилию, имя и отчество",
         mainBtnText: "Сохранить",
-        mainBtnAction: async function() {
+        mainBtnAction: async function () {
             const lastName = document.getElementById('newLastName').value;
             const firstName = document.getElementById('newFirstName').value;
             const patronymic = document.getElementById('newPatronymic').value;
@@ -456,7 +458,7 @@ const modalConfigs = {
         `,
         description: "ⓘ Необходимо ввести корректный номер телефона",
         mainBtnText: "Сохранить",
-        mainBtnAction: async function() {
+        mainBtnAction: async function () {
             const newPhoneNumber = document.getElementById('newPhoneNumber').value;
 
             if (!newPhoneNumber) {
@@ -499,7 +501,7 @@ const modalConfigs = {
         `,
         description: "ⓘ Это действие необратимо. Все ваши данные будут удалены.",
         mainBtnText: "Удалить аккаунт",
-        mainBtnAction: async function() {
+        mainBtnAction: async function () {
             const confirmation = document.getElementById('deleteConfirmation').value;
 
             if (confirmation !== 'УДАЛИТЬ') {
