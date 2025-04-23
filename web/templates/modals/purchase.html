@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="modal">
+    <div class="modal-content purchase-modal">
+        <span class="modal-close" onclick="this.closest('.modal').remove()">✖</span>
 
-</body>
-</html>
+        <h1 class="purchase-title">Оплата курса</h1>
+        <p class="course-title"></p>
+        <p class="purchase-description">Отсканируйте QR-код или перейдите по ссылке для оплаты</p>
+
+        <div class="qr-code-container">
+            <img
+                    src="/web/static/img/qr-purchase.png"
+                    alt="QR-код для оплаты"
+                    class="qr-code"
+            >
+            <a href="https://securepayments.tinkoff.ru/jrLkWSSb" class="" target="_blank">
+                https://securepayments.tinkoff.ru/jrLkWSSb
+            </a>
+        </div>
+
+        <div id="success"></div>
+
+        <div class="payment-link-container">
+            <a href="https://securepayments.tinkoff.ru/jrLkWSSb" class="payment-link" target="_blank">
+                <span class="flare"></span>Перейти к оплате
+            </a>
+        </div>
+    </div>
+</div>

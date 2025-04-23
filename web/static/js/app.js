@@ -33,13 +33,43 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function openAboutModal(author, fullDescription) {
+function openPurchaseModal(title) {
+    // document.querySelector('.modal').remove();
+    fetch("/web/templates/modals/purchase.html")
+        .then((res) => res.text())
+        .then((html) => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+            if (title != undefined)
+                document.querySelector('.purchase-modal .course-title').innerHTML = "«"+title+"»";
+
+            setTimeout(() => {
+                showNotify("Успех", "Оплата прошла успешно! Страница будет перезагружена");
+                document.querySelector('.qr-code-container').style.display = 'none';
+                document.querySelector('.purchase-description').style.display = 'none';
+
+                const animation = lottie.loadAnimation({
+                    container: document.getElementById('success'),
+                    renderer: 'svg',
+                    path: '/web/static/js/success.json'
+                });
+                animation.play();
+            }, 6100);
+            setTimeout(() => {
+                window.location.reload();
+            }, 13500);
+        });
+}
+
+function openAboutModal(title, author, fullDescription) {
     fetch("/web/templates/modals/about-course.html")
         .then((res) => res.text())
         .then((html) => {
             const modalContainer = document.createElement("div");
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
+            document.querySelector(".course-title").innerHTML = title;
             document.querySelector(".course-description").innerHTML = "<p>"+fullDescription+"</p>"
             document.querySelector(".course-category").innerHTML = "Автор курса: " + author;
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
