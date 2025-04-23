@@ -243,6 +243,59 @@ function openModal(config) {
 
 // Конфигурации для разных модальных окон
 const modalConfigs = {
+    orderKit: {
+        title: "Оставить заявку",
+        body: `
+            <form id="submitForm" autocomplete="off">
+                <input id="fio" type="text" id="name" autocomplete="off" placeholder="ФИО" required>
+                <input id="email1" type="email" id="newEmail" autocomplete="off" placeholder="Почта" required>
+                <input id="tel1" type="tel" id="email" autocomplete="off" placeholder="Телефон" required>
+            </form>
+        `,
+        description: "ⓘ Необходимо ввести свои данные без ошибок",
+        mainBtnText: "Готово",
+        mainBtnAction: async function() {
+            const email = document.getElementById('email1').value;
+            const fio = document.getElementById('fio').value;
+            const tel = document.getElementById('tel1').value;
+
+            if (!email || !fio || ! tel) {
+                showErr("Все поля должны быть заполнены");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showErr("Введен некорректный адрес электронной почты");
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || "Не удалось");
+                }
+
+                showNotify("Успех", "Страница будет перезагружена");
+                this.closest('.modal').remove();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3100);
+            } catch (error) {
+                showErr(error.message);
+            }
+        }
+    },
     emailEdit: {
         title: "Изменение почты",
         body: `

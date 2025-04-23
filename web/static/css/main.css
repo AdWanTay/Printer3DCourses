@@ -634,6 +634,11 @@ footer {
     }
 }
 
+
+.kit-title {
+    margin: 0;
+}
+
 .success-container {
     width: 100%;
 }
@@ -652,4 +657,118 @@ footer {
 .success-container video {
     width: 100%;
     height: 50%;
+}
+
+.tab-container {
+}
+
+.tab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid #999999;
+}
+
+.tab > input[type="radio"] {
+    display: none;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#tab-btn-1:checked~#content-1,
+#tab-btn-2:checked~#content-2,
+#tab-btn-3:checked~#content-3 {
+    display: block;
+}
+
+.tab > label {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    cursor: pointer;
+    transition: color .15s ease-in-out, border-color .15s ease-in-out;
+    color: #0d6efd;
+    background: 0 0;
+    border-bottom: 0.125rem solid transparent;
+}
+
+.tab > label:hover {
+    border-bottom-color: #0d6efd;
+}
+
+.tab > input[type="radio"]:checked + label {
+    cursor: default;
+    font-weight: bold;
+    color: #212529;
+    border-bottom-color: #212529;
+}
+
+.payment-delivery {
+    width: 100%;
+    background-color: #f8f9fb;
+    padding: 60px 0;
+    font-family: Arial, sans-serif;
+}
+
+.payment-delivery .container {
+    margin: 0 auto;
+}
+
+.payment-delivery h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+    color: #222;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.feature {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.icon {
+    font-size: 36px;
+    color: #f59e0b;
+    margin-bottom: 10px;
+}
+
+.feature h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #111827;
+}
+
+.feature p {
+    font-size: 14px;
+    color: #374151;
+}
+
+.starter-kit {
+    display: flex;
+    gap: 4rem;
+    margin: 3rem 0;
+}
+
+#buyStarterKit {
+    margin-top: 2rem;
+}
+
+#content-1 {
+    line-height: 1.5;
 }
