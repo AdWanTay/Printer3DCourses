@@ -15,6 +15,8 @@ type courseResponse struct {
 	Duration             int     `json:"duration"`
 	Price                float32 `json:"price"`
 	IsBought             bool    `json:"is_bought" default:"false"`
+	AuthorName           string  `json:"author_name"`
+	AuthorTgUsername     string  `json:"author_tg_username"`
 }
 
 func NewCoursesPageResponse(items *[]models.Course, paidIndexes map[uint]struct{}) *CoursesPageResponse {
@@ -32,6 +34,8 @@ func NewCoursesPageResponse(items *[]models.Course, paidIndexes map[uint]struct{
 			Duration:             course.Duration,
 			Price:                course.Price,
 			IsBought:             exists,
+			AuthorName:           course.AuthorName,
+			AuthorTgUsername:     course.AuthorTgUsername,
 		})
 	}
 	coursesPageResponse.Items = courseResponses

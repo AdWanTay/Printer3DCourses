@@ -46,7 +46,7 @@
         <div class="course-card">
             <h3>{{ .CourseTitle }}</h3>
             <div class="description">{{ .ShortDescription }}</div>
-            <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч · Автор: {{ "Тут Ильнур добавит в запрос автора" }}</div>
+            <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч · Автор: {{ .AuthorName }}</div>
 
             {{if not .IsBought}}
                 <div class="price">{{ printf "%.0f" .Price }} ₽</div>
