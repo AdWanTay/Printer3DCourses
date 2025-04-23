@@ -210,9 +210,9 @@ h1 {
 }
 
 .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    grid-gap: 1rem;
+    display: flex;
+
+    gap: 1rem;
 }
 
 .course-card {
@@ -547,7 +547,7 @@ footer {
     }
     .courses-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -579,9 +579,6 @@ footer {
     footer {
         padding: 5rem;
     }
-    .courses-grid {
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    }
 }
 
 /* Extra large (xl) – устройства от 1200px */
@@ -601,9 +598,6 @@ footer {
     footer {
         padding: 4rem 5rem;
     }
-    .courses-grid {
-        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-    }
 }
 
 /* Extra extra large (xxl) – устройства от 1400px */
@@ -618,22 +612,25 @@ footer {
         padding: 4rem 8rem;
     }
     .courses-grid {
-        grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 1600px) {
-    .courses-grid {
-        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-    }
+
 }
 
 @media (min-width: 1920px) {
     .image {
         width: 25%;
     }
+    #courses .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+    #bought-courses .courses-grid {
+        grid-template-columns: repeat(5, minmax(500px, 1fr));
+    }
 }
-
 
 .kit-title {
     margin: 0;
