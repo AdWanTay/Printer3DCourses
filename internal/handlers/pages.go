@@ -5,6 +5,7 @@ import (
 	"Printer3DCourses/internal/services"
 	"Printer3DCourses/internal/utils"
 	"github.com/gofiber/fiber/v2"
+	"strconv"
 )
 
 func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config, userService *services.UserService) error {
@@ -26,9 +27,6 @@ func Render(c *fiber.Ctx, template string, data fiber.Map, cfg *config.Config, u
 
 func IndexPage(cfg *config.Config, courseService *services.CourseService, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-
-		//userId, ok := c.Locals("userId").(uint)
-
 		var userIdPointer *uint
 		if userId, ok := c.Locals("userId").(uint); ok {
 			userIdPointer = &userId
@@ -63,9 +61,17 @@ func TestingPage(cfg *config.Config, userService *services.UserService) fiber.Ha
 		return Render(c, "test/test", nil, cfg, userService)
 	}
 }
-func CourseViewPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
+func CourseViewPage(cfg *config.Config, userService *services.UserService, courseService *services.CourseService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return Render(c, "course-view", nil, cfg, userService)
+		userId := c.Locals("userId").(uint)
+		courseId, err := strconv.Atoi(c.Params("id"))
+		if err != nil {
+			return err
+		}
+
+		coursePageResponse, err := courseService.GetCourseDetailInfo(c.Context(), userId, uint(courseId))
+
+		return Render(c, "course-view", fiber.Map{"response": coursePageResponse}, cfg, userService)
 	}
 }
 func HomeworkPage(cfg *config.Config, userService *services.UserService) fiber.Handler {

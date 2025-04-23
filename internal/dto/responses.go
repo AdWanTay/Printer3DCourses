@@ -123,3 +123,36 @@ func NewTestResponse(test *models.Test, count int) *TestResponse {
 		Questions: questionItems,
 	}
 }
+
+type CourseViewPageResponse struct {
+	ID             uint                         `json:"id"`
+	CourseTitle    string                       `json:"course_title"`
+	CourseProgress int                          `json:"course_progress"`
+	Tests          []testCourseViewPageResponse `json:"tests"`
+}
+
+type testCourseViewPageResponse struct {
+	ID           uint   `json:"id"`
+	TestTitle    string `json:"test_title"`
+	TestProgress int    `json:"test_progress"`
+	Index        int    `json:"index"`
+}
+
+func NewCourseViewPageResponse(course *models.Course, courseProgress int, tests *[]models.Test, testProgresses map[uint]int) *CourseViewPageResponse {
+	items := make([]testCourseViewPageResponse, 0, len(*tests))
+	for i, test := range *tests {
+		items = append(items, testCourseViewPageResponse{
+			ID:           test.ID,
+			TestTitle:    test.TestTitle,
+			TestProgress: testProgresses[test.ID],
+			Index:        i + 1,
+		})
+	}
+
+	return &CourseViewPageResponse{
+		ID:             course.ID,
+		CourseTitle:    course.CourseTitle,
+		CourseProgress: courseProgress,
+		Tests:          items,
+	}
+}

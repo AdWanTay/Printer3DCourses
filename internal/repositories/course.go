@@ -9,9 +9,19 @@ import (
 type CourseRepository interface {
 	GetAllCourses(c context.Context) (*[]models.Course, error)
 	GetAllPaidCoursesByUserId(c context.Context, userId uint) (*[]models.Course, error)
+	GetCourseById(c context.Context, id uint) (*models.Course, error)
 }
 type courseRepository struct {
 	db *gorm.DB
+}
+
+func (cr *courseRepository) GetCourseById(c context.Context, id uint) (*models.Course, error) {
+	var course *models.Course
+	err := cr.db.WithContext(c).First(&course, "id = ?", id).Error
+	if err != nil {
+		return nil, err
+	}
+	return course, nil
 }
 
 func (cr *courseRepository) GetAllPaidCoursesByUserId(c context.Context, userId uint) (*[]models.Course, error) {
@@ -33,11 +43,11 @@ func NewCourseRepository(db *gorm.DB) CourseRepository {
 }
 
 func (cr *courseRepository) GetAllCourses(c context.Context) (*[]models.Course, error) {
-	var course []models.Course
-	err := cr.db.WithContext(c).Find(&course).Error
+	var courses []models.Course
+	err := cr.db.WithContext(c).Find(&courses).Error
 	if err != nil {
 		return nil, err
 	}
-	return &course, nil
+	return &courses, nil
 
 }

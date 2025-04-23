@@ -2,60 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{"Название курса"}} | Курсы по 3D-печати</title>
+    <title>{{.response.CourseTitle}} | Курсы по 3D-печати</title>
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/auth.css">
     <link rel="stylesheet" href="/web/static/css/courses.css">
-    <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
+    <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
     <script src="/web/static/js/app.js"></script>
 </head>
 <body>
+
 {{template "header" .}}
 
 <main class="container">
     <div class="course-latex-container">
         <div style="display: flex; justify-content: space-between; align-items: center">
-            <h1 class="course-name">Название курса</h1>
-            <p class="course-progress">Прогресс курса: 11%</p>
+            <h1 class="course-name">{{ .response.CourseTitle}}</h1>
+            <p class="course-progress">Прогресс курса: {{.response.CourseProgress }}%</p>
         </div>
         <div id="course-content">
-            Тута вся информация извлеченная с латех файла
-            <br>
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
-            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <!--            {{if eq .ID 1 }}-->
+            <!--                {{template "header" .}}-->
+            <!--            {{end}}-->
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
+            <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab aperiam assumenda atque expedita fugiat
+            fugit illo in, laborum nam natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.laborum nam
+            natus neque perferendis quam quas, quidem rerum saepe sequi. Odio.
         </div>
     </div>
 
-    <div class="tests-container">
+
+    {{ range .response.Tests }}
         <div class="test-card">
-            <p class="test-name">Тест №1 Название теста</p>
+            <p class="test-name">Тест №{{ .Index }} {{ .TestTitle }}</p>
             <p class="test-status passed">Пройден</p>
+            <p class="test-status passed">Прогресс: {{ .TestProgress}} %</p>
         </div>
-        <div class="test-card">
-            <p class="test-name">Тест №2 Название теста</p>
-            <p class="test-status">Не пройден</p>
-        </div>
-        <div class="test-card">
-            <p class="test-name">Тест №3 Название теста</p>
-            <p class="test-status">Не пройден</p>
-        </div>
-    </div>
+    {{ end }}
     <h1></h1>
 </main>
 

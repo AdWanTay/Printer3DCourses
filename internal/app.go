@@ -26,11 +26,11 @@ func App() error {
 	userRepo := repositories.NewUserRepository(db)
 	userService := services.NewUserService(userRepo)
 
-	courseRepo := repositories.NewCourseRepository(db)
-	courseService := services.NewCourseService(courseRepo, userRepo)
-
 	testRepo := repositories.NewTestRepository(db)
 	testService := services.NewTestService(testRepo)
+
+	courseRepo := repositories.NewCourseRepository(db)
+	courseService := services.NewCourseService(courseRepo, userRepo, testRepo)
 
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)
