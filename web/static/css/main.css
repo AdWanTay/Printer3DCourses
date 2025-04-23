@@ -628,7 +628,7 @@ footer {
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     }
     #bought-courses .courses-grid {
-        grid-template-columns: repeat(5, minmax(500px, 1fr));
+        grid-template-columns: repeat(4, minmax(400px, 1fr));
     }
 }
 
