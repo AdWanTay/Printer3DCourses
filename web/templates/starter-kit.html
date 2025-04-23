@@ -4,16 +4,130 @@
     <meta charset="UTF-8">
     <title>Стартовый набор | Курсы по 3D-печати</title>
     <link rel="stylesheet" href="/web/static/css/main.css">
+    <link rel="stylesheet" href="/web/static/css/elements.css">
     <link rel="stylesheet" href="/web/static/css/auth.css">
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
     <script src="/web/static/js/app.js"></script>
-    <meta http-equiv="refresh" content="3" />
+
+    <style>
+        .subtitle {
+            color: #999999;
+            transform: translateY(4px);
+            border: 1px solid #999999;
+            padding: .5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #22c55e;
+            color: white;
+            padding: 14px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 2em;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #16a34a;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     {{template "header" .}}
 
-    <main>
-        Тута всякая хрень
+    <main class="container">
+        <div style="display: flex; gap: 1rem; align-items: center">
+            <h1 class="kit-title">🚀 Стартовый набор для 3D-принтера</h1>
+            <p class="subtitle">Комплект</p>
+        </div>
+        <div class="starter-kit">
+            <div class="image">
+                <img src="/web/static/img/starter-kit-1.webp" alt="">
+            </div>
+            <div>
+                <h2>Модели принтера</h2>
+                <button onclick="openModal(modalConfigs.orderKit)" id="buyStarterKit" class="btn-huge accent-btn">Оставить заявку</button>
+            </div>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab">
+                <input checked id="tab-btn-1" name="tab-btn" type="radio" value="">
+                <label for="tab-btn-1">Описание</label>
+                <input id="tab-btn-2" name="tab-btn" type="radio" value="">
+                <label for="tab-btn-2">Характеристики</label>
+                <input id="tab-btn-3" name="tab-btn" type="radio" value="">
+                <label for="tab-btn-3">Обзор</label>
+                <div class="tab-content" id="content-1">
+                    <p>
+                        Этот стартовый набор идеально подойдёт тем, кто только начинает путь в 3D-печати. Комплект состоит из 3D-принтера Raise3D DF2 + Raise3D DF Wash + Raise3D DF Cure. С его помощью не нужно думать о дополнительных этапах обработки, ведь все они уже учтены.
+                        Мы упростили запуск до минимума: подключай — и печатай! Поддержка и материалы в комплекте помогут тебе избежать ошибок и насладиться процессом.
+                    </p>
+                    <img style="width: 50%; margin: 1rem 0" src="https://cvetmir3d.ru/upload/resize_cache/webp/upload/medialibrary/097/dqm1p6zq3n0avsxlwv02600ze7hizjfj/Komplekt_3D_printer_Raise3D_DF2_Raise3D_DF_Wash_Raise3D_DF_Cure_11.webp" alt="">
+                    <p>
+                        Состав комплекта:
+                        <ul style="margin: .5rem 0; padding-left: 1rem; color: #0055ff">
+                            <li>3D-принтер Raise3D DF2.</li>
+                            <li>Устройство для очистки моделей Raise3D DF Wash.</li>
+                            <li>Устройство для отверждения моделей Raise3D DF Cure.</li>
+                        </ul>
+
+                        В комплекте Raise3D DF используется технология RFID, позволяющая легко объединять оборудование, программное обеспечение и материалы, обеспечивая пользователям оптимизированный рабочий процесс без необходимости ручного ввода настроек процесса. Это не только экономит время, но и обеспечивает непрерывность рабочего процесса, что очень важно для производства.
+
+                        Raise3D DF2, DF Wash и DF Cure оснащены встроенной RFID-системой и логичным интерфейсом, обеспечивающим более простой и понятный рабочий процесс на всех этапах печати, очистки и отверждения. Это не только упрощает выполнение действий вручную, но и гарантирует, что поставленные задачи по 3D-печати всегда будут выполняться без ошибок.
+
+                        Приобретая комплект 3D-принтер Raise3D DF2 + Raise3D DF Wash + Raise3D DF Cure вы не просто получаете полный набор оборудования для изготовления 3D-изделий, но и экономите свои средства, ведь на стоимость комплект действует отличная скидка.
+                    </p>
+                </div>
+                <div class="tab-content" id="content-2">
+                    Содержимое 2... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique eaque iure debitis nostrum, vero ad totam ratione sequi! Suscipit, labore repellat cum soluta ullam dignissimos perspiciatis sequi rerum sapiente ex.
+                </div>
+                <div class="tab-content" id="content-3">
+                    Содержимое 3... Тут будет рандомное видео.
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-delivery">
+            <div class="container">
+                <h2>Оплата и доставка</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="icon">✈️</div>
+                        <h3>Масштабы доставки</h3>
+                        <p>Доставка во все регионы России и страны Таможенного союза.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">🗺️</div>
+                        <h3>Бесплатная доставка</h3>
+                        <p>При покупке 3D-принтера (кроме наборов для сборки) Вы получаете бесплатную доставку.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">💰</div>
+                        <h3>Наличный расчет</h3>
+                        <p>В нашем магазине вы можете оплатить заказ наличными средствами.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">💳</div>
+                        <h3>Оплата онлайн на сайте</h3>
+                        <p>Вы можете оплачивать заказы банковской картой на сайте нашего интернет-магазина.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button onclick="openModal(modalConfigs.orderKit)" class="accent-btn btn-standard">Оставить заявку</button>
+        </div>
     </main>
 
     {{template "footer" .}}
