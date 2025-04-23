@@ -41,7 +41,7 @@ function openAboutModal(author, fullDescription) {
             modalContainer.innerHTML = html;
             document.body.appendChild(modalContainer);
             document.querySelector(".course-description").innerHTML = "<p>"+fullDescription+"</p>"
-            document.querySelector(".course-category").innerHTML = author;
+            document.querySelector(".course-category").innerHTML = "Автор курса: " + author;
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
                 if (e.target.classList.contains("modal")) {

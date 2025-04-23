@@ -265,6 +265,31 @@ h1 {
     color: #999999;
 }
 
+.course-card .details a {
+    color: inherit;
+    display: inline-flex;
+    gap: .2rem;
+    align-items: center;
+    justify-content: flex-start;
+    transition: color .3s ease-in-out;
+}
+
+.course-card .details a:hover {
+    color: #333333;
+}
+
+.course-card .details a svg {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease-in-out, visibility 0s .2s; /* visibility меняется после opacity */
+}
+
+.course-card .details a:hover svg {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .2s ease-in-out, visibility 0s; /* visibility меняется сразу */
+}
+
 .course-card .price {
     margin-top: 15px;
     font-weight: bold;

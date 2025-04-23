@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
+	"strings"
 )
 
 func App() error {
@@ -33,6 +34,10 @@ func App() error {
 
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)
+
+	engine.AddFunc("split", func(s, sep string) []string {
+		return strings.Split(s, sep)
+	})
 
 	app := fiber.New(fiber.Config{Views: engine})
 
