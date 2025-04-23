@@ -48,6 +48,9 @@ function openPurchaseModal(title) {
                 showNotify("Успех", "Оплата прошла успешно! Страница будет перезагружена");
                 document.querySelector('.qr-code-container').style.display = 'none';
                 document.querySelector('.purchase-description').style.display = 'none';
+                document.querySelector('.payment-link-container').style.display = 'none';
+                document.querySelector('.success-text').style.height = 'auto';
+                document.querySelector('.success-text').style.opacity = 1;
 
                 const animation = lottie.loadAnimation({
                     container: document.getElementById('success'),
