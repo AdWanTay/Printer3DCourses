@@ -23,12 +23,12 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 
 	existingUser, err := s.repo.GetUserByEmail(c, input.Email)
 	if err == nil && existingUser != nil {
-		return nil, fmt.Errorf("user with this email already exists")
+		return nil, fmt.Errorf("Аккаунт с такой почтой уже существует")
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return nil, fmt.Errorf("failed to hash password: %w", err)
+		return nil, fmt.Errorf("Внутренняя ошибка сервера: %w", err)
 	}
 
 	newUser := &models.User{
@@ -45,7 +45,7 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 	if err != nil {
 		var validationErrors validator.ValidationErrors
 		errors.As(err, &validationErrors)
-		errorString := "failed to validate user fields: \n"
+		errorString := "Не удалось согласовать данные пользователя: \n"
 		for _, validationError := range validationErrors {
 			errorString += validationError.Field() + "\n"
 		}
@@ -55,7 +55,7 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 	err = s.repo.CreateUser(c, newUser)
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to create user: %w", err)
+		return nil, fmt.Errorf("Не удалось создать новый аккаунт: %w", err)
 	}
 
 	return newUser, nil
@@ -64,12 +64,12 @@ func (s *UserService) RegisterUser(c context.Context, input dto.RegistrationRequ
 func (s *UserService) LoginUser(c context.Context, input dto.LoginRequest) (*models.User, error) {
 	user, err := s.repo.GetUserByEmail(c, input.Email)
 	if err != nil {
-		return nil, fmt.Errorf("invalid email or password")
+		return nil, fmt.Errorf("Неверная почта или пароль")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password))
 	if err != nil {
-		return nil, fmt.Errorf("invalid email or password")
+		return nil, fmt.Errorf("Неверная почта или пароль")
 	}
 
 	return user, nil
@@ -92,7 +92,7 @@ func (s *UserService) ChangePassword(c context.Context, userID uint, newPassword
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
 	user.Password = string(hashedPassword)
 	if err != nil {
-		return fmt.Errorf("failed to hash password: %w", err)
+		return fmt.Errorf("Внутренняя ошибка сервера: %w", err)
 	}
 	return s.repo.Update(c, user)
 }
