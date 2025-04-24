@@ -19,3 +19,8 @@ type StarterKitRequest struct {
 	FullName    string `json:"full_name"`
 	PhoneNumber string `json:"phone_number"`
 }
+
+type TestAnswersRequest struct {
+	TestId uint          `json:"test_id"`
+	Result map[uint]uint `json:"result"`
+}

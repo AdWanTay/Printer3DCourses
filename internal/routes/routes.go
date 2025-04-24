@@ -30,6 +30,7 @@ func SetupRoutes(app *fiber.App, cfg *config.Config, userService *services.UserS
 	app.Delete("/api/auth/delete-account", middlewares.RequireAuth(cfg, false), handlers.DeleteAccount(userService))
 
 	app.Get("/api/tests/:id", middlewares.RequireAuth(cfg, false), handlers.GetTests(testService))
+	app.Post("/api/tests/send-result", middlewares.RequireAuth(cfg, false), handlers.SaveResult(testService))
 
 	app.Post("/api/starter-kit/request", middlewares.RequireAuth(cfg, true), handlers.StarterKitRequest(cfg))
 

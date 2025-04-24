@@ -28,7 +28,7 @@ type Answer struct {
 
 type TestScore struct {
 	ID    uint64 `gorm:"primaryKey"`
-	Score float64
+	Score float32
 
 	TestID uint `gorm:"not null;OnDelete:CASCADE;"`
 	Test   Test `gorm:"foreignKey:TestID;references:ID"`

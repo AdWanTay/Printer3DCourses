@@ -2,6 +2,8 @@ package repositories
 
 import (
 	"Printer3DCourses/internal/models"
+	"context"
+	"errors"
 	"gorm.io/gorm"
 )
 
@@ -10,6 +12,10 @@ type TestRepository interface {
 	GetTestsByCourseId(courseId uint) (*[]models.Test, error)
 	GetCourseProgressForUser(courseID, userID uint) (int, error)
 	GetTestProgressesForUser(courseId, userId uint) (map[uint]int, error)
+	GetQuestionsWithCorrectAnswers(ctx context.Context, testID uint) (*[]models.Question, error)
+	SaveTestScore(c context.Context, testScore *models.TestScore) error
+	GetTestScoreByUserAndTest(ctx context.Context, userID, testID uint) (*models.TestScore, error)
+	UpdateTestScore(ctx context.Context, score *models.TestScore) error
 }
 
 type testRepository struct {
@@ -86,6 +92,50 @@ func (t *testRepository) GetTestProgressesForUser(courseId, userId uint) (map[ui
 	}
 
 	return testProgresses, nil
+}
+
+func (t *testRepository) GetQuestionsWithCorrectAnswers(ctx context.Context, testID uint) (*[]models.Question, error) {
+	var questions []models.Question
+
+	err := t.db.WithContext(ctx).
+		Preload("Answers", "is_correct = ?", true).
+		Where("test_id = ?", testID).
+		Find(&questions).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	filtered := make([]models.Question, 0)
+	for _, q := range questions {
+		if len(q.Answers) > 0 {
+			filtered = append(filtered, q)
+		}
+	}
+	return &filtered, nil
+}
+
+func (t *testRepository) SaveTestScore(c context.Context, testScore *models.TestScore) error {
+	return t.db.WithContext(c).Create(testScore).Error
+}
+
+func (t *testRepository) GetTestScoreByUserAndTest(ctx context.Context, userID, testID uint) (*models.TestScore, error) {
+	var score models.TestScore
+	err := t.db.WithContext(ctx).
+		Where("user_id = ? AND test_id = ?", userID, testID).
+		First(&score).Error
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, nil // не решал
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &score, nil
+}
+
+func (t *testRepository) UpdateTestScore(ctx context.Context, score *models.TestScore) error {
+	return t.db.WithContext(ctx).Save(score).Error
 }
 
 func NewTestRepository(db *gorm.DB) TestRepository {

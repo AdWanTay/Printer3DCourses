@@ -260,16 +260,19 @@ document.addEventListener('DOMContentLoaded', function() {
         saveCurrentAnswer();
 
         const resultData = {
-            result: testData.questions.map(question => ({
-                question_id: question.id,
-                answers_id: userAnswers[question.id] ? userAnswers[question.id][0] : null
-            }))
+            test_id: parseInt(testId),
+            result: Object.fromEntries(
+                testData.questions.map((question) => [
+                    question.id,
+                    userAnswers[question.id] ? userAnswers[question.id][0] : null
+                ])
+            )
         };
 
         console.log('Submitting results:', resultData);
 
         try {
-            const response = await fetch('/sendresults', {
+            const response = await fetch('/api/tests/send-result', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

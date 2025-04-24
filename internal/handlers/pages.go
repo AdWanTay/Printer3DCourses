@@ -64,6 +64,7 @@ func ProfilePage(cfg *config.Config, courseService *services.CourseService, user
 }
 func TestingPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
 	return func(c *fiber.Ctx) error {
+
 		return Render(c, "test/test", nil, cfg, userService)
 	}
 }

@@ -36,7 +36,7 @@ func (cr *courseRepository) GetCoursesProgress(c context.Context, userId uint) (
 	}
 
 	type progressData struct {
-		total float64
+		total float32
 		count int
 	}
 	courseProgress := make(map[uint]progressData)
@@ -54,7 +54,7 @@ func (cr *courseRepository) GetCoursesProgress(c context.Context, userId uint) (
 		if data.count == 0 {
 			result[courseId] = 0
 		} else {
-			result[courseId] = int(data.total / float64(data.count) * 100)
+			result[courseId] = int(data.total / float32(data.count) * 100)
 		}
 	}
 
