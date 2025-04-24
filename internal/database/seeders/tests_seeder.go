@@ -2,219 +2,136 @@ package seeders
 
 import (
 	"Printer3DCourses/internal/models"
-	"github.com/gofiber/fiber/v2/log"
 	"gorm.io/gorm"
 )
 
 func SeedTestsAndQuestionsForCourse1(db *gorm.DB) error {
-	// Создаем тест 1: «Основы 3D-печати»
+	// Тест 1: Основы 3D-печати
 	test1 := models.Test{
 		ID:        1,
 		TestTitle: "Основы 3D-печати",
-		CourseID:  1, // Предположим, что курс с ID = 1 уже существует
+		CourseID:  1,
 	}
 
-	// Создаем тест 2: «Безопасность при 3D-печати»
+	if err := db.FirstOrCreate(&test1, models.Test{ID: test1.ID}).Error; err != nil {
+		return err
+	}
+
+	questions1 := []models.Question{
+		{ID: 1, QuestionText: "Какой материал чаще всего используется в FDM-печати?", TestID: test1.ID},
+		{ID: 2, QuestionText: "Что означает аббревиатура FDM?", TestID: test1.ID},
+		{ID: 3, QuestionText: "Какой принтер подходит для печати мелкими деталями?", TestID: test1.ID},
+		{ID: 4, QuestionText: "Какая температура платформы для PLA?", TestID: test1.ID},
+		{ID: 5, QuestionText: "Что делает слайсер?", TestID: test1.ID},
+		{ID: 6, QuestionText: "Какой материал токсичен при печати?", TestID: test1.ID},
+		{ID: 7, QuestionText: "Что такое «перекос слоёв»?", TestID: test1.ID},
+		{ID: 8, QuestionText: "Для чего нужна поддержка (supports)?", TestID: test1.ID},
+	}
+
+	for _, q := range questions1 {
+		db.FirstOrCreate(&q, models.Question{ID: q.ID, TestID: test1.ID})
+	}
+
+	answers1 := []models.Answer{
+		{ID: 1, AnswerText: "PLA", IsCorrect: true, QuestionID: 1},
+		{ID: 2, AnswerText: "ABS", IsCorrect: false, QuestionID: 1},
+		{ID: 3, AnswerText: "Нейлон", IsCorrect: false, QuestionID: 1},
+		{ID: 4, AnswerText: "Резина", IsCorrect: false, QuestionID: 1},
+
+		{ID: 5, AnswerText: "Fused Deposition Modeling", IsCorrect: true, QuestionID: 2},
+		{ID: 6, AnswerText: "Flexible Direct Manufacturing", IsCorrect: false, QuestionID: 2},
+		{ID: 7, AnswerText: "Fast Digital Modeling", IsCorrect: false, QuestionID: 2},
+
+		{ID: 8, AnswerText: "FDM", IsCorrect: false, QuestionID: 3},
+		{ID: 9, AnswerText: "SLA", IsCorrect: true, QuestionID: 3},
+		{ID: 10, AnswerText: "SLS", IsCorrect: false, QuestionID: 3},
+
+		{ID: 11, AnswerText: "50–60°C", IsCorrect: true, QuestionID: 4},
+		{ID: 12, AnswerText: "100–120°C", IsCorrect: false, QuestionID: 4},
+		{ID: 13, AnswerText: "Не нужен подогрев", IsCorrect: false, QuestionID: 4},
+
+		{ID: 14, AnswerText: "Конвертирует 3D-модель в инструкции для принтера", IsCorrect: true, QuestionID: 5},
+		{ID: 15, AnswerText: "Рисует 3D-модели", IsCorrect: false, QuestionID: 5},
+		{ID: 16, AnswerText: "Чинит принтеры", IsCorrect: false, QuestionID: 5},
+
+		{ID: 17, AnswerText: "PLA", IsCorrect: false, QuestionID: 6},
+		{ID: 18, AnswerText: "ABS", IsCorrect: true, QuestionID: 6},
+		{ID: 19, AnswerText: "PETG", IsCorrect: false, QuestionID: 6},
+
+		{ID: 20, AnswerText: "Ошибка печати из-за рассинхронизации осей", IsCorrect: true, QuestionID: 7},
+		{ID: 21, AnswerText: "Вид 3D-моделирования", IsCorrect: false, QuestionID: 7},
+		{ID: 22, AnswerText: "Тип принтера", IsCorrect: false, QuestionID: 7},
+
+		{ID: 23, AnswerText: "Чтобы печатать нависающие элементы", IsCorrect: true, QuestionID: 8},
+		{ID: 24, AnswerText: "Для ускорения печати", IsCorrect: false, QuestionID: 8},
+		{ID: 25, AnswerText: "Для украшения модели", IsCorrect: false, QuestionID: 8},
+	}
+
+	for _, ans := range answers1 {
+		db.FirstOrCreate(&ans, models.Answer{ID: ans.ID, QuestionID: ans.QuestionID})
+	}
+
+	// Тест 2: Безопасность при 3D-печати
 	test2 := models.Test{
 		ID:        2,
 		TestTitle: "Безопасность при 3D-печати",
-		CourseID:  1, // Предположим, что курс с ID = 1 уже существует
+		CourseID:  1,
 	}
 
-	// Добавляем тесты в базу данных
-	if err := db.FirstOrCreate(&test1).Error; err != nil {
-		log.Fatal("Ошибка при создании теста 1: ", err)
-		return err
-	}
-	if err := db.FirstOrCreate(&test2).Error; err != nil {
-		log.Fatal("Ошибка при создании теста 2: ", err)
+	if err := db.FirstOrCreate(&test2, models.Test{ID: test2.ID}).Error; err != nil {
 		return err
 	}
 
-	// Вопросы и ответы для теста 1: «Основы 3D-печати»
-	questionsTest1 := []models.Question{
-		{
-			ID:           1,
-			QuestionText: "Какой материал чаще всего используется в FDM-печати?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 1, AnswerText: "PLA", IsCorrect: true, QuestionID: 1},
-				{ID: 2, AnswerText: "ABS", IsCorrect: false, QuestionID: 1},
-				{ID: 3, AnswerText: "Нейлон", IsCorrect: false, QuestionID: 1},
-				{ID: 4, AnswerText: "Резина", IsCorrect: false, QuestionID: 1},
-			},
-		},
-		{
-			ID:           2,
-			QuestionText: "Что означает аббревиатура FDM?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 5, AnswerText: "Fused Deposition Modeling", IsCorrect: true, QuestionID: 2},
-				{ID: 6, AnswerText: "Flexible Direct Manufacturing", IsCorrect: false, QuestionID: 2},
-				{ID: 7, AnswerText: "Fast Digital Modeling", IsCorrect: false, QuestionID: 2},
-			},
-		},
-		{
-			ID:           3,
-			QuestionText: "Какой принтер подходит для печати мелкими деталями?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 8, AnswerText: "FDM", IsCorrect: false, QuestionID: 3},
-				{ID: 9, AnswerText: "SLA", IsCorrect: true, QuestionID: 3},
-				{ID: 10, AnswerText: "SLS", IsCorrect: false, QuestionID: 3},
-			},
-		},
-		{
-			ID:           4,
-			QuestionText: "Какая температура платформы для PLA?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 11, AnswerText: "50–60°C", IsCorrect: true, QuestionID: 4},
-				{ID: 12, AnswerText: "100–120°C", IsCorrect: false, QuestionID: 4},
-				{ID: 13, AnswerText: "Не нужен подогрев", IsCorrect: false, QuestionID: 4},
-			},
-		},
-		{
-			ID:           5,
-			QuestionText: "Что делает слайсер?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 14, AnswerText: "Конвертирует 3D-модель в инструкции для принтера", IsCorrect: true, QuestionID: 5},
-				{ID: 15, AnswerText: "Рисует 3D-модели", IsCorrect: false, QuestionID: 5},
-				{ID: 16, AnswerText: "Чинит принтеры", IsCorrect: false, QuestionID: 5},
-			},
-		},
-		{
-			ID:           6,
-			QuestionText: "Какой материал токсичен при печати?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 17, AnswerText: "PLA", IsCorrect: false, QuestionID: 6},
-				{ID: 18, AnswerText: "ABS", IsCorrect: true, QuestionID: 6},
-				{ID: 19, AnswerText: "PETG", IsCorrect: false, QuestionID: 6},
-			},
-		},
-		{
-			ID:           7,
-			QuestionText: "Что такое «перекос слоёв»?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 20, AnswerText: "Ошибка печати из-за рассинхронизации осей", IsCorrect: true, QuestionID: 7},
-				{ID: 21, AnswerText: "Вид 3D-моделирования", IsCorrect: false, QuestionID: 7},
-				{ID: 22, AnswerText: "Тип принтера", IsCorrect: false, QuestionID: 7},
-			},
-		},
-		{
-			ID:           8,
-			QuestionText: "Для чего нужна поддержка (supports)?",
-			TestID:       test1.ID,
-			Answers: []models.Answer{
-				{ID: 23, AnswerText: "Чтобы печатать нависающие элементы", IsCorrect: true, QuestionID: 8},
-				{ID: 24, AnswerText: "Для ускорения печати", IsCorrect: false, QuestionID: 8},
-				{ID: 25, AnswerText: "Для украшения модели", IsCorrect: false, QuestionID: 8},
-			},
-		},
+	questions2 := []models.Question{
+		{ID: 9, QuestionText: "Можно ли оставлять 3D-принтер без присмотра?", TestID: test2.ID},
+		{ID: 10, QuestionText: "Какая температура экструдера для PLA?", TestID: test2.ID},
+		{ID: 11, QuestionText: "Что делать при засорении сопла?", TestID: test2.ID},
+		{ID: 12, QuestionText: "Нужна ли вентиляция при печати PLA?", TestID: test2.ID},
+		{ID: 13, QuestionText: "Можно ли трогать печатную платформу во время работы?", TestID: test2.ID},
+		{ID: 14, QuestionText: "Что делать, если модель не прилипает к столу?", TestID: test2.ID},
+		{ID: 15, QuestionText: "Какой инструмент нужен для снятия модели?", TestID: test2.ID},
+		{ID: 16, QuestionText: "Куда девать опоры после печати?", TestID: test2.ID},
 	}
 
-	for _, questionTest1 := range questionsTest1 {
-		if err := db.FirstOrCreate(&questionTest1).Error; err != nil {
-			log.Fatal("Ошибка при добавлении вопросов теста 1: ", err)
-			return err
-		}
-	}
-	//// Вставляем вопросы и ответы для теста 1 в базу данных
-	//if err := db.FirstOrCreate(&questionsTest1).Error; err != nil {
-	//	log.Fatal("Ошибка при добавлении вопросов теста 1: ", err)
-	//	return err
-	//}
-
-	// Вопросы и ответы для теста 2: «Безопасность при 3D-печати»
-	questionsTest2 := []models.Question{
-		{
-			ID:           9,
-			QuestionText: "Можно ли оставлять 3D-принтер без присмотра?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 26, AnswerText: "Да, если печатает PLA", IsCorrect: false, QuestionID: 9},
-				{ID: 27, AnswerText: "Нет, всегда нужно контролировать процесс", IsCorrect: true, QuestionID: 9},
-			},
-		},
-		{
-			ID:           10,
-			QuestionText: "Какая температура экструдера для PLA?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 28, AnswerText: "190–220°C", IsCorrect: true, QuestionID: 10},
-				{ID: 29, AnswerText: "250–300°C", IsCorrect: false, QuestionID: 10},
-				{ID: 30, AnswerText: "150–170°C", IsCorrect: false, QuestionID: 10},
-			},
-		},
-		{
-			ID:           11,
-			QuestionText: "Что делать при засорении сопла?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 31, AnswerText: "Очистить иглой или холодной протяжкой", IsCorrect: true, QuestionID: 11},
-				{ID: 32, AnswerText: "Стучать по нему молотком", IsCorrect: false, QuestionID: 11},
-				{ID: 33, AnswerText: "Залить водой", IsCorrect: false, QuestionID: 11},
-			},
-		},
-		{
-			ID:           12,
-			QuestionText: "Нужна ли вентиляция при печати PLA?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 34, AnswerText: "Да, обязательна", IsCorrect: false, QuestionID: 12},
-				{ID: 35, AnswerText: "Желательна, но не критична", IsCorrect: true, QuestionID: 12},
-				{ID: 36, AnswerText: "Не нужна", IsCorrect: false, QuestionID: 12},
-			},
-		},
-		{
-			ID:           13,
-			QuestionText: "Можно ли трогать печатную платформу во время работы?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 37, AnswerText: "Да, если в перчатках", IsCorrect: false, QuestionID: 13},
-				{ID: 38, AnswerText: "Нет, это опасно!", IsCorrect: true, QuestionID: 13},
-				{ID: 39, AnswerText: "Только если принтер выключен", IsCorrect: false, QuestionID: 13},
-			},
-		},
-		{
-			ID:           14,
-			QuestionText: "Что делать, если модель не прилипает к столу?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 40, AnswerText: "Проверить калибровку и использовать клей-карандаш", IsCorrect: true, QuestionID: 14},
-				{ID: 41, AnswerText: "Увеличить скорость печати", IsCorrect: false, QuestionID: 14},
-				{ID: 42, AnswerText: "Ничего, само прилипнет", IsCorrect: false, QuestionID: 14},
-			},
-		},
-		{
-			ID:           15,
-			QuestionText: "Какой инструмент нужен для снятия модели?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 43, AnswerText: "Шпатель", IsCorrect: true, QuestionID: 15},
-				{ID: 44, AnswerText: "Ножницы", IsCorrect: false, QuestionID: 15},
-				{ID: 45, AnswerText: "Отвёртка", IsCorrect: false, QuestionID: 15},
-			},
-		},
-		{
-			ID:           16,
-			QuestionText: "Куда девать опоры после печати?",
-			TestID:       test2.ID,
-			Answers: []models.Answer{
-				{ID: 46, AnswerText: "Аккуратно отломать или срезать", IsCorrect: true, QuestionID: 16},
-				{ID: 47, AnswerText: "Растворить в воде", IsCorrect: false, QuestionID: 16},
-				{ID: 48, AnswerText: "Оставить на модели", IsCorrect: false, QuestionID: 16},
-			},
-		},
+	for _, q := range questions2 {
+		db.FirstOrCreate(&q, models.Question{ID: q.ID, TestID: test2.ID})
 	}
 
-	// Вставляем вопросы и ответы для теста 2 в базу данных
-	if err := db.FirstOrCreate(&questionsTest2).Error; err != nil {
-		log.Fatal("Ошибка при добавлении вопросов теста 2: ", err)
-		return err
+	answers2 := []models.Answer{
+		{ID: 26, AnswerText: "Да, если печатает PLA", IsCorrect: false, QuestionID: 9},
+		{ID: 27, AnswerText: "Нет, всегда нужно контролировать процесс", IsCorrect: true, QuestionID: 9},
+
+		{ID: 28, AnswerText: "190–220°C", IsCorrect: true, QuestionID: 10},
+		{ID: 29, AnswerText: "250–300°C", IsCorrect: false, QuestionID: 10},
+		{ID: 30, AnswerText: "150–170°C", IsCorrect: false, QuestionID: 10},
+
+		{ID: 31, AnswerText: "Очистить иглой или холодной протяжкой", IsCorrect: true, QuestionID: 11},
+		{ID: 32, AnswerText: "Стучать по нему молотком", IsCorrect: false, QuestionID: 11},
+		{ID: 33, AnswerText: "Залить водой", IsCorrect: false, QuestionID: 11},
+
+		{ID: 34, AnswerText: "Да, обязательна", IsCorrect: false, QuestionID: 12},
+		{ID: 35, AnswerText: "Желательна, но не критична", IsCorrect: true, QuestionID: 12},
+		{ID: 36, AnswerText: "Не нужна", IsCorrect: false, QuestionID: 12},
+
+		{ID: 37, AnswerText: "Да, если в перчатках", IsCorrect: false, QuestionID: 13},
+		{ID: 38, AnswerText: "Нет, это опасно!", IsCorrect: true, QuestionID: 13},
+		{ID: 39, AnswerText: "Только если принтер выключен", IsCorrect: false, QuestionID: 13},
+
+		{ID: 40, AnswerText: "Проверить калибровку и использовать клей-карандаш", IsCorrect: true, QuestionID: 14},
+		{ID: 41, AnswerText: "Увеличить скорость печати", IsCorrect: false, QuestionID: 14},
+		{ID: 42, AnswerText: "Ничего, само прилипнет", IsCorrect: false, QuestionID: 14},
+
+		{ID: 43, AnswerText: "Шпатель", IsCorrect: true, QuestionID: 15},
+		{ID: 44, AnswerText: "Плоскогубцы", IsCorrect: false, QuestionID: 15},
+		{ID: 45, AnswerText: "Молоток", IsCorrect: false, QuestionID: 15},
+
+		{ID: 46, AnswerText: "Удалять после печати, если они не поддерживают модель", IsCorrect: true, QuestionID: 16},
+		{ID: 47, AnswerText: "Оставить, чтобы они не повредили модель", IsCorrect: false, QuestionID: 16},
+		{ID: 48, AnswerText: "Использовать для дальнейшей печати", IsCorrect: false, QuestionID: 16},
+	}
+
+	for _, ans := range answers2 {
+		db.FirstOrCreate(&ans, models.Answer{ID: ans.ID, QuestionID: ans.QuestionID})
 	}
 
 	return nil
