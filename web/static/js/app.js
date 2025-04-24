@@ -76,7 +76,11 @@ function openPurchaseModal(title, id) {
         });
 }
 
-function openAboutModal(title, author, fullDescription, id) {
+function openAboutModal(title, author, fullDescription, id, isAuth) {
+    try {
+        document.querySelector(".modal").remove()
+    }catch{}
+
     fetch("/web/templates/modals/about-course.html")
         .then((res) => res.text())
         .then((html) => {
@@ -87,7 +91,12 @@ function openAboutModal(title, author, fullDescription, id) {
             document.querySelector(".course-description").innerHTML = "<p>" + fullDescription + "</p>"
             document.querySelector(".course-category").innerHTML = "Автор курса: " + author;
             const buyBtn = modalContainer.querySelector(".buy-btn");
-            buyBtn.setAttribute("onclick", `openPurchaseModal("${title}", ${id})`);
+            if (isAuth){
+                buyBtn.setAttribute("onclick", `openPurchaseModal("${title}", ${id})`);
+            }else{
+                buyBtn.setAttribute("onclick", `openAuthModal('login')`);
+
+            }
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
                 if (e.target.classList.contains("modal")) {
@@ -98,6 +107,9 @@ function openAboutModal(title, author, fullDescription, id) {
 }
 
 function openAuthModal(type) {
+    try {
+        document.querySelector(".modal").remove()
+    }catch{}
     fetch("/web/templates/modals/auth.html")
         .then((res) => res.text())
         .then((html) => {
@@ -225,6 +237,10 @@ async function logout() {
 
 // Функция для открытия модального окна с нужным содержимым
 function openModal(config) {
+    try {
+        document.querySelector(".modal").remove()
+    }catch{}
+
     const modalHtml = `
         <div class="modal">
             <div class="modal-content main-modal">
