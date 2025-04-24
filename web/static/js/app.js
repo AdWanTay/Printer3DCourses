@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function openPurchaseModal(title) {
+function openPurchaseModal(title, id) {
     // document.querySelector('.modal').remove();
     fetch("/web/templates/modals/purchase.html")
         .then((res) => res.text())
@@ -44,20 +44,31 @@ function openPurchaseModal(title) {
             if (title != undefined)
                 document.querySelector('.purchase-modal .course-title').innerHTML = "«" + title + "»";
 
-            setTimeout(() => {
-                showNotify("Успех", "Оплата прошла успешно! Страница будет перезагружена");
-                document.querySelector('.qr-code-container').style.display = 'none';
-                document.querySelector('.purchase-description').style.display = 'none';
-                document.querySelector('.payment-link-container').style.display = 'none';
-                document.querySelector('.success-text').style.height = 'auto';
-                document.querySelector('.success-text').style.opacity = 1;
-
-                const animation = lottie.loadAnimation({
-                    container: document.getElementById('success'),
-                    renderer: 'svg',
-                    path: '/web/static/js/success.json'
+            setTimeout(async () => {
+                const response = await fetch(`/api/course/buy/${id}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
                 });
-                animation.play();
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showNotify("Успех", "Оплата прошла успешно! Страница будет перезагружена");
+                    document.querySelector('.qr-code-container').style.display = 'none';
+                    document.querySelector('.purchase-description').style.display = 'none';
+                    document.querySelector('.payment-link-container').style.display = 'none';
+                    document.querySelector('.success-text').style.height = 'auto';
+                    document.querySelector('.success-text').style.opacity = 1;
+
+                    const animation = lottie.loadAnimation({
+                        container: document.getElementById('success'),
+                        renderer: 'svg',
+                        path: '/web/static/js/success.json'
+                    });
+                    animation.play();
+                } else {
+                    showErr("Ошибка", "Оплата не прошла. Страница будет перезагружена");
+                }
             }, 6100);
             setTimeout(() => {
                 window.location.reload();
@@ -65,7 +76,7 @@ function openPurchaseModal(title) {
         });
 }
 
-function openAboutModal(title, author, fullDescription) {
+function openAboutModal(title, author, fullDescription, id) {
     fetch("/web/templates/modals/about-course.html")
         .then((res) => res.text())
         .then((html) => {
@@ -75,6 +86,8 @@ function openAboutModal(title, author, fullDescription) {
             document.querySelector(".course-title").innerHTML = title;
             document.querySelector(".course-description").innerHTML = "<p>" + fullDescription + "</p>"
             document.querySelector(".course-category").innerHTML = "Автор курса: " + author;
+            const buyBtn = modalContainer.querySelector(".buy-btn");
+            buyBtn.setAttribute("onclick", `openPurchaseModal("${title}", ${id})`);
             //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
             modalContainer.addEventListener("click", (e) => {
                 if (e.target.classList.contains("modal")) {

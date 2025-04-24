@@ -60,11 +60,11 @@
                 {{if .IsBought}}
                     <a class="redirect-btn accent-btn" href="/course/{{ .ID }}">Перейти</a>
                 {{else}}
-                    <button class="about-btn primary-btn" onclick="openAboutModal({{.CourseTitle}}, {{.AuthorName}}, {{.FullDescription}})">
+                    <button class="about-btn primary-btn" onclick="openAboutModal({{.CourseTitle}}, {{.AuthorName}}, {{.FullDescription}}, {{ .ID }})">
                         Подробнее
                     </button>
                     {{if $.isAuthenticated}}
-                    <button class="buy-btn outline-btn" onclick="openPurchaseModal({{.CourseTitle}})">Купить</button>
+                    <button class="buy-btn outline-btn" onclick="openPurchaseModal({{.CourseTitle}}, {{.ID}})">Купить</button>
                     {{else}}
                     <button class="buy-btn outline-btn" onclick="openAuthModal('login')">Купить</button>
                     {{end}}

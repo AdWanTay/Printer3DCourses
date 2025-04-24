@@ -53,8 +53,8 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 }
 
 func populateDB(db *gorm.DB) error {
-	authorName := "Полное Имя Автора"
-	authorTgUsername := "kizzzzzaaaaa"
+	authorName := "Дик Роман Владимирович"
+	authorTgUsername := "DikRomanV"
 	courses := []models.Course{
 		{
 			CourseTitle:          "Основы 3D-печати: старт для новичков",

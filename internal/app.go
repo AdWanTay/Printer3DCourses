@@ -28,6 +28,9 @@ func App(cfg *config.Config) error {
 	courseRepo := repositories.NewCourseRepository(db)
 	courseService := services.NewCourseService(courseRepo, userRepo, testRepo)
 
+	usersCourseRepo := repositories.NewUsersCourseRepository(db)
+	usersCourseService := services.NewUsersCourseService(usersCourseRepo)
+
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)
 
@@ -57,7 +60,7 @@ func App(cfg *config.Config) error {
 		},
 	})
 
-	routes.SetupRoutes(app, cfg, userService, courseService, testService)
+	routes.SetupRoutes(app, cfg, userService, courseService, testService, usersCourseService)
 	err = app.Listen(":" + cfg.Port)
 	if err != nil {
 		return fmt.Errorf("app listen: %w", err)
