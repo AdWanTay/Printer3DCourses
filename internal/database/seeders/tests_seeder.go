@@ -116,11 +116,17 @@ func SeedTestsAndQuestionsForCourse1(db *gorm.DB) error {
 		},
 	}
 
-	// Вставляем вопросы и ответы для теста 1 в базу данных
-	if err := db.FirstOrCreate(&questionsTest1).Error; err != nil {
-		log.Fatal("Ошибка при добавлении вопросов теста 1: ", err)
-		return err
+	for _, questionTest1 := range questionsTest1 {
+		if err := db.FirstOrCreate(&questionTest1).Error; err != nil {
+			log.Fatal("Ошибка при добавлении вопросов теста 1: ", err)
+			return err
+		}
 	}
+	//// Вставляем вопросы и ответы для теста 1 в базу данных
+	//if err := db.FirstOrCreate(&questionsTest1).Error; err != nil {
+	//	log.Fatal("Ошибка при добавлении вопросов теста 1: ", err)
+	//	return err
+	//}
 
 	// Вопросы и ответы для теста 2: «Безопасность при 3D-печати»
 	questionsTest2 := []models.Question{

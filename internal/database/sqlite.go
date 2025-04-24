@@ -40,6 +40,10 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 
 		err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{}, &models.Test{}, &models.Question{}, &models.Answer{}, &models.TestScore{})
 		err = populateDB(db)
+		if err != nil {
+			fmt.Errorf("populateDB(db)")
+			return
+		}
 	})
 
 	if db == nil {
