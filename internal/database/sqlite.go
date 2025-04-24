@@ -2,6 +2,7 @@ package database
 
 import (
 	"Printer3DCourses/internal/config"
+	"Printer3DCourses/internal/database/seeders"
 	"Printer3DCourses/internal/models"
 	"fmt"
 	"gorm.io/driver/postgres"
@@ -17,10 +18,8 @@ var (
 
 func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 	var err error
-
 	once.Do(func() {
 		var dsn string
-
 		switch cfg.Driver {
 		case "sqlite":
 			dsn = cfg.Name
@@ -39,11 +38,9 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 			return
 		}
 
-		// Автоматическая миграция таблиц
 		err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{}, &models.Test{}, &models.Question{}, &models.Answer{}, &models.TestScore{})
 		err = populateDB(db)
 	})
-	//err = db.AutoMigrate(&models.User{}, &models.Course{}, &models.UsersCourse{})
 
 	if db == nil {
 		return nil, err
@@ -51,70 +48,31 @@ func GetConnection(cfg config.DatabaseConfig) (*gorm.DB, error) {
 
 	return db, nil
 }
-
 func populateDB(db *gorm.DB) error {
-	authorName := "Дик Роман Владимирович"
-	authorTgUsername := "DikRomanV"
-	courses := []models.Course{
-		{
-			CourseTitle:          "Основы 3D-печати: старт для новичков",
-			ShortDescription:     "Описание 1",
-			FullDescription:      "Полное описание",
-			NumberOfParticipants: "150",
-			Duration:             40,
-			LatexPath:            "course1",
-			Price:                2900,
-			AuthorName:           authorName,
-			AuthorTgUsername:     authorTgUsername,
-		},
-		{
-			CourseTitle:          "3D-моделирование для печати в Blender",
-			ShortDescription:     "Описание 2",
-			FullDescription:      "Полное описание",
-			NumberOfParticipants: "423",
-			Duration:             35,
-			LatexPath:            "course2",
-			Price:                3200,
-			AuthorName:           authorName,
-			AuthorTgUsername:     authorTgUsername,
-		},
-		{
-			CourseTitle:          "Печать прототипов: от модели до изделия",
-			ShortDescription:     "Описание 3",
-			FullDescription:      "Полное описание",
-			NumberOfParticipants: "93",
-			Duration:             50,
-			LatexPath:            "course3",
-			Price:                3500,
-			AuthorName:           authorName,
-			AuthorTgUsername:     authorTgUsername,
-		},
-		{
-			CourseTitle:          "Настройка и калибровка 3D-принтера",
-			ShortDescription:     "Описание 4",
-			FullDescription:      "Полное описание",
-			NumberOfParticipants: "45",
-			Duration:             30,
-			LatexPath:            "course4",
-			Price:                2700,
-			AuthorName:           authorName,
-			AuthorTgUsername:     authorTgUsername,
-		},
-		{
-			CourseTitle:          "Продвинутый курс по SLA и FDM технологиям",
-			ShortDescription:     "Описание 5",
-			FullDescription:      "Полное описание",
-			NumberOfParticipants: "892",
-			Duration:             45,
-			LatexPath:            "course5",
-			Price:                4100,
-			AuthorName:           authorName,
-			AuthorTgUsername:     authorTgUsername,
-		},
+	err := seeders.SeedCourses(db)
+	if err != nil {
+		return err
 	}
-	result := db.Create(&courses)
-	if result.Error != nil {
-		return result.Error
+	err = seeders.SeedTestsAndQuestionsForCourse1(db)
+	if err != nil {
+		return err
 	}
+	err = seeders.SeedTestsAndQuestionsForCourse2(db)
+	if err != nil {
+		return err
+	}
+	err = seeders.SeedTestsAndQuestionsForCourse3(db)
+	if err != nil {
+		return err
+	}
+	err = seeders.SeedTestsAndQuestionsForCourse4(db)
+	if err != nil {
+		return err
+	}
+	err = seeders.SeedTestsAndQuestionsForCourse5(db)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Database seeded successfully")
 	return nil
 }

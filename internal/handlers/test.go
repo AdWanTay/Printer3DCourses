@@ -31,11 +31,14 @@ func SaveResult(testService *services.TestService) fiber.Handler {
 
 		userId := c.Locals("userId").(uint)
 
-		result, err := testService.SaveTestResult(c.Context(), userId, &body)
+		total, correct, err := testService.SaveTestResult(c.Context(), userId, &body)
 		if err != nil {
 			return fiber.NewError(fiber.StatusBadRequest, "Ошибка сохранения теста")
 		}
 
-		return c.JSON(fiber.Map{"result": int(result * 100)})
+		return c.JSON(fiber.Map{
+			"total":   total,
+			"correct": correct,
+		})
 	}
 }

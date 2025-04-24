@@ -26,10 +26,10 @@ func (s *TestService) GetTestByIdForResponse(id uint) (*dto.TestResponse, error)
 	return response, err
 }
 
-func (s *TestService) SaveTestResult(c context.Context, userId uint, request *dto.TestAnswersRequest) (float32, error) {
+func (s *TestService) SaveTestResult(c context.Context, userId uint, request *dto.TestAnswersRequest) (uint, uint, error) {
 	questionsWithCorrectAnswers, err := s.repo.GetQuestionsWithCorrectAnswers(c, request.TestId)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 
 	correctSum := 0
@@ -40,12 +40,14 @@ func (s *TestService) SaveTestResult(c context.Context, userId uint, request *dt
 			}
 		}
 	}
-	result := float32(correctSum) / float32(len(*questionsWithCorrectAnswers))
+
+	totalQuestions := len(*questionsWithCorrectAnswers)
+	result := float32(correctSum) / float32(totalQuestions)
 
 	// Проверка: решал ли пользователь тест
 	existingScore, err := s.repo.GetTestScoreByUserAndTest(c, userId, request.TestId)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 
 	if existingScore != nil {
@@ -54,7 +56,7 @@ func (s *TestService) SaveTestResult(c context.Context, userId uint, request *dt
 			existingScore.Score = result
 			err := s.repo.UpdateTestScore(c, existingScore)
 			if err != nil {
-				return 0, err
+				return 0, 0, err
 			}
 		}
 	} else {
@@ -65,9 +67,9 @@ func (s *TestService) SaveTestResult(c context.Context, userId uint, request *dt
 			Score:  result,
 		})
 		if err != nil {
-			return 0, err
+			return 0, 0, err
 		}
 	}
 
-	return result, nil
+	return uint(totalQuestions), uint(correctSum), nil
 }

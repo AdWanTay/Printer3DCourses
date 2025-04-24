@@ -13,7 +13,6 @@ import (
 )
 
 func App(cfg *config.Config) error {
-
 	db, err := database.GetConnection(cfg.Database)
 	if err != nil {
 		return fmt.Errorf("get database connection: %w", err)
