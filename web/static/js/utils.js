@@ -146,19 +146,38 @@ function setCursorPosition(pos, elem) {
 }
 
 function mask(event) {
-    var matrix = "+7 (___) ___ ____",
+    // Проверяем, было ли это автозаполнение
+    const isAutofill = !event.inputType && this.value.length > 0;
+
+    let matrix = "+7 (___) ___ ____",
         i = 0,
         def = matrix.replace(/\D/g, ""),
         val = this.value.replace(/\D/g, "");
-    if (def.length >= val.length) val = def;
-    this.value = matrix.replace(/./g, function(a) {
-        return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a
-    });
-    if (event.type == "blur") {
-        if (this.value.length == 2) this.value = ""
-    } else setCursorPosition(this.value.length, this)
-};
 
+    // Обработка автозаполнения
+    if (isAutofill) {
+        // Если номер начинается с 7 или 8 (российский формат)
+        if (/^[78]/.test(val)) {
+            val = "7" + val.substring(1); // Приводим к формату +7
+        }
+        // Если номер начинается без кода страны (например, 900...)
+        else if (val.length === 10) {
+            val = "7" + val; // Добавляем 7 как код России
+        }
+    }
+
+    if (def.length >= val.length) val = def;
+
+    this.value = matrix.replace(/./g, function(a) {
+        return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
+    });
+
+    if (event.type == "blur") {
+        if (this.value.length == 2) this.value = "";
+    } else {
+        setCursorPosition(this.value.length, this);
+    }
+}
 function validateEmail(email) {
     var re = /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/;
     return re.test(String(email).toLowerCase());

@@ -124,6 +124,16 @@ function openAuthModal(type) {
             input.addEventListener("focus", mask, false);
             input.addEventListener("blur", mask, false);
 
+            // Специальный обработчик для автозаполнения
+            input.addEventListener('change', function(e) {
+                if (this.value && !this.value.startsWith('+7')) {
+                    setTimeout(() => {
+                        const event = new Event('input');
+                        this.dispatchEvent(event);
+                    }, 100);
+                }
+            }, false);
+
             // Запускаем нужную форму
             if (type === "login") {
                 showForm("login");
