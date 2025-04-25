@@ -5,6 +5,7 @@
     <title>{{.response.CourseTitle}} | 3D-Академия - курсы по 3D-печати</title>
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/courses.css">
+    <link rel="stylesheet" href="/web/static/css/elements.css">
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
     <script src="/web/static/js/app.js"></script>
 </head>
@@ -56,14 +57,50 @@
     </div>
 
 
-    {{ range .response.Tests }}
+    <div class="tests-container">
+        <h2>Тесты</h2>
+        {{ range .response.Tests }}
         <div class="test-card" onclick="location.href = '/test/{{ .ID }}'">
             <p class="test-name">Тест №{{ .Index }} {{ .TestTitle }}</p>
+            <p class="test-progress">Прогресс: {{ .TestProgress}} %</p>
             <p class="test-status passed">Пройден</p>
-            <p class="test-status passed">Прогресс: {{ .TestProgress}} %</p>
         </div>
-    {{ end }}
-    <h1></h1>
+        {{ end }}
+    </div>
+
+    <div class="svyaz">
+        <h2>Получите помощь от преподователя</h2>
+        <a style="width: 10rem; padding: 1rem" class="btn-huge accent-btn" href="https://t.me/">Связаться</a>
+    </div>
+    
+    <div class="contacts-form">
+        <h2>Связаться с преподавателем</h2>
+        <div class="contact-section">
+            <div class="form-container">
+                <form class="contact-form">
+                    <input type="text" name="name" placeholder="Ваше имя" required />
+                    <input type="email" name="email" placeholder="Email" required />
+                    <textarea name="message" placeholder="Сообщение для преподавателя" rows="5" required></textarea>
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+            <div class="info-container">
+                <p>
+                    Если у вас возникли вопросы по курсу 3D-печати — заполните форму, и преподаватель свяжется с вами.
+                </p>
+                <p>
+                    Поможем с выбором принтера, настройкой и первым проектом.
+                </p>
+                <p class="address">
+                    <strong>Адрес:</strong><br />
+                    ул. Инженеров, д. 3<br />
+                    Уфа, Россия, 101000
+                </p>
+            </div>
+        </div>
+    </div>
+
+
 </main>
 
 {{template "footer" .}}

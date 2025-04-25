@@ -341,7 +341,6 @@ h1 {
 .footer__logo {
     font-family: 'Pacifico', cursive;
     font-weight: 400;
-    text-transform: lowercase;
     font-size: 1.5rem;
 }
 
@@ -862,4 +861,73 @@ h1 {
 
 #content-1 {
     line-height: 1.5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contacts-form {
+    margin: 4rem 0;
+}
+
+.contact-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 900px;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.form-container,
+.info-container {
+    flex: 1;
+}
+
+.contact-form button {
+    padding: 10px 20px;
+    border: 2px solid #000;
+    background: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-form button:hover {
+    background: #000;
+    color: #fff;
+}
+
+.info-container p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.address {
+    font-weight: bold;
+}
+
+
+.svyaz {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    border: 1px solid #999999;
+    padding: 1.5rem;
+    margin: 4rem 0;
+}
+
+.svyaz a {
+    text-align: center;
 }
