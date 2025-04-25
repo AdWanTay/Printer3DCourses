@@ -86,3 +86,15 @@ func HomeworkPage(cfg *config.Config, userService *services.UserService) fiber.H
 		return Render(c, "homework", nil, cfg, userService)
 	}
 }
+
+func PolicyPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		return Render(c, "policy", nil, cfg, userService)
+	}
+}
+
+func OfferPage(cfg *config.Config, userService *services.UserService) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		return Render(c, "offer", nil, cfg, userService)
+	}
+}

@@ -323,7 +323,7 @@ h1 {
 .footer {
     display: flex;
     flex-flow: row wrap;
-    padding: 3rem 8rem;
+    padding: 4rem 8rem;
     color: #2f2f2f;
     background-color: #fff;
     border-top: 1px solid #e5e5e5;
