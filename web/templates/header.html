@@ -1,44 +1,48 @@
 <header>
-    <div class="logo"><a href="/" style="color: white; text-decoration: none; font-weight: bold;">3D-КУРСЫ</a></div>
+    <div class="logo">
+        <a href="/" style="color: white; text-decoration: none; font-weight: bold;">
+            <span>3D-Академия</span>
+        </a>
+    </div>
     <nav class="nav-block">
         <a href="/#courses">Каталог курсов</a>
         {{if .isAuthenticated}}
-            <a href="/homework">Домашние задания</a>
+        <a href="/homework">Домашние задания</a>
         {{end}}
         <a href="/starter-kit">Стартовый набор</a>
     </nav>
     {{if .isAuthenticated}}
-        {{if eq .page "Profile"}}
-            <div style="margin-left: auto">
-                <span id="name">{{ .firstName}} {{ printf "%.1s." .lastName }}</span>
-                <button class="profile logoutBtn">Выйти</button>
-            </div>
-        {{else}}
-            <a id="profileBtn" href="/profile"><span id="profileAvatar">{{ printf "%.1s" .firstName }}</span>Профиль</a>
-            <div class="profile-dropdown">
-                <div class="dropdown-container">
-                    <span class="profile-name">{{ .firstName}} {{ printf "%.1s." .lastName }}</span>
-                    <ul class="dropdown-list">
-                        <li class="dropdown-item"><a class="link" href="/profile">Мой профиль</a></li>
-                        <li class="dropdown-item"><a class="link" href="/profile#bought-courses">Мои курсы</a></li>
-                        <li class="dropdown-item"><a class="link" href="/homework">Домашние задания</a></li>
-                        <li class="dropdown-item">
-                            <div class="switch">
-                                <input type="checkbox" id="checkbox-theme" />
-                                <label id="theme-switch" for="checkbox-theme">Тема: Светлая</label>
-                            </div>
-                        </li>
-                        <li class="delimeter"></li>
-                        <li class="dropdown-item"><p style="color: #ff0000" class="logoutBtn">Выйти</p></li>
-                    </ul>
-                </div>
-            </div>
-        {{end}}
+    {{if eq .page "Profile"}}
+    <div style="margin-left: auto">
+        <span id="name">{{ .firstName}} {{ printf "%.1s." .lastName }}</span>
+        <button class="profile logoutBtn">Выйти</button>
+    </div>
     {{else}}
-        <div class="auth-buttons">
-            <button id="loginBtn">Войти</button>
-            <button id="registerBtn">Регистрация</button>
+    <a id="profileBtn" href="/profile"><span id="profileAvatar">{{ printf "%.1s" .firstName }}</span>Профиль</a>
+    <div class="profile-dropdown">
+        <div class="dropdown-container">
+            <span class="profile-name">{{ .firstName}} {{ printf "%.1s." .lastName }}</span>
+            <ul class="dropdown-list">
+                <li class="dropdown-item"><a class="link" href="/profile">Мой профиль</a></li>
+                <li class="dropdown-item"><a class="link" href="/profile#bought-courses">Мои курсы</a></li>
+                <li class="dropdown-item"><a class="link" href="/homework">Домашние задания</a></li>
+                <li class="dropdown-item">
+                    <div class="switch">
+                        <input type="checkbox" id="checkbox-theme"/>
+                        <label id="theme-switch" for="checkbox-theme">Тема: Светлая</label>
+                    </div>
+                </li>
+                <li class="delimeter"></li>
+                <li class="dropdown-item"><p style="color: #ff0000" class="logoutBtn">Выйти</p></li>
+            </ul>
         </div>
+    </div>
+    {{end}}
+    {{else}}
+    <div class="auth-buttons">
+        <button id="loginBtn">Войти</button>
+        <button id="registerBtn">Регистрация</button>
+    </div>
     {{end}}
 </header>
 
