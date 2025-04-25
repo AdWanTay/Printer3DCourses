@@ -6,9 +6,7 @@
     <title>Курсы по 3D-печати</title>
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/auth.css">
-    <link rel="stylesheet" href="/web/static/css/elements.css">
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
-<!--        <meta http-equiv="refresh" content="3" />-->
 </head>
 <body>
 {{template "header" .}}
@@ -46,7 +44,7 @@
         <div class="course-card">
             <h3>{{ .CourseTitle }}</h3>
             <div class="description">{{ .ShortDescription }}</div>
-            <div class="details">{{ .NumberOfParticipants }} учеников · {{ .Duration }} ч · Автор: <a href="https://t.me/{{ .AuthorTgUsername }}">{{ $parts := split .AuthorName " " }}{{ index $parts 0 }} {{ index $parts 1 }}
+            <div class="details">{{ .NumberOfParticipants }} учеников • {{ .Duration }} ч • Автор: <a href="https://t.me/{{ .AuthorTgUsername }}">{{ $parts := split .AuthorName " " }}{{ index $parts 0 }} {{ index $parts 1 }}
                 <svg width="12px" height="12px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
                     <polyline points="8.25 2.75,2.75 2.75,2.75 13.25,13.25 13.25,13.25 7.75"/>
                     <path d="m13.25 2.75-5.5 5.5m3-6.5h3.5v3.5"/>
@@ -58,7 +56,8 @@
             {{end}}
             <div class="courses-buttons">
                 {{if .IsBought}}
-                    <a class="redirect-btn accent-btn" href="/course/{{ .ID }}">Перейти</a>
+                    <div style="color: #999999; font-size: 1.2rem; flex: 1;">✔ Приобретено</div>
+                    <a style="flex: 1;" class="redirect-btn accent-btn" href="/course/{{ .ID }}">Перейти</a>
                 {{else}}
                     <button class="about-btn primary-btn" onclick="openAboutModal({{.CourseTitle}}, {{.AuthorName}}, {{.FullDescription}}, {{ .ID }}, {{ $.isAuthenticated}})">
                         Подробнее

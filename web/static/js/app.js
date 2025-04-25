@@ -1,3 +1,7 @@
+function closeAllModals() {
+    document.querySelectorAll('.modal').forEach(modal => modal.remove());
+}
+
 function showForm(type) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
@@ -34,7 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function openPurchaseModal(title, id) {
-    // document.querySelector('.modal').remove();
+    closeAllModals();
+
     fetch("/web/templates/modals/purchase.html")
         .then((res) => res.text())
         .then((html) => {
@@ -77,9 +82,7 @@ function openPurchaseModal(title, id) {
 }
 
 function openAboutModal(title, author, fullDescription, id, isAuth) {
-    try {
-        document.querySelector(".modal").remove()
-    }catch{}
+    closeAllModals();
 
     fetch("/web/templates/modals/about-course.html")
         .then((res) => res.text())
@@ -107,9 +110,8 @@ function openAboutModal(title, author, fullDescription, id, isAuth) {
 }
 
 function openAuthModal(type) {
-    try {
-        document.querySelector(".modal").remove()
-    }catch{}
+    closeAllModals();
+
     fetch("/web/templates/modals/auth.html")
         .then((res) => res.text())
         .then((html) => {
@@ -141,7 +143,6 @@ function openAuthModal(type) {
 
 function addAuthListener(type, modalContainer) {
     if (type === "login") {
-
         const loginForm = document.getElementById("loginForm");
         const loginHandler = login(modalContainer);
         loginForm.addEventListener('submit', loginHandler);
@@ -237,9 +238,7 @@ async function logout() {
 
 // Функция для открытия модального окна с нужным содержимым
 function openModal(config) {
-    try {
-        document.querySelector(".modal").remove()
-    }catch{}
+    closeAllModals();
 
     const modalHtml = `
         <div class="modal">
