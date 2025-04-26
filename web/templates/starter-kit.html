@@ -22,6 +22,7 @@
             text-align: center;
         }
     </style>
+
 </head>
 <body>
     {{template "header" .}}
@@ -32,12 +33,15 @@
             <p class="subtitle">Комплект</p>
         </div>
         <div class="starter-kit">
-            <div class="image">
+            <div class="starter-kit-image">
                 <img src="/web/static/img/starter-kit-1.webp" alt="">
             </div>
             <div>
-                <h2>Модели принтера {{.response.FullName}}</h2>
-                <button onclick="openModal(modalConfigs.orderKit)" id="buyStarterKit" class="btn-huge accent-btn">Оставить заявку</button>
+                <h2 style="margin-bottom: 2rem">Комплект 3D-принтер Raise3D DF2 + Raise3D DF Wash + Raise3D DF Cure</h2>
+                <p>
+                    Raise3D DF2 – это первый фотополимерный 3D-принтер от компании Raise3D, печатающий по технологии DLP, предназначенный для мелкосерийного производства с высокой точностью.
+                </p>
+                <button onclick="openModal(modalConfigs.orderKit)" id="buyStarterKit1" class="btn-huge accent-btn">Оставить заявку</button>
             </div>
         </div>
 
@@ -74,7 +78,7 @@
                     Содержимое 2... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique eaque iure debitis nostrum, vero ad totam ratione sequi! Suscipit, labore repellat cum soluta ullam dignissimos perspiciatis sequi rerum sapiente ex.
                 </div>
                 <div class="tab-content" id="content-3">
-                    Содержимое 3... Тут будет рандомное видео.
+                    <iframe src="https://vk.com/video_ext.php?oid=-50804569&id=456239057&hash=664930c22cabd55a" width="640" height="360" frameborder="0" allowfullscreen="1" allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>
                 </div>
             </div>
         </div>
@@ -108,9 +112,13 @@
         </div>
 
         <div class="text-center">
-            <button onclick="openModal(modalConfigs.orderKit)" class="accent-btn btn-standard">Оставить заявку</button>
+            <button onclick="openModal(modalConfigs.orderKit)" id="buyStarterKit" class="btn-huge accent-btn">Оставить заявку</button>
         </div>
     </main>
+
+    <input id="full_name" type="hidden" value="{{ .response.FullName}}">
+    <input id="phone_number" type="hidden" value="{{ .response.PhoneNumber}}">
+    <input id="email_address" type="hidden" value="{{ .response.Email}}">
 
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-816daf2a-38c6-435c-b3a4-fe1e80aafd27" data-elfsight-app-lazy></div>

@@ -231,6 +231,7 @@ pre {
 }
 
 #course-content img {
+    overflow: hidden;
     border-radius: 15px;
     margin-bottom: 2rem;
     border: 1px solid var(--primary-border-color);

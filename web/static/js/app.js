@@ -270,6 +270,15 @@ function openModal(config) {
 
     // Назначаем обработчик для основной кнопки
     document.getElementById('mainBtn').addEventListener('click', config.mainBtnAction);
+
+    try {
+        if (config == modalConfigs.orderKit) {
+            document.getElementById('fio').value = document.getElementById('full_name').value
+            document.getElementById('email1').value = document.getElementById('email_address').value
+            document.getElementById('tel1').value = document.getElementById('phone_number').value
+        }
+    } catch { }
+
     try {
         var input = document.querySelector("input[type='tel']");
         input.addEventListener("input", mask, false);
@@ -285,7 +294,7 @@ const modalConfigs = {
         title: "Оставить заявку",
         body: `
             <form id="submitForm" autocomplete="off">
-                <input id="fio" type="text" id="name" autocomplete="off" placeholder="ФИО" required>
+                <input id="fio" type="text" id="name" autocomplete="off" placeholder="ФИО" value="" required>
                 <input id="email1" type="email" id="newEmail" autocomplete="off" placeholder="Почта" required>
                 <input id="tel1" type="tel" id="email" autocomplete="off" placeholder="Телефон" required>
             </form>
