@@ -5,13 +5,166 @@
     <title>Домашние задания | 3D-Академия - курсы по 3D-печати</title>
     <link rel="icon" href="/web/static/img/favicon.ico">
     <link rel="stylesheet" href="/web/static/css/main.css" />
+    <link rel="stylesheet" href="/web/static/css/auth.css" />
+    <link rel="stylesheet" href="/web/static/css/courses.css" />
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css" />
     <script src="/web/static/js/app.js"></script>
+
+    <style>
+        .homework-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .homework-card {
+            position: relative;
+            display: flex;
+            height: 20rem;
+            background: var(--white-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .homework-image {
+            height: 100%;
+            object-fit: cover;
+            border-right: 1px solid #bcbcbc;
+            flex-shrink: 0;
+        }
+        .homework-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+        .homework-title {
+            font-size: 20px;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+        .homework-description {
+            flex-grow: 1;
+            font-size: 1rem;
+            line-height: 180%;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .homework-button {
+            align-self: flex-start;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: .3s ease;
+        }
+        .homework-button:hover {
+            opacity: .8;
+        }
+    </style>
 </head>
 <body>
 {{template "header" .}}
 
-Тута домашние работы
+
+<main class="container">
+    <h1>Домашние задания</h1>
+
+    <div class="homework-list">
+
+        <div class="homework-card">
+            <img class="homework-image" src="/web/static/img/dz1.jpg" alt="Картинка ДЗ 1">
+            <div class="homework-content">
+                <div class="homework-title">Домашнее задание №1: Калибровка стола</div>
+                <div class="homework-description">
+                    Цель задания — научиться правильно выравнивать печатную платформу 3D-принтера. Обучающиеся должны выполнить ручную калибровку стола, проверив зазор в пяти точках с помощью листа бумаги, а затем напечатать тестовый квадрат размером 50×50 мм. Результаты необходимо сфотографировать и загрузить в форму отчета. Инструкция включает прогрев стола и сопла, а также регулировку винтов под столом.
+                </div>
+                <a href="/web/static/homeworks/Домашнее%20задание%201.pdf" target="_blank" class="homework-button">Открыть</a>
+            </div>
+        </div>
+
+        <div class="homework-card">
+            <img class="homework-image" src="/web/static/img/dz2.jpg" alt="Картинка ДЗ 2">
+            <div class="homework-content">
+                <div class="homework-title">Домашнее задание №2: Настройка температуры</div>
+                <div class="homework-description">
+                    Задание направлено на определение оптимальной температуры печати для используемого филамента. Студенты должны напечатать температурную башню, изменяя температуру каждые 5 слоев, и проанализировать качество печати на разных участках. Результаты, включая фото и G-код, нужно загрузить в форму. В задании также приведены настройки ретракции и потока материала.
+                </div>
+                <a href="/web/static/homeworks/Домашнее%20задание%202.pdf" target="_blank" class="homework-button">Открыть</a>
+            </div>
+        </div>
+
+        <div class="homework-card">
+            <img class="homework-image" src="/web/static/img/dz3.jpg" alt="Картинка ДЗ 2">
+            <div class="homework-content">
+                <div class="homework-title">Домашнее задание №3: Создание простой модели</div>
+                <div class="homework-description">
+                    Цель задания — освоить базовые навыки 3D-моделирования в программе SelfCAD. Обучающиеся должны создать подставку под книгу, добавить текст и отверстие диаметром 5 мм, а затем экспортировать модель в STL и напечатать. В случае затруднений можно использовать готовую STL-модель. В задании также приведены полезные ссылки на уроки по 3D-печати и настройке принтера.
+                </div>
+                <a href="/web/static/homeworks/Домашнее%20задание%203.pdf" target="_blank"  class="homework-button">Открыть</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="svyaz">
+        <svg width="64px" height="64px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <style>
+                    .cls-1{fill:none;stroke: currentColor;stroke-miterlimit:10;stroke-width:1.2px;}
+                </style>
+            </defs>
+            <path class="cls-1" d="M1.5,5.3v9.54a3.82,3.82,0,0,0,3.82,3.82H7.23v2.86L13,18.66h5.73a3.82,3.82,0,0,0,3.82-3.82V5.3a3.82,3.82,0,0,0-3.82-3.82H5.32A3.82,3.82,0,0,0,1.5,5.3Z"/>
+            <path class="cls-1" d="M12,12V10.86a1.9,1.9,0,0,1,.56-1.35l.79-.79a1.92,1.92,0,0,0,.56-1.35V7.2A1.91,1.91,0,0,0,12,5.3h0a1.91,1.91,0,0,0-1.91,1.9"/>
+            <line class="cls-1" x1="11.05" y1="13.89" x2="12.95" y2="13.89"/>
+        </svg>
+        <div style="margin-right: auto; margin-left: 1.5rem">
+            <h2>Получите помощь от преподавателя</h2>
+            <p style="color: #555555">Ответим на вопросы, разберём сложные моменты и поможем достичь результатов</p>
+        </div>
+        <a style="width: 15rem; padding: 1rem" class="btn-huge accent-btn" href="https://t.me/DikRomanV">Связаться</a>
+    </div>
+
+
+    <div style="margin: 4rem 0" class="about-prepod">
+        <h2>О преподавателе</h2>
+
+        <div class="instructor-card">
+            <div class="instructor-photo">
+                <img src="/web/static/img/dik.jpg" alt="Роман Дик Владимирович">
+            </div>
+
+            <div class="instructor-info">
+                <h2 class="instructor-name">Дик Роман Владимирович</h2>
+                <p class="instructor-title">Преподаватель УУНИТ, стаж 3 года, специалист по аддитивным технологиям</p>
+
+                <div class="instructor-quote">
+                    <blockquote>
+                        Любимая цитата:<br>
+                        «3D-печать — это не просто технология, это новый язык творчества, где код становится материей.» — <b>Ход Липсон</b>
+                    </blockquote>
+                </div>
+
+                <ul class="instructor-details">
+                    <li>3+ года работы в сфере аддитивных технологий</li>
+                    <li>Автор 5 курсов по 3D принтерам</li>
+                    <li>100+ довольных клиентов</li>
+                </ul>
+
+                <div class="instructor-contacts">
+                    <p>📱 Telegram: <a href="https://t.me/DikRomanV">@DikRomanV</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
 
 {{template "footer" .}}
 
