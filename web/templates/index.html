@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>3D-Академия - курсы по 3D-печати</title>
-    <link rel="icon" href="/img/favicon.ico">
+    <link rel="icon" href="/web/static/img/favicon.ico">
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/auth.css">
     <link rel="stylesheet" href="/web/static/notify/simple-notify.css"/>
@@ -13,9 +13,9 @@
 {{template "header" .}}
 
 <main id="main" class="container">
-    <h1 class="main-header">3D-печать с нуля: первые идеальные<br>модели уже через 3 дня</h1>
     <div class="content">
         <div class="description">
+            <h1 class="main-header"><span style="color: var(--accent-color)">3D-печать —</span><br>твой новый навык!</h1>
             <p>
                 Хотите освоить 3D-печать быстро и без лишних проб и ошибок? Наша Академия предлагает уникальные курсы, где вы с первого дня научитесь создавать безупречные модели. Больше не нужно тратить недели на изучение форумов — мы даем только проверенные практикой знания.
             </p>
@@ -26,7 +26,7 @@
                 стартовый набор</a>
         </div>
         <div class="image"><img
-                src="https://s.yimg.com/ny/api/res/1.2/yzX93lbD80VQlgM9LJmgjw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MA--/https://media.zenfs.com/en/Benzinga/ce1ec5a318ffbcdf41f17e0675e7c5c0"
+                src="/web/static/img/3D-print-main-bg.jpg"
                 alt="Пример изображения"></div>
     </div>
 
@@ -66,8 +66,23 @@
         {{ end }}
     </div>
 
+    <div class="profession">
+        <h1>О профессии</h1>
+        <p>
+            3D-печать — перспективная профессия на стыке технологий и творчества. Освоив работу с 3D-принтерами, вы получаете ключ к современному производству — от создания прототипов и функциональных деталей до реализации сложных дизайн-проектов. Эта специализация открывает двери в промышленность, медицину, архитектуру и даже космическую отрасль, где технологии аддитивного производства становятся неотъемлемой частью процессов.
+        </p>
+        <p>
+            Сегодня компании ценят специалистов, способных не только управлять оборудованием, но и оптимизировать модели для печати, выбирать материалы и доводить изделия до совершенства. После обучения вы сможете работать инженером-технологом, разработчиком изделий или открыть собственное дело в сфере цифрового производства.
+        </p>
+        <p>
+            Курсы по 3D-печати — это быстрый старт в профессии, которая сочетает технические навыки с возможностью воплощать идеи в реальные объекты. Начните свой путь в мире инноваций, где каждый проект расширяет границы возможного.
+        </p>
+    </div>
+
     <div class="banner">
-        <img src="https://s3.objstor.cloud4u.com/unti-prod-people/file/presentation/project/ftx97l9vip.jpg" alt="">
+        <a href="#courses">
+            <img src="/web/static/img/banner.webp" alt="">
+        </a>
     </div>
 </main>
 
