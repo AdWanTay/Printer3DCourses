@@ -807,6 +807,25 @@ h1 {
     object-fit: cover;
 }
 
+.specs {
+    max-width: 700px;
+    border-collapse: collapse;
+    width: 100%;
+}
+.specs tr {
+    border-bottom: 1px solid #ddd;
+}
+.specs td {
+    padding: 10px 4rem 10px 0;
+    vertical-align: top;
+}
+.specs td:first-child {
+    font-weight: bold;
+    width: 50%;
+}
+.specs td:last-child {
+    color: #999999;
+}
 
 
 
