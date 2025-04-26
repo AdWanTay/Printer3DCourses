@@ -53,12 +53,12 @@ func (t *testRepository) GetCourseProgressForUser(courseId, userId uint) (int, e
 		return 0, err
 	}
 
-	var totalScore int
+	var totalScore int64
 	for _, score := range passedScores {
-		totalScore += int(score.Score * 100)
+		totalScore += int64(score.Score * 100)
 	}
 
-	return totalScore, nil
+	return int(totalScore / totalTests), nil
 }
 
 func (t *testRepository) GetTestProgressesForUser(courseId, userId uint) (map[uint]int, error) {
