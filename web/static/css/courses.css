@@ -188,3 +188,57 @@
     opacity: .8;
 }
 
+.course-latex-container h1 {
+    color: var(--accent-color);
+}
+
+#course-content {
+    border-bottom: 2px dashed var(--accent-color);
+}
+
+#course-content h2 {
+    margin-top: 4rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--primary-border-color);
+}
+
+#course-content h3, #course-content h2 {
+    margin-bottom: 1rem;
+}
+
+#course-content p {
+    line-height: 180%;
+    margin-bottom: 2rem;
+}
+
+#course-content ol, #course-content ul, pre {
+    padding: 1rem;
+    background: var(--bg-color3);
+    border-radius: 15px;
+    margin-bottom: 2rem;
+}
+#course-content ul {
+    list-style-type: circle;
+}
+
+#course-content li {
+    line-height: 180%;
+    margin-left: 1rem;
+}
+
+pre {
+    font-style: italic;
+}
+
+#course-content img {
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--primary-border-color);
+}
+
+
+#course-content .accent-block {
+    padding: 1rem;
+    border-radius: 15px;
+    border: 1px solid var(--accent-color);
+}
