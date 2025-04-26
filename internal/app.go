@@ -60,7 +60,12 @@ func App(cfg *config.Config) error {
 	})
 
 	routes.SetupRoutes(app, cfg, userService, courseService, testService, usersCourseService)
-	err = app.Listen(":" + cfg.Port)
+	if cfg.Env == "prod" {
+		err = app.ListenTLS(":443", "cert.pem", "key.pem")
+	} else if cfg.Env == "dev" {
+		err = app.Listen(":" + cfg.Port)
+	}
+
 	if err != nil {
 		return fmt.Errorf("app listen: %w", err)
 	}

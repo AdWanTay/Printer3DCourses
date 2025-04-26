@@ -21,8 +21,8 @@ type BotConfig struct {
 type Config struct {
 	JWTSecret string `envconfig:"JWT_SECRET" required:"true"`
 	Port      string `envconfig:"PORT" default:"8080"`
-
-	Database DatabaseConfig
+	Env       string `envconfig:"ENV" default:"dev"`
+	Database  DatabaseConfig
 
 	Bot BotConfig
 }
