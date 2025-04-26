@@ -52,6 +52,7 @@ func App(cfg *config.Config) error {
 			case fiber.StatusNotFound:
 				return c.Status(code).Render("errors/404", fiber.Map{})
 			default:
+				fmt.Println(err)
 				return c.Status(code).Render("errors/500", fiber.Map{
 					"error": err.Error(),
 				})
