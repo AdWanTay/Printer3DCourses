@@ -215,7 +215,7 @@ main.container {
 
 .image {
     width: 35%;
-    border-radius: 15px;
+    border-radius: 30px;
     margin-bottom: 1rem;
     overflow: hidden;
 }
@@ -597,187 +597,7 @@ h1 {
     background: #333333;
 }
 
-@media (prefers-color-scheme: dark) {
 
-}
-@media (prefers-color-scheme: light) {
-
-}
-
-/* Small (sm) – устройства от 576px */
-@media (min-width: 120px) {
-
-}
-
-
-/* Small (sm) – устройства от 576px */
-@media (min-width: 320px) {
-    body {
-    }
-    header {
-        padding: 1.5rem 1rem;
-    }
-    header .logo {
-        margin-right: .5rem;
-        white-space: nowrap;
-    }
-    main.container {
-        padding: 10px 1rem;
-    }
-    main .main-header {
-        font-size: 3rem;
-    }
-    footer {
-        padding: 1rem !important;
-    }
-    .courses-grid {
-        display: flex;
-        flex-direction: column;
-    }
-    header .nav-block {
-        display: none;
-    }
-    .content {
-        flex-direction: column;
-    }
-    .content .image {
-        order: 0;
-        width: 100%;
-    }
-    .content .description {
-        order: 1;
-        width: 100%;
-    }
-    .banner {
-        display: none;
-    }
-}
-
-
-/* Small (sm) – устройства от 576px */
-@media (min-width: 576px) {
-    body {
-    }
-    header {
-        padding: 1rem 2rem;
-    }
-    main.container {
-        padding: 40px 2rem;
-    }
-    footer {
-        padding: 2rem !important;
-    }
-}
-
-/* Medium (md) – устройства от 768px */
-@media (min-width: 768px) {
-    body {
-        font-size: 14px;
-    }
-    header {
-        padding: 1rem 3rem;
-    }
-    header .logo {
-        margin-right: 1rem;
-    }
-    main.container {
-        padding: 40px 3rem;
-    }
-    footer {
-        padding: 3rem !important;
-    }
-    header .nav-block {
-        display: block;
-    }
-    .courses-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Large (lg) – устройства от 992px */
-@media (min-width: 992px) {
-    body {
-        font-size: 15px;
-    }
-    header {
-        padding: 1rem 5rem;
-    }
-    header .logo {
-        margin-right: 2rem;
-    }
-    main.container {
-        padding: 40px 5rem;
-    }
-    .content {
-        flex-direction: row;
-    }
-    .content .image {
-        order: 1;
-        width: 35%;
-    }
-    .content .description {
-        order: 0;
-        width: 60%;
-    }
-    footer {
-        padding: 5rem !important;
-    }
-}
-
-/* Extra large (xl) – устройства от 1200px */
-@media (min-width: 1200px) {
-    body {
-        font-size: 16px;
-    }
-    header {
-        padding: 1rem 6rem;
-    }
-    header .logo {
-        margin-right: 3rem;
-    }
-    main.container {
-        padding: 40px 6rem;
-    }
-    footer {
-        padding: 4rem 6rem !important;
-    }
-    .banner {
-        display: block;
-    }
-}
-
-/* Extra extra large (xxl) – устройства от 1400px */
-@media (min-width: 1400px) {
-    header {
-        padding: 1rem 8rem;
-    }
-    main.container {
-        padding: 40px 8rem;
-    }
-    footer {
-        padding: 4rem 8rem !important;
-    }
-    .courses-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 1600px) {
-
-}
-
-@media (min-width: 1920px) {
-    .image {
-        width: 25%;
-    }
-    #courses .courses-grid {
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    }
-    #bought-courses .courses-grid {
-        grid-template-columns: repeat(4, minmax(400px, 1fr));
-    }
-}
 
 .kit-title {
     margin: 0;
@@ -921,7 +741,7 @@ h1 {
     border: 1px solid var(--white-color);
 }
 
- .glQTQr, .fAAaFy {
+.glQTQr, .fAAaFy {
     background: var(--white-color) !important;
 }
 
@@ -939,4 +759,244 @@ h1 {
 .profession p {
     line-height: 180%;
     margin-bottom: 1rem;
+}
+
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+}
+.card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+.card img {
+    width: 12rem;
+    height: auto;
+    object-fit: contain;
+}
+.card-text h2 {
+    word-break: break-word;
+    color: var(--font-color2);
+    margin: 0 0 10px 0;
+}
+.card-text p {
+    width: 100%;
+    margin: 0;
+    color: var(--font-color2);
+    line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+
+}
+@media (prefers-color-scheme: light) {
+
+}
+
+/* Small (sm) – устройства от 576px */
+@media (min-width: 120px) {
+
+}
+
+
+/* Small (sm) – устройства от 576px */
+@media (min-width: 320px) {
+    body {
+    }
+    header {
+        padding: 1.5rem 1rem;
+    }
+    header .logo {
+        margin-right: .5rem;
+        white-space: nowrap;
+    }
+    main.container {
+        padding: 10px 1rem;
+    }
+    main .main-header {
+        font-size: 3rem;
+    }
+    footer {
+        padding: 1rem !important;
+    }
+    .courses-grid {
+        display: flex;
+        flex-direction: column;
+    }
+    header .nav-block {
+        display: none;
+    }
+    .content {
+        flex-direction: column;
+    }
+    .content .image {
+        order: 0;
+        width: 100%;
+    }
+    .content .description {
+        order: 1;
+        width: 100%;
+    }
+    .banner {
+        display: none;
+    }
+    .grid {
+        display: flex;
+        flex-direction: column;
+    }
+    .card {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+
+/* Small (sm) – устройства от 576px */
+@media (min-width: 576px) {
+    body {
+    }
+    header {
+        padding: 1rem 2rem;
+    }
+    main.container {
+        padding: 40px 2rem;
+    }
+    footer {
+        padding: 2rem !important;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .card {
+        flex-direction: row;
+    }
+
+}
+
+/* Medium (md) – устройства от 768px */
+@media (min-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    header {
+        padding: 1rem 3rem;
+    }
+    header .logo {
+        margin-right: 1rem;
+    }
+    main.container {
+        padding: 40px 3rem;
+    }
+    footer {
+        padding: 3rem !important;
+    }
+    header .nav-block {
+        display: block;
+    }
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Large (lg) – устройства от 992px */
+@media (min-width: 992px) {
+    body {
+        font-size: 15px;
+    }
+    header {
+        padding: 1rem 5rem;
+    }
+    header .logo {
+        margin-right: 2rem;
+    }
+    main.container {
+        padding: 40px 5rem;
+    }
+    .content {
+        flex-direction: row;
+    }
+    .content .image {
+        order: 1;
+        width: 35%;
+    }
+    .content .description {
+        order: 0;
+        width: 60%;
+    }
+    footer {
+        padding: 5rem !important;
+    }
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+}
+
+/* Extra large (xl) – устройства от 1200px */
+@media (min-width: 1200px) {
+    body {
+        font-size: 16px;
+    }
+    header {
+        padding: 1rem 6rem;
+    }
+    header .logo {
+        margin-right: 3rem;
+    }
+    main.container {
+        padding: 40px 6rem;
+    }
+    footer {
+        padding: 4rem 6rem !important;
+    }
+    .banner {
+        display: block;
+    }
+}
+
+/* Extra extra large (xxl) – устройства от 1400px */
+@media (min-width: 1400px) {
+    header {
+        padding: 1rem 8rem;
+    }
+    main.container {
+        padding: 40px 8rem;
+    }
+    footer {
+        padding: 4rem 8rem !important;
+    }
+    .courses-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+    }
+}
+
+@media (min-width: 1600px) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
+    }
+}
+
+@media (min-width: 1920px) {
+    .image {
+        width: 25%;
+    }
+    #courses .courses-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+    #bought-courses .courses-grid {
+        grid-template-columns: repeat(4, minmax(400px, 1fr));
+    }
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
+    }
 }
