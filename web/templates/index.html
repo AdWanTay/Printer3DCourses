@@ -49,7 +49,7 @@
             {{end}}
             <div class="courses-buttons">
                 {{if .IsBought}}
-                    <div style="color: #999999; font-size: 1.2rem; flex: 1;">✔ Приобретено</div>
+                    <div style="color: #999999; font-size: 1.1rem; flex: 1;">✔ Приобретено</div>
                     <a style="flex: 1;" class="redirect-btn accent-btn" href="/course/{{ .ID }}">Перейти</a>
                 {{else}}
                     <button class="about-btn primary-btn" onclick="openAboutModal({{.CourseTitle}}, {{.AuthorName}}, {{.FullDescription}}, {{ .ID }}, {{ $.isAuthenticated}})">

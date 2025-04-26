@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{.response.CourseTitle}} | 3D-Академия - курсы по 3D-печати</title>
-    <link rel="icon" href="/img/favicon.ico">
+    <link rel="icon" href="/web/static/img/favicon.ico">
     <link rel="stylesheet" href="/web/static/css/main.css">
     <link rel="stylesheet" href="/web/static/css/courses.css">
     <link rel="stylesheet" href="/web/static/css/elements.css">
@@ -17,7 +17,7 @@
 <main class="container">
     <div class="course-latex-container">
         <div style="display: flex; justify-content: space-between; align-items: center">
-            <h1 class="course-name">{{ .response.CourseTitle}}</h1>
+            <h1 style="margin: 0">{{ .response.CourseTitle}}</h1>
             <p class="course-progress">Прогресс курса: {{.response.CourseProgress }}%</p>
         </div>
         <div id="course-content">
@@ -34,46 +34,77 @@
         </div>
     </div>
 
+    <div class="svyaz">
+        <svg width="64px" height="64px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <style>
+                    .cls-1{fill:none;stroke: currentColor;stroke-miterlimit:10;stroke-width:1.2px;}
+                </style>
+            </defs>
+            <path class="cls-1" d="M1.5,5.3v9.54a3.82,3.82,0,0,0,3.82,3.82H7.23v2.86L13,18.66h5.73a3.82,3.82,0,0,0,3.82-3.82V5.3a3.82,3.82,0,0,0-3.82-3.82H5.32A3.82,3.82,0,0,0,1.5,5.3Z"/>
+            <path class="cls-1" d="M12,12V10.86a1.9,1.9,0,0,1,.56-1.35l.79-.79a1.92,1.92,0,0,0,.56-1.35V7.2A1.91,1.91,0,0,0,12,5.3h0a1.91,1.91,0,0,0-1.91,1.9"/>
+            <line class="cls-1" x1="11.05" y1="13.89" x2="12.95" y2="13.89"/>
+        </svg>
+        <div style="margin-right: auto; margin-left: 1.5rem">
+            <h2>Получите помощь от преподавателя</h2>
+            <p style="color: #555555">Ответим на вопросы, разберём сложные моменты и поможем достичь результатов</p>
+        </div>
+        <a style="width: 15rem; padding: 1rem" class="btn-huge accent-btn" href="https://t.me/DikRomanV">Связаться</a>
+    </div>
+
 
     <div class="tests-container">
-        <h2>Тесты</h2>
+        <h2>Тестирование</h2>
         {{ range .response.Tests }}
         <div class="test-card" onclick="location.href = '/test/{{ .ID }}'">
-            <p class="test-name">Тест №{{ .Index }} {{ .TestTitle }}</p>
+            <p class="test-name">Тест №{{ .Index }} {{ .TestTitle }}
+                <svg width="14px" height="14px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                    <polyline points="8.25 2.75,2.75 2.75,2.75 13.25,13.25 13.25,13.25 7.75"/>
+                    <path d="m13.25 2.75-5.5 5.5m3-6.5h3.5v3.5"/>
+                </svg>
+            </p>
             <p class="test-progress">Прогресс: {{ .TestProgress}} %</p>
-            <p class="test-status passed">Пройден</p>
+            {{if eq .TestProgress 100}}
+                <p class="test-status passed">Пройден</p>
+            {{else}}
+                <p class="test-status">Не пройден</p>
+            {{end}}
         </div>
         {{ end }}
     </div>
 
-    <div class="svyaz">
-        <h2>Получите помощь от преподователя</h2>
-        <a style="width: 10rem; padding: 1rem" class="btn-huge accent-btn" href="https://t.me/">Связаться</a>
+    <div class="homeworks">
+        <h2>Домашние задания</h2>
     </div>
 
-    <div class="contacts-form">
-        <h2>Связаться с преподавателем</h2>
-        <div class="contact-section">
-            <div class="form-container">
-                <form class="contact-form">
-                    <input type="text" name="name" placeholder="Ваше имя" required/>
-                    <input type="email" name="email" placeholder="Email" required/>
-                    <textarea name="message" placeholder="Сообщение для преподавателя" rows="5" required></textarea>
-                    <button type="submit">Отправить</button>
-                </form>
+    <div style="margin: 4rem 0" class="about-prepod">
+        <h2>О преподавателе</h2>
+
+        <div class="instructor-card">
+            <div class="instructor-photo">
+                <img src="/web/static/img/dik.jpg" alt="Роман Дик Владимирович">
             </div>
-            <div class="info-container">
-                <p>
-                    Если у вас возникли вопросы по курсу 3D-печати — заполните форму, и преподаватель свяжется с вами.
-                </p>
-                <p>
-                    Поможем с выбором принтера, настройкой и первым проектом.
-                </p>
-                <p class="address">
-                    <strong>Адрес:</strong><br/>
-                    ул. Инженеров, д. 3<br/>
-                    Уфа, Россия, 101000
-                </p>
+
+            <div class="instructor-info">
+                <h2 class="instructor-name">Дик Роман Владимирович</h2>
+                <p class="instructor-title">Преподаватель УУНИТ, стаж 3 года, специалист по аддитивным технологиям</p>
+
+                <div class="instructor-quote">
+                    <blockquote>
+                        Любимая цитата:<br>
+                        «3D-печать — это не просто технология, это новый язык творчества, где код становится материей.» — <b>Ход Липсон</b>
+                    </blockquote>
+                </div>
+
+                <ul class="instructor-details">
+                    <li>3+ года работы в сфере аддитивных технологий</li>
+                    <li>Автор 5 курсов по 3D принтерам</li>
+                    <li>100+ довольных клиентов</li>
+                </ul>
+
+                <div class="instructor-contacts">
+                    <p>📱 Telegram: <a href="https://t.me/DikRomanV">@DikRomanV</a></p>
+                </div>
             </div>
         </div>
     </div>
