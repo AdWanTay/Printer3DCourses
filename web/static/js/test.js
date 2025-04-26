@@ -1,61 +1,9 @@
 const navContainer = document.querySelector('.question-navigation');
 const questionButtons = navContainer.querySelectorAll('.question-number');
 
-// let isDragging = false;
-// let startX;
-// let scrollStart;
-//
-// questionButtons.forEach(button => {
-//     button.addEventListener('click', (e) => {
-//         button.classList.add('selected');
-//     });
-//
-//     button.addEventListener('mousedown', (e) => {
-//         isDragging = true;
-//         startX = e.pageX;
-//         scrollStart = navContainer.scrollLeft;
-//         navContainer.classList.add('dragging');
-//     });
-//
-//     button.addEventListener('mouseup', () => {
-//         isDragging = false;
-//         navContainer.classList.remove('dragging');
-//     });
-//
-//     button.addEventListener('mouseleave', () => {
-//         isDragging = false;
-//         navContainer.classList.remove('dragging');
-//     });
-//
-//     button.addEventListener('mousemove', (e) => {
-//         if (!isDragging) return;
-//         const x = e.pageX;
-//         const walk = (x - startX) * 1.5;
-//         navContainer.scrollLeft = scrollStart - walk;
-//     });
-// });
-
-
-
-function forceFinishModal() {
-    fetch("/web/templates/test/modals/force-finish.html")
-        .then((res) => res.text())
-        .then((html) => {
-            const modalContainer = document.createElement("div");
-            modalContainer.innerHTML = html;
-            document.body.appendChild(modalContainer);
-
-            //todo ВЕЗДЕ СДЕЛАТЬ ТАК = Закрытие по клику вне модалки (доп)
-            modalContainer.addEventListener("click", (e) => {
-                if (e.target.classList.contains("modal")) {
-                    modalContainer.remove();
-                }
-            });
-            addAuthListener(type, modalContainer)
-        });
-}
-
 document.addEventListener('DOMContentLoaded', function() {
+    let elapsedSeconds = 0;
+
     // 1. Получаем ID теста из URL
     const pathParts = window.location.pathname.split('/').filter(Boolean);
     const testId = pathParts[pathParts.length - 1];
@@ -71,50 +19,61 @@ document.addEventListener('DOMContentLoaded', function() {
     let timerInterval = null;
 
     // 2. Модальное окно для начала теста
-    function showStartModal() {
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        `;
+    async function showStartModal() {
+        try {
+            const response = await fetch('/web/templates/test/modals/window.html');
+            const html = await response.text();
 
-        modal.innerHTML = `
-            <div style="background: white; padding: 20px; border-radius: 5px; max-width: 500px;">
-                <h3>Готовы начать тест?</h3>
-                <p>Тест содержит вопросы с одним или несколькими правильными ответами.</p>
-                <div style="margin-top: 20px; text-align: right;">
-                    <button id="start-test" style="padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                        Начать тест
-                    </button>
-                </div>
-            </div>
-        `;
+            const modal = document.createElement('div');
+            modal.innerHTML = html;
+            document.body.appendChild(modal);
 
-        document.body.appendChild(modal);
+            // Настраиваем модальное окно
+            const modalTitle = modal.querySelector('.modal-title');
+            modalTitle.textContent = 'Готовы начать тест?';
 
-        document.getElementById('start-test').addEventListener('click', function() {
-            document.body.removeChild(modal);
+            const modalBody = modal.querySelector('.modal-body');
+            modalBody.innerHTML = '<p>Тест содержит вопросы только с одним правильным ответом.</p>';
+
+            const modalDesc = modal.querySelector('.modal-description');
+            modalDesc.innerHTML = '<p>На выполнение теста отводится <span style="color: #0055ff">15 минут</span>. Таймер запустится автоматически после начала.</p>';
+
+            const startBtn = modal.querySelector('#mainBtn');
+            startBtn.textContent = 'Начать тест';
+            startBtn.id = 'start-test'; // Меняем ID для обработчика
+
+            startBtn.addEventListener('click', function() {
+                modal.remove();
+                startTimer();
+                showQuestion(0);
+            });
+
+            const escBtn = modal.querySelector('.cancel');
+            escBtn.addEventListener('click', function() {
+                window.close();
+            });
+
+            const escBtn2 = modal.querySelector('.modal-close');
+            escBtn2.addEventListener('click', function() {
+                window.close();
+            });
+
+        } catch (error) {
+            console.error('Ошибка загрузки модального окна:', error);
             startTimer();
-            showQuestion(0); // Показываем первый вопрос после старта
-        });
+            showQuestion(0);
+        }
     }
+
 
     // 3. Таймер
     function startTimer() {
         const timeElement = document.getElementById('time');
-        let time = 30; // 30 минут в секундах
+        let time = 15*60; // 15 минут в секундах
 
         timerInterval = setInterval(function() {
             time--;
+            elapsedSeconds++;
             if (time <= 0) {
                 clearInterval(timerInterval);
                 finishTest();
@@ -127,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
+
     // 4. Загрузка данных теста
     async function loadTestData() {
         try {
@@ -134,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
             testData = await response.json();
-            console.log('Test data loaded:', testData);
 
             if (!testData.questions || !testData.questions.length) {
                 throw new Error('No questions in test');
@@ -144,10 +103,10 @@ document.addEventListener('DOMContentLoaded', function() {
             initializeTest();
             showStartModal();
         } catch (error) {
-            console.error('Error loading test:', error);
-            alert('Не удалось загрузить тест. Пожалуйста, попробуйте позже.');
+            showErr('Не удалось загрузить тест. Пожалуйста, попробуйте позже.');
         }
     }
+
 
     // 5. Инициализация теста
     function initializeTest() {
@@ -191,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+
 
     // 6. Показать вопрос
     function showQuestion(index) {
@@ -238,6 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+
     // 7. Сохранить текущий ответ
     function saveCurrentAnswer() {
         if (!testData || currentQuestionIndex >= testData.questions.length) return;
@@ -245,14 +206,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const questionId = testData.questions[currentQuestionIndex].id;
         const selected = document.querySelector('input[name="answer"]:checked');
 
+        const label = document.querySelector(`.question-navigation label:nth-child(${currentQuestionIndex + 1})`);
+
         if (selected) {
             userAnswers[questionId] = [parseInt(selected.value)];
+            if (label) label.classList.add('answered'); // <--- Добавляем класс
         } else {
             delete userAnswers[questionId];
+            if (label) label.classList.remove('answered'); // <--- Убираем класс, если ответ убрали
         }
-
-        console.log('Current answers:', userAnswers);
     }
+
+
 
     // 8. Завершение теста
     async function finishTest() {
@@ -269,8 +234,6 @@ document.addEventListener('DOMContentLoaded', function() {
             )
         };
 
-        console.log('Submitting results:', resultData);
-
         try {
             const response = await fetch('/api/tests/send-result', {
                 method: 'POST',
@@ -281,61 +244,215 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (response.ok) {
-                const result = await response.json();
-                alert('Тест завершен! Ваши результаты сохранены.');
-                // Можно добавить перенаправление: window.location.href = '/results';
+                const result = await response.json(); // Получаем {correct: X, total: Y}
+
+                // Показываем модальное окно с результатами
+                await showResultsModal(result.correct, result.total, elapsedSeconds);
+
             } else {
                 throw new Error(`Server returned ${response.status}`);
             }
         } catch (error) {
-            console.error('Submission error:', error);
-            alert('Ошибка при отправке результатов. Пожалуйста, попробуйте ещё раз.');
+            showErr('Ошибка при отправке результатов. Пожалуйста, попробуйте ещё раз.');
         }
     }
 
-    // 9. Модальное окно подтверждения завершения
-    window.forceFinishModal = function() {
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        `;
+    async function showResultsModal(correctAnswers, totalQuestions, elapsedSeconds) {
+        try {
+            // Загружаем шаблон модального окна
+            const response = await fetch('/web/templates/test/modals/window.html');
+            const html = await response.text();
 
-        modal.innerHTML = `
-            <div style="background: white; padding: 20px; border-radius: 5px; max-width: 500px;">
-                <h3>Завершить тест?</h3>
-                <p>Вы уверены, что хотите завершить тест? После завершения вы не сможете изменить ответы.</p>
-                <div style="margin-top: 20px; text-align: right;">
-                    <button id="confirm-finish" style="padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
-                        Завершить
-                    </button>
-                    <button id="cancel-finish" style="padding: 8px 16px; background: #e7e7e7; border: none; border-radius: 4px; cursor: pointer;">
-                        Отмена
-                    </button>
+            const modal = document.createElement('div');
+            modal.innerHTML = html;
+
+            // Настраиваем содержимое
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+            const minutesSpent = Math.floor(elapsedSeconds / 60);
+            const secondsSpent = elapsedSeconds % 60;
+            const formattedTimeSpent = `${minutesSpent}:${secondsSpent < 10 ? '0' : ''}${secondsSpent}`;
+
+            modal.querySelector('.modal-title').textContent = 'Результаты тестирования';
+
+            modal.querySelector('.modal-close').style.display = "none";
+
+            const modalBody = modal.querySelector('.modal-body');
+            modalBody.innerHTML = `
+                <div class="results-container">
+                    <div class="result-circle">
+                        <div class="circle-progress" style="--percentage: ${percentage}">
+                            <span>${percentage}%</span>
+                        </div>
+                    </div>
+                    <div class="result-details">
+                        <div class="result-item">
+                            <span class="label">Правильных ответов:</span>
+                            <span class="value correct">${correctAnswers}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Всего вопросов:</span>
+                            <span class="value">${totalQuestions}</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Затраченное время:</span>
+                            <span class="value">${formattedTimeSpent}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="result-message">
+                    ${getResultMessage(percentage)}
+                </div>
+            `;
+
+            // Настраиваем кнопки
+            const modalActions = modal.querySelector('.modal-actions');
+            modalActions.innerHTML = `
+            <button id="restartTest" class="modal-button primary">Пройти тест снова</button>
+            <button id="returnToCourse" class="modal-button cancel">Вернуться к курсу</button>
         `;
 
-        document.body.appendChild(modal);
+            // Удаляем описание (не нужно)
+            modal.querySelector('.modal-description').remove();
 
-        document.getElementById('confirm-finish').addEventListener('click', function() {
-            document.body.removeChild(modal);
+            // Добавляем обработчики
+            document.body.appendChild(modal);
+
+            document.getElementById('restartTest').addEventListener('click', function() {
+                modal.remove();
+                location.reload(); // Или ваша функция для перезапуска теста
+            });
+
+            document.getElementById('returnToCourse').addEventListener('click', function() {
+                modal.remove();
+                window.location.href = '/profile#bought-courses'; // Или ваш путь к курсу
+            });
+
+            // Добавляем стили
+            const style = document.createElement('style');
+            style.textContent = `
+            .results-container {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                margin: 20px 0;
+            }
+            
+            .result-circle {
+                position: relative;
+                width: 120px;
+                height: 120px;
+            }
+            
+            .circle-progress {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background: conic-gradient(
+                    #4CAF50 calc(var(--percentage) * 3.6deg),
+                    #f0f0f0 0
+                );
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .circle-progress span {
+                background: white;
+                width: 90px;
+                height: 90px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 20px;
+            }
+            
+            .result-details {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .result-item {
+                display: flex;
+                justify-content: space-between;
+                min-width: 200px;
+            }
+            
+            .label {
+                color: #666;
+            }
+            
+            .value {
+                font-weight: bold;
+            }
+            
+            .correct {
+                color: #4CAF50;
+            }
+            
+            .result-message {
+                margin-top: 20px;
+                padding: 15px;
+                background: #f8f9fa;
+                border-radius: 8px;
+                text-align: center;
+            }
+        `;
+            document.head.appendChild(style);
+
+        } catch (error) {
+            console.error('Ошибка загрузки модального окна:', error);
+            showNotify("Тест завершен!", `Правильных ответов: ${correctAnswers}/${totalQuestions}`);
+        }
+    }
+
+    function getResultMessage(percentage) {
+        if (percentage == 100) return 'Отличный результат! Вы прекрасно усвоили материал.';
+        if (percentage >= 70) return 'Хороший результат! Есть немного тем для повторения.';
+        if (percentage >= 50) return 'Средний результат. Рекомендуем повторить материал.';
+        return 'Низкий результат. Внимательно изучите материал и попробуйте снова.';
+    }
+
+
+    // 9. Модальное окно подтверждения завершения (использует шаблон force-finish.html)
+    window.forceFinishModal = async function() {
+        saveCurrentAnswer();
+
+        const answeredCount = Object.keys(userAnswers).length;
+        const totalQuestions = testData.questions.length;
+
+        if (answeredCount === totalQuestions) {
+            // Все вопросы отвечены — сразу завершаем тест без подтверждения
             finishTest();
-        });
+        } else {
+            // Есть неотвеченные — показываем подтверждение
+            try {
+                const response = await fetch('/web/templates/test/modals/force-finish.html');
+                if (!response.ok) throw new Error('Не удалось загрузить модальное окно');
 
-        document.getElementById('cancel-finish').addEventListener('click', function() {
-            document.body.removeChild(modal);
-        });
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const modalTemplate = doc.querySelector('.modal').outerHTML;
+
+                const modalContainer = document.createElement('div');
+                modalContainer.innerHTML = modalTemplate;
+                const modal = modalContainer.firstChild;
+
+                modal.querySelector('.modal-button.primary').addEventListener('click', function() {
+                    modal.remove();
+                    finishTest();
+                });
+                document.body.appendChild(modal);
+
+            } catch (error) {
+                console.error('Ошибка загрузки модального окна:', error);
+            }
+        }
     };
+
 
     // Запускаем загрузку теста
     loadTestData();
