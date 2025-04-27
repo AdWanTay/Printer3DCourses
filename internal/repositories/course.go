@@ -24,38 +24,46 @@ func (cr *courseRepository) GetCourseById(c context.Context, id uint) (*models.C
 	}
 	return course, nil
 }
-
 func (cr *courseRepository) GetCoursesProgress(c context.Context, userId uint) (map[uint]int, error) {
-	var testScores []models.TestScore
-	err := cr.db.WithContext(c).
-		Preload("Test").
-		Where("user_id = ?", userId).
-		Find(&testScores).Error
+	// Сначала получаем все тесты
+	var tests []models.Test
+	err := cr.db.WithContext(c).Find(&tests).Error
 	if err != nil {
 		return nil, err
 	}
 
-	type progressData struct {
-		total float32
-		count int
-	}
-	courseProgress := make(map[uint]progressData)
-
-	for _, score := range testScores {
-		courseId := score.Test.CourseID
-		data := courseProgress[courseId]
-		data.total += score.Score
-		data.count++
-		courseProgress[courseId] = data
+	// Строим мапу: courseId -> общее количество тестов
+	totalTestsPerCourse := make(map[uint]int64)
+	for _, test := range tests {
+		totalTestsPerCourse[test.CourseID]++
 	}
 
+	// Получаем все результаты тестов пользователя
+	var passedScores []models.TestScore
+	err = cr.db.WithContext(c).
+		Preload("Test.Course").
+		Where("user_id = ?", userId).
+		Find(&passedScores).Error
+	if err != nil {
+		return nil, err
+	}
+
+	// Считаем сумму очков для каждого курса
+	totalScorePerCourse := make(map[uint]int64)
+	for _, score := range passedScores {
+		totalScorePerCourse[score.Test.CourseID] += int64(score.Score * 100)
+	}
+
+	// Собираем финальный результат
 	result := make(map[uint]int)
-	for courseId, data := range courseProgress {
-		if data.count == 0 {
+	for courseId, totalTests := range totalTestsPerCourse {
+		if totalTests == 0 {
 			result[courseId] = 0
-		} else {
-			result[courseId] = int(data.total / float32(data.count) * 100)
+			continue
 		}
+		totalScore := totalScorePerCourse[courseId]
+		progress := totalScore / totalTests
+		result[courseId] = int(progress)
 	}
 
 	return result, nil
@@ -86,5 +94,4 @@ func (cr *courseRepository) GetAllCourses(c context.Context) (*[]models.Course, 
 		return nil, err
 	}
 	return &courses, nil
-
 }
