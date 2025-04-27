@@ -28,7 +28,7 @@ func App(cfg *config.Config) error {
 	courseService := services.NewCourseService(courseRepo, userRepo, testRepo)
 
 	usersCourseRepo := repositories.NewUsersCourseRepository(db)
-	usersCourseService := services.NewUsersCourseService(usersCourseRepo)
+	usersCourseService := services.NewUsersCourseService(usersCourseRepo, testRepo)
 
 	engine := html.New("./web/templates", ".html")
 	engine.Reload(true)
@@ -51,6 +51,8 @@ func App(cfg *config.Config) error {
 				return c.Status(code).Render("errors/401", fiber.Map{})
 			case fiber.StatusNotFound:
 				return c.Status(code).Render("errors/404", fiber.Map{})
+			case fiber.StatusNotAcceptable:
+				return c.Status(code).Render("errors/406", fiber.Map{})
 			default:
 				fmt.Println(err)
 				return c.Status(code).Render("errors/500", fiber.Map{
