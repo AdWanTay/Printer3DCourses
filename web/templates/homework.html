@@ -19,7 +19,6 @@
         .homework-card {
             position: relative;
             display: flex;
-            height: 20rem;
             background: var(--white-color);
             border-radius: 12px;
             overflow: hidden;
@@ -27,9 +26,8 @@
         }
 
         .homework-image {
-            height: 100%;
+            width: 20rem;
             object-fit: cover;
-            border-right: 1px solid #bcbcbc;
             flex-shrink: 0;
         }
         .homework-content {
@@ -37,6 +35,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            border-left: 1px solid #bcbcbc;
             flex-grow: 1;
         }
         .homework-title {
