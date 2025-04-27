@@ -202,7 +202,11 @@
     border-bottom: 1px solid var(--primary-border-color);
 }
 
-#course-content h3, #course-content h2 {
+#course-content h4, #course-content h5 {
+    margin-bottom: .5rem;
+}
+
+#course-content h3, #course-content h2{
     margin-bottom: 1rem;
 }
 
