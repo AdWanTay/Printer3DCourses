@@ -210,9 +210,28 @@
     margin-bottom: 1rem;
 }
 
-#course-content p {
+#course-content p, #course-content table {
     line-height: 180%;
     margin-bottom: 2rem;
+}
+
+#course-content table {
+    width: 100%;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+}
+#course-content table th {
+    font-weight: bold;
+    padding: 5px;
+    background: #efefef;
+    border-radius: 13px;
+    border: 1px solid #dddddd;
+}
+#course-content table td {
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+
+    padding: 5px;
 }
 
 #course-content ol, #course-content ul, pre {
@@ -221,6 +240,13 @@
     border-radius: 15px;
     margin-bottom: 2rem;
 }
+
+#course-content ul ul {
+    margin-bottom: 0rem;
+    padding: 0;
+    list-style-type: disc;
+}
+
 #course-content ul {
     list-style-type: circle;
 }

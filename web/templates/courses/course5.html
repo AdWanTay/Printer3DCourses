@@ -1,0 +1,883 @@
+{{define "course5"}}
+    <h2>Курс 5: Программирование микроконтроллеров</h2>
+    <p>Программирование микроконтроллеров открывает двери в мир умных устройств и автоматизированных систем. Этот курс
+        научит вас создавать программы для управления электронными устройствами, начиная от простых мигалок и заканчивая
+        сложными IoT-проектами.</p>
+
+    <h3>Что вы узнаете:</h3>
+    <ul>
+        <li>Архитектуру и принципы работы микроконтроллеров</li>
+        <li>Основы программирования на C/C++ для встроенных систем</li>
+        <li>Работу с периферийными устройствами: GPIO, АЦП, таймеры</li>
+        <li>Использование интерфейсов связи: UART, I2C, SPI</li>
+        <li>Практические методы отладки и оптимизации кода</li>
+    </ul>
+
+    <h2>Раздел 1: Основы программирования микроконтроллеров</h2>
+
+    <h3>1.1. Введение в микроконтроллеры</h3>
+
+    <p><strong>Что такое микроконтроллер?</strong></p>
+    <p>Микроконтроллер (МК) — это полноценная микрокомпьютерная система, интегрированная в единый кристалл. В отличие от
+        микропроцессоров, которым требуются внешние компоненты, микроконтроллер содержит все необходимое для работы:</p>
+
+    <img src="/web/static/img/microcontoller.jpg" alt="Микроконтроллер" width="500">
+
+    <h4>Ключевые компоненты МК:</h4>
+    <ul>
+        <li><strong>Центральный процессор (CPU)</strong> — выполняет программный код</li>
+        <li><strong>Память программ (Flash)</strong> — хранит прошивку (обычно 8KB-2MB)</li>
+        <li><strong>Оперативная память (SRAM)</strong> — временное хранение данных (1KB-256KB)</li>
+        <li><strong>Периферийные устройства:</strong>
+            <ul>
+                <li>GPIO (цифровые входы/выходы)</li>
+                <li>АЦП/ЦАП (аналогово-цифровые преобразователи)</li>
+                <li>Таймеры/счетчики</li>
+                <li>Интерфейсы связи (UART, SPI, I2C, USB)</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>Популярные семейства микроконтроллеров:</h4>
+
+    <h5>1. AVR (Arduino)</h5>
+    <ul>
+        <li>ATmega328P (Arduino Uno/Nano)</li>
+        <li>Особенности:
+            <ul>
+                <li>8-битная архитектура</li>
+                <li>16 МГц тактовая частота</li>
+                <li>32 KB Flash, 2 KB SRAM</li>
+                <li>Простота освоения</li>
+            </ul>
+        </li>
+    </ul>
+
+    <img src="/web/static/img/avr.jpg" alt="Arduino Mega 2560" width="500">
+
+    <h5>2. ARM Cortex (STM32)</h5>
+    <ul>
+        <li>STM32F103 (Blue Pill)</li>
+        <li>Особенности:
+            <ul>
+                <li>32-битная архитектура</li>
+                <li>До 72 МГц</li>
+                <li>64-256 KB Flash</li>
+                <li>Богатая периферия</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h5>3. ESP32</h5>
+    <ul>
+        <li>Двухъядерный процессор</li>
+        <li>Встроенные Wi-Fi и Bluetooth</li>
+        <li>160-240 МГц</li>
+        <li>Идеален для IoT проектов</li>
+    </ul>
+
+    <img src="/web/static/img/esp32.jpg" alt="ESP32 DevKit" width="500">
+
+    <h4>Сравнительная таблица характеристик:</h4>
+    <table>
+        <tr>
+            <th>Параметр</th>
+            <th>Arduino Uno</th>
+            <th>STM32F103</th>
+            <th>ESP32</th>
+        </tr>
+        <tr>
+            <td>Архитектура</td>
+            <td>8-bit AVR</td>
+            <td>32-bit ARM</td>
+            <td>32-bit Xtensa</td>
+        </tr>
+        <tr>
+            <td>Тактовая частота</td>
+            <td>16 MHz</td>
+            <td>72 MHz</td>
+            <td>160-240 MHz</td>
+        </tr>
+        <tr>
+            <td>Flash память</td>
+            <td>32 KB</td>
+            <td>64-256 KB</td>
+            <td>4-16 MB</td>
+        </tr>
+        <tr>
+            <td>SRAM</td>
+            <td>2 KB</td>
+            <td>20-64 KB</td>
+            <td>520 KB</td>
+        </tr>
+        <tr>
+            <td>Цена</td>
+            <td>$20-25</td>
+            <td>$3-5</td>
+            <td>$6-10</td>
+        </tr>
+    </table>
+
+    <h3>1.2. Настройка среды разработки</h3>
+
+    <h4>1. Установка Arduino IDE</h4>
+    <p>Пошаговая инструкция:</p>
+    <ol>
+        <li>Скачайте последнюю версию с <a href="https://www.arduino.cc/en/software/" target="_blank">официального
+                сайта</a></li>
+        <li>Установите пакет драйверов (для Windows)</li>
+        <li>Подключите плату через USB кабель</li>
+        <li>В меню выберите:
+            <ul>
+                <li>Инструменты → Плата → "Arduino Uno"</li>
+                <li>Инструменты → Порт → соответствующий COM-порт</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h4>2. Первый проект "Blink"</h4>
+    <p>Детальный разбор кода:</p>
+    <pre>
+        <code class="language-cpp">
+        // Функция setup выполняется один раз при старте
+        void setup() {
+        // Инициализация цифрового вывода 13 (встроенный светодиод)
+        pinMode(LED_BUILTIN, OUTPUT);
+        }
+
+        // Функция loop выполняется циклически
+        void loop() {
+        digitalWrite(LED_BUILTIN, HIGH); // Подаем высокий уровень (5V)
+        delay(1000); // Пауза 1000 мс (1 секунда)
+        digitalWrite(LED_BUILTIN, LOW); // Подаем низкий уровень (0V)
+        delay(1000); // Снова пауза
+        }
+        </code>
+    </pre>
+
+    <h4>Процесс загрузки:</h4>
+    <ol>
+        <li>Нажмите кнопку "Проверить" (галочка) для компиляции</li>
+        <li>Затем "Загрузить" (стрелка вправо)</li>
+        <li>Наблюдайте за процессом в нижней панели</li>
+        <li>При успехе появится сообщение "Загрузка завершена"</li>
+    </ol>
+
+    <h4>3. Альтернативные среды разработки</h4>
+
+    <h5>PlatformIO (VS Code Extension)</h5>
+
+    <img src="/web/static/img/platform-io.jpg" alt="Микроконтроллер" width="40%">
+
+
+    <p>Преимущества:</p>
+    <ul>
+        <li>Поддержка множества платформ</li>
+        <li>Продвинутая система управления библиотеками</li>
+        <li>Встроенный отладчик</li>
+    </ul>
+
+    <h5>STM32CubeIDE</h5>
+    <p>Особенности:</p>
+    <ul>
+        <li>Официальная среда от STMicroelectronics</li>
+        <li>Генератор кода для периферии</li>
+        <li>Поддержка отладки через ST-Link</li>
+    </ul>
+
+    <h4>Сравнение сред разработки:</h4>
+    <table>
+        <tr>
+            <th>Характеристика</th>
+            <th>Arduino IDE</th>
+            <th>PlatformIO</th>
+            <th>STM32CubeIDE</th>
+        </tr>
+        <tr>
+            <td>Поддержка языков</td>
+            <td>C++</td>
+            <td>C/C++/Python</td>
+            <td>C/C++</td>
+        </tr>
+        <tr>
+            <td>Отладка</td>
+            <td>Ограничена</td>
+            <td>Полноценная</td>
+            <td>Полноценная</td>
+        </tr>
+        <tr>
+            <td>Управление библиотеками</td>
+            <td>Базовое</td>
+            <td>Продвинутое</td>
+            <td>Среднее</td>
+        </tr>
+        <tr>
+            <td>Поддержка платформ</td>
+            <td>Основные</td>
+            <td>50+ платформ</td>
+            <td>Только STM32</td>
+        </tr>
+    </table>
+
+    <h4>Дополнительные инструменты:</h4>
+    <ul>
+        <li><strong>Serial Monitor</strong> — для отладки через UART</li>
+        <li><strong>Logic Analyzer</strong> — анализ цифровых сигналов</li>
+        <li><strong>Oscilloscope</strong> — просмотр аналоговых сигналов</li>
+    </ul>
+
+    <h3>Практическое задание</h3>
+    <p><strong>Цель:</strong> Создать программу, которая:</p>
+    <ol>
+        <li>Мигает встроенным светодиодом с разной частотой</li>
+        <li>Выводит счетчик в Serial Monitor</li>
+        <li>Реагирует на внешнюю кнопку</li>
+    </ol>
+
+    <p><strong>Пример решения:</strong></p>
+    <pre><code class="language-cpp">
+        int counter = 0;
+        bool fastMode = false;
+
+        void setup() {
+        pinMode(LED_BUILTIN, OUTPUT);
+        pinMode(2, INPUT_PULLUP); // Кнопка на пине 2
+        Serial.begin(9600);
+        }
+
+        void loop() {
+        if(digitalRead(2) == LOW) {
+        fastMode = !fastMode;
+        delay(200); // Защита от дребезга
+        }
+
+        digitalWrite(LED_BUILTIN, HIGH);
+        Serial.print("Counter: ");
+        Serial.println(counter++);
+
+        if(fastMode) {
+        delay(100); // Быстрый режим
+        } else {
+        delay(500); // Медленный режим
+        }
+
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(fastMode ? 100 : 500);
+    }
+        </code>
+    </pre>
+
+    <h4>Тестовые вопросы:</h4>
+    <ol>
+        <li>Какие три типа памяти есть в микроконтроллерах?</li>
+        <li>Чем отличается архитектура AVR от ARM?</li>
+        <li>Какой параметр отвечает за скорость выполнения программы?</li>
+        <li>Перечислите три способа отладки кода для МК.</li>
+    </ol>
+
+    <h2>Раздел 2: Язык C/C++ для микроконтроллеров</h2>
+
+    <h3>2.1. Основы синтаксиса и структуры программ</h3>
+
+    <h4>Структура программы Arduino:</h4>
+    <p>Каждая программа (скетч) для Arduino состоит из двух обязательных функций:</p>
+    <pre><code class="language-cpp">
+        void setup() {
+            // Инициализация параметров - выполняется один раз при старте
+            pinMode(13, OUTPUT); // Настройка пина 13 как выхода
+            Serial.begin(9600); // Инициализация последовательного порта
+            }
+
+            void loop() {
+            // Основной цикл - выполняется бесконечно
+            digitalWrite(13, HIGH);
+            delay(500);
+            digitalWrite(13, LOW);
+            delay(500);
+        }
+        </code>
+    </pre>
+
+    <img src="/web/static/img/arduino.jpg" alt="Микроконтроллер" width="40%">
+
+    <h4>Типы данных в C/C++ для МК:</h4>
+    <table>
+        <tr>
+            <th>Тип данных</th>
+            <th>Размер</th>
+            <th>Диапазон значений</th>
+            <th>Пример использования</th>
+        </tr>
+        <tr>
+            <td>bool</td>
+            <td>1 байт</td>
+            <td>true/false</td>
+            <td>bool buttonState = false;</td>
+        </tr>
+        <tr>
+            <td>byte</td>
+            <td>1 байт</td>
+            <td>0-255</td>
+            <td>byte brightness = 127;</td>
+        </tr>
+        <tr>
+            <td>int</td>
+            <td>2 байта</td>
+            <td>-32,768 to 32,767</td>
+            <td>int temperature = 25;</td>
+        </tr>
+        <tr>
+            <td>unsigned int</td>
+            <td>2 байта</td>
+            <td>0-65,535</td>
+            <td>unsigned int distance = 5000;</td>
+        </tr>
+        <tr>
+            <td>float</td>
+            <td>4 байта</td>
+            <td>±3.4e±38</td>
+            <td>float voltage = 3.14;</td>
+        </tr>
+    </table>
+
+    <h4>Операторы и выражения:</h4>
+
+    <h5>1. Арифметические операторы:</h5>
+    <pre><code class="language-cpp">
+        int a = 5 + 3; // Сложение
+        int b = a * 2; // Умножение
+        float c = b / 3.0; // Деление
+  </code>
+</pre>
+
+    <h5>2. Операторы сравнения:</h5>
+    <pre><code class="language-cpp">
+        if (x == y) {...} // Равно
+        if (x > y) {...} // Больше
+        if (x <= y) {...} // Меньше или равно
+  </code>
+</pre>
+
+    <h5>3. Логические операторы:</h5>
+    <pre><code class="language-cpp">
+        if (x > 0 && x < 100) {...} // И
+        if (x < 0 || x > 100) {...} // ИЛИ
+        if (!enabled) {...} // НЕ
+  </code>
+</pre>
+
+<h3>2.2. Управляющие конструкции</h3>
+
+<h4>Условные операторы:</h4>
+
+<h5>1. if-else:</h5>
+<pre><code class="language-cpp">
+    if (temperature > 30) {
+    if (x < 0 || x > 100) {...} // ИЛИ
+    if (!enabled) {...} // НЕ
+  </code>
+</pre>
+
+<h3>2.2. Управляющие конструкции</h3>
+
+<h4>Условные операторы:</h4>
+
+<h5>1. if-else:</h5>
+<pre><code class="language-cpp">
+    if (temperature > 30) {
+    digitalWrite(FAN_PIN, HIGH);
+    } else {
+    digitalWrite(FAN_PIN, LOW);
+}</code></pre>
+
+<h5>2. switch-case:</h5>
+<pre><code class="language-cpp">
+    switch (menuOption) {
+        case 1:
+        showTemperature();
+        break;
+        case 2:
+        showHumidity();
+        break;
+        default:
+        showMainMenu();
+    }
+  </code>
+</pre>
+
+<h4>Циклы:</h4>
+
+<h5>1. for:</h5>
+<pre><code class="language-cpp">
+    for (int i = 0; i < 10; i++) {
+        Serial.println(i); // Выведет числа от 0 до 9
+    }
+    </code>
+</pre>
+
+<h5>2. while:</h5>
+<pre><code class="language-cpp">
+    while (digitalRead(BUTTON_PIN) == HIGH) {
+        // Ждем нажатия кнопки
+        delay(10);
+    }
+  </code>
+</pre>
+
+<h5>3. do-while:</h5>
+<pre><code class="language-cpp">
+    do {
+        reading = analogRead(SENSOR_PIN);
+    } while (reading < 500);
+    </code>
+</pre>
+
+<h3>2.3. Функции и области видимости</h3>
+
+<h4>Создание собственных функций:</h4>
+<pre><code class="language-cpp">
+        // Объявление функции
+        float convertToVoltage(int adcValue) {
+            return adcValue * (5.0 / 1023.0);
+        }
+
+        // Использование
+        void loop() {
+            int sensorValue = analogRead(A0);
+            float voltage = convertToVoltage(sensorValue);
+            Serial.println(voltage);
+        }
+    </code></pre>
+
+<h4>Области видимости переменных:</h4>
+
+<h5>1. Глобальные переменные:</h5>
+<pre><code class="language-cpp">
+        int counter = 0; // Видна во всех функциях
+        void setup() {
+            // Можно использовать counter
+        }
+
+        void loop() {
+            // Можно использовать counter
+        }
+    </code>
+</pre>
+
+<h5>2. Локальные переменные:</h5>
+<pre><code class="language-cpp">
+        void myFunction() {
+            int temp = 0; // Видна только в этой функции
+        }
+    </code>
+</pre>
+
+<h3>2.4. Работа с массивами и строками</h3>
+
+<h4>Одномерные массивы:</h4>
+<pre><code class="language-cpp">
+        int ledPins[] = {2, 3, 4, 5, 6}; // Объявление массива
+        void setup() {
+            for (int i = 0; i < 5; i++) {
+                pinMode(ledPins[i], OUTPUT); // Инициализация пинов
+            }
+        }
+    </code>
+</pre>
+
+<h4>Двумерные массивы:</h4>
+<pre><code class="language-cpp">
+        int buttonMatrix[3][3] = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+    </code>
+</pre>
+
+<h4>Работа со строками:</h4>
+<pre><code class="language-cpp">
+        char message[] = "Hello"; // Строка как массив символов
+        String text = "World"; // Объект String
+
+        void setup() {
+            Serial.begin(9600);
+            Serial.println(message);
+            Serial.println(text);
+        }
+    </code>
+</pre>
+
+<h3>2.5. Указатели и адресная арифметика</h3>
+
+<h4>Основы указателей:</h4>
+<pre><code class="language-cpp">
+        int value = 42;
+        int ptr = value; // ptr содержит адрес value
+        Serial.println(ptr); // Выведет 42 (разыменование)
+    </code>
+</pre>
+
+<h4>Использование с массивами:</h4>
+<pre><code class="language-cpp">
+        int numbers[] = {10, 20, 30};
+        int ptr = numbers; // Указывает на первый элемент
+        Serial.println((ptr+1)); // Выведет 20
+    </code>
+</pre>
+
+<h3>Практические примеры</h3>
+
+<h4>Пример 1: Управление RGB-светодиодом</h4>
+<pre><code class="language-cpp">
+        int redPin = 9;
+        int greenPin = 10;
+        int bluePin = 11;
+
+        void setColor(int r, int g, int b) {
+            analogWrite(redPin, r);
+            analogWrite(greenPin, g);
+            analogWrite(bluePin, b);
+        }
+
+        void loop() {
+            setColor(255, 0, 0); // Красный
+            delay(1000);
+            setColor(0, 255, 0); // Зеленый
+            delay(1000);
+            setColor(0, 0, 255); // Синий
+            delay(1000);
+        }
+    </code>
+</pre>
+
+<h4>Пример 2: Обработка аналогового сигнала</h4>
+<pre><code class="language-cpp">
+        void setup() {
+        Serial.begin(9600);
+        }
+
+        void loop() {
+            int sensorValue = analogRead(A0);
+            float voltage = sensorValue * (5.0 / 1023.0);
+            Serial.print("Sensor: ");
+            Serial.print(sensorValue);
+            Serial.print(" Voltage: ");
+            Serial.println(voltage);
+            delay(500);
+        }
+    </code>
+</pre>
+
+<h3>Тестовые задания</h3>
+<ol>
+    <li>Напишите функцию, которая вычисляет среднее значение массива из 10 элементов</li>
+    <li>Создайте программу, которая выводит таблицу умножения в Serial Monitor</li>
+    <li>Реализуйте обработчик кнопки с защитой от дребезга</li>
+</ol>
+
+<h2>Раздел 3: Практическое программирование микроконтроллеров</h2>
+
+<h3>3.1 Работа с цифровыми входами/выходами</h3>
+
+<h4>Настройка GPIO (General Purpose Input/Output):</h4>
+<pre><code class="language-cpp">
+        void setup() {
+            pinMode(13, OUTPUT); // Настройка пина 13 как выхода
+            pinMode(2, INPUT_PULLUP); // Настройка пина 2 как входа с подтяжкой
+        }
+    </code>
+</pre>
+
+<h4>Основные функции:</h4>
+<ul>
+    <li>digitalWrite(pin, HIGH/LOW) — установка состояния выхода</li>
+    <li>digitalRead(pin) — чтение состояния входа</li>
+    <li>pinMode(pin, mode) — настройка режима работы пина</li>
+</ul>
+
+<img src="/web/static/img/arduino_cxem.png" alt="Схема подключения кнопки" width="500">
+
+<h4>Практический пример: Управление светодиодом кнопкой</h4>
+<pre><code class="language-cpp">
+        const int buttonPin = 2;
+        const int ledPin = 13;
+        int buttonState = 0;
+
+        void setup() {
+            pinMode(ledPin, OUTPUT);
+            pinMode(buttonPin, INPUT_PULLUP);
+        }
+
+        void loop() {
+            buttonState = digitalRead(buttonPin);
+            if (buttonState == LOW) {
+                digitalWrite(ledPin, HIGH);
+            } else {
+                digitalWrite(ledPin, LOW);
+            }
+        }
+    </code>
+</pre>
+
+<h3>3.2 Аналоговые входы и ШИМ</h3>
+
+<h4>Аналого-цифровое преобразование (АЦП):</h4>
+<pre><code class="language-cpp">
+        int sensorValue = analogRead(A0); // Чтение значения (0-1023)
+        float voltage = sensorValue * (5.0 / 1023.0); // Преобразование в вольты
+    </code>
+</pre>
+
+<h4>ШИМ (PWM) выходы:</h4>
+<pre><code class="language-cpp">analogWrite(9, 128); // 50% заполнение (0-255)</code></pre>
+
+<h4>Пример: Плавное изменение яркости светодиода</h4>
+<pre><code class="language-cpp">
+        int brightness = 0;
+        int fadeAmount = 5;
+
+        void setup() {
+        pinMode(9, OUTPUT);
+        }
+
+        void loop() {
+        analogWrite(9, brightness);
+        brightness += fadeAmount;
+        if (brightness <= 0 || brightness >= 255) {
+        fadeAmount = -fadeAmount;
+        }
+        delay(30);
+    }
+    </code>
+</pre>
+
+<img src="/web/static/img/pulse.jpg" alt="График ШИМ сигнала" width="500">
+
+<h3>3.3 Работа с таймерами и прерываниями</h3>
+
+<h4>Настройка прерываний:</h4>
+<pre><code class="language-cpp">
+        attachInterrupt(digitalPinToInterrupt(2), buttonPressed, FALLING);
+        void buttonPressed() {
+            // Обработчик прерывания
+        }
+    </code>
+</pre>
+
+<h4>Типы прерываний:</h4>
+<ul>
+    <li>RISING — при переходе из LOW в HIGH</li>
+    <li>FALLING — при переходе из HIGH в LOW</li>
+    <li>CHANGE — при любом изменении состояния</li>
+</ul>
+
+<h4>Пример использования таймера:</h4>
+<pre><code class="language-cpp">
+        unsigned long previousMillis = 0;
+        const long interval = 1000; // Интервал 1 секунда
+
+        void loop() {
+            unsigned long currentMillis = millis();
+            if (currentMillis - previousMillis >= interval) {
+                previousMillis = currentMillis;
+            digitalWrite(13, !digitalRead(13)); // Переключение светодиода
+        }
+    }
+    </code>
+</pre>
+
+<h3>3.4 Интерфейсы связи</h3>
+
+<h4>1. UART (Serial):</h4>
+<pre><code class="language-cpp">
+        void setup() {
+            Serial.begin(9600); // Инициализация порта
+        }
+
+        void loop() {
+            Serial.println("Hello, world!");
+            delay(1000);
+        }
+    </code>
+</pre>
+
+<h4>2. I2C:</h4>
+<pre>
+    <code class="language-cpp">
+        #include "Wire.h"
+        void setup() {
+            Wire.begin(); // Инициализация I2C
+        }
+
+        void loop() {
+            Wire.beginTransmission(0x27); // Адрес устройства
+            Wire.write(0x00); // Регистр
+            Wire.write(0x01); // Данные
+            Wire.endTransmission();
+        }
+    </code>
+</pre>
+
+<h4>3. SPI:</h4>
+<pre><code class="language-cpp">
+        #include "SPI.h"
+        void setup() {
+            SPI.begin(); // Инициализация SPI
+        }
+
+        void loop() {
+            digitalWrite(SS, LOW);
+            SPI.transfer(0x55); // Передача данных
+            digitalWrite(SS, HIGH);
+        }
+    </code>
+</pre>
+
+<h3>3.5 Работа с памятью</h3>
+
+<h4>EEPROM (энергонезависимая память):</h4>
+<pre><code class="language-cpp">
+        #include "EEPROM.h"
+        void setup() {
+            EEPROM.write(0, 123); // Запись значения
+            byte value = EEPROM.read(0); // Чтение значения
+        }
+    </code>
+</pre>
+
+<h4>Flash память (PROGMEM):</h4>
+<pre><code class="language-cpp">
+        #include "avr/pgmspace.h"
+        const char stringTable[] PROGMEM = {
+            "String 1", "String 2", "String 3"
+        };
+
+        void setup() {
+            char buffer[20];
+            strcpy_P(buffer, (char*)pgm_read_word(&(stringTable[0])));
+            Serial.println(buffer);
+        }
+    </code>
+</pre>
+
+<h3>3.6 Оптимизация кода</h3>
+
+<h4>1. Использование регистров напрямую:</h4>
+<pre><code class="language-cpp">
+        PORTB |= (1 << PB5); // Установка пина 13 в HIGH (Arduino Uno)
+    </code>
+</pre>
+
+<h4>2. Битовые операции:</h4>
+<pre><code class="language-cpp">
+        byte flags = 0;
+        flags |= (1 << 3); // Установка бита 3
+        flags &= ~(1 << 2); // Сброс бита 2
+    </code>
+</pre>
+
+<h4>3. Встраиваемые функции:</h4>
+<pre>
+    <code class="language-cpp">
+        inline int square(int x) {
+            return x * x;
+        }
+    </code>
+</pre>
+
+<h3>3.7 Практические проекты</h3>
+
+<h4>Проект 1: Цифровой термометр</h4>
+<pre><code class="language-cpp">
+        #include "LiquidCrystal.h"
+        #include "OneWire.h"
+        #include "DallasTemperature.h"
+
+        OneWire oneWire(2);
+        DallasTemperature sensors(&oneWire);
+        LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+        void setup() {
+            sensors.begin();
+            lcd.begin(16, 2);
+        }
+
+        void loop() {
+            sensors.requestTemperatures();
+            float temp = sensors.getTempCByIndex(0);
+            lcd.setCursor(0, 0);
+            lcd.print("Temp: ");
+            lcd.print(temp);
+            lcd.print(" C");
+            delay(1000);
+        }
+    </code>
+</pre>
+
+<h4>Проект 2: Система автоматического полива</h4>
+<pre><code class="language-cpp">
+        #include "DHT.h"
+        #define DHTPIN 2
+        #define DHTTYPE DHT11
+        #define PUMP_PIN 3
+        #define SOIL_MOISTURE_PIN A0
+
+        DHT dht(DHTPIN, DHTTYPE);
+
+        void setup() {
+            pinMode(PUMP_PIN, OUTPUT);
+            Serial.begin(9600);
+            dht.begin();
+        }
+
+        void loop() {
+            float humidity = dht.readHumidity();
+            int soilMoisture = analogRead(SOIL_MOISTURE_PIN);
+            if (soilMoisture < 300 && humidity < 70) {
+                digitalWrite(PUMP_PIN, HIGH);
+                delay(5000);
+                digitalWrite(PUMP_PIN, LOW);
+            }
+            delay(3600000); // Проверка каждый час
+        }
+    </code>
+</pre>
+
+<h3>3.8 Отладка и тестирование</h3>
+
+<h4>1. Serial Monitor:</h4>
+<pre><code class="language-cpp">
+        Serial.print("Value: ");
+        Serial.println(sensorValue);
+    </code>
+</pre>
+
+<h4>2. Логический анализатор:</h4>
+<ul>
+    <li>Анализ цифровых сигналов</li>
+    <li>Декодирование протоколов</li>
+</ul>
+
+<h4>3. Встроенные LED индикаторы:</h4>
+<pre>
+    <code class="language-cpp">
+        #define DEBUG_LED 13
+        void debugBlink(int count) {
+            for(int i=0; i< count; i++) {
+            digitalWrite(DEBUG_LED, HIGH);
+            delay(200);
+            digitalWrite(DEBUG_LED, LOW);
+            delay(200);
+        }
+      }
+    </code>
+</pre>
+
+<h3>3.9 Тестовые задания</h3>
+<ol>
+    <li>Реализуйте систему управления светом с датчиком освещенности</li>
+    <li>Создайте простой осциллограф на базе Serial Plotter</li>
+    <li>Напишите программу для измерения частоты входного сигнала</li>
+</ol>
+{{end}}
